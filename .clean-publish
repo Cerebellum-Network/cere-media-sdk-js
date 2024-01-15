@@ -1,0 +1,12 @@
+{
+    "withoutPublish": true,
+    "tempDir": "dist",
+    "files": [
+        "webpack.config.js",
+        "babel.config.json",
+        "tsconfig.*",
+        ".browserslistrc",
+        "src/**",
+        "dist/types"
+    ]
+}

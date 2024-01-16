@@ -1,4 +1,5 @@
 import { Deployment, MediaClientConfig, MediaClientOptions, mediaClientConfig } from '.';
+import { FreeportApi } from './freeport-api';
 import { Logger } from './logger';
 
 export const defaultMediaClientOptions: MediaClientOptions = {
@@ -13,14 +14,22 @@ export class MediaSdkClient {
 
   private logger: Logger;
 
+  private freeportApi!: FreeportApi;
+
   protected constructor({ deployment, logger }: MediaClientOptions = defaultMediaClientOptions) {
     this.deployment = deployment;
     this.config = mediaClientConfig[deployment];
     this.logger = Logger('MediaClient', logger);
-    this.logger.debug('MediaClient initialized');
   }
 
   static async create(options: MediaClientOptions = defaultMediaClientOptions): Promise<MediaSdkClient> {
-    return new MediaSdkClient(options);
+    const client = new MediaSdkClient(options);
+    client.freeportApi = await FreeportApi.create({
+      logger: options.logger,
+      freeportApiUrl: client.config.freeportApiUrl,
+    });
+
+    client.logger.debug('MediaClient initialized');
+    return client;
   }
 }

@@ -1,8 +1,13 @@
 export type Deployment = 'production' | 'staging' | 'development' | 'local';
 export interface MediaClientConfig {
-  freeportApi: string;
+  freeportApiUrl: string;
 }
 export interface MediaClientOptions {
   deployment: Deployment;
   logger?: boolean;
+}
+
+export interface FreeportApiClientOptions {
+  logger?: boolean;
+  freeportApiUrl: string;
 }

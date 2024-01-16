@@ -1,5 +1,6 @@
 import 'ts-jest';
 import * as path from 'path';
+
 import type { Config } from 'jest';
 
 const config: Config = {

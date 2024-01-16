@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
-import { collectionSchema, nftSchema } from '.';
+import { collectionSchema } from './collection';
+import { nftSchema } from './nft';
 
 export interface FreeportApiClientOptions {
   freeportApiUrl: string;

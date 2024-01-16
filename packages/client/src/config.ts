@@ -1,16 +1,20 @@
-import { Deployment, MediaClientConfig } from './types';
+import { Deployment, MediaClientConfig, Tenant } from './types';
 
-export const mediaClientConfig: Record<Deployment, MediaClientConfig> = {
+export const mediaClientConfig: Record<Deployment, Record<Tenant, MediaClientConfig>> = {
   local: {
-    freeportApiUrl: 'http://localhost:3012',
+    davinci: { freeportApiUrl: 'http://localhost:3012' },
+    cerefans: { freeportApiUrl: 'http://localhost:3012' },
   },
   development: {
-    freeportApiUrl: 'https://dev-video-streaming.core-dev.aws.cere.io',
+    davinci: { freeportApiUrl: 'https://dev-video-streaming.core-dev.aws.cere.io' },
+    cerefans: { freeportApiUrl: 'https://dev-video-streaming-cerefans.core-dev.aws.cere.io' },
   },
   staging: {
-    freeportApiUrl: '',
+    davinci: { freeportApiUrl: '' },
+    cerefans: { freeportApiUrl: '' },
   },
   production: {
-    freeportApiUrl: '',
+    davinci: { freeportApiUrl: '' },
+    cerefans: { freeportApiUrl: '' },
   },
 };

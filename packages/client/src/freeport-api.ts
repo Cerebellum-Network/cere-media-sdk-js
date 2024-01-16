@@ -17,7 +17,7 @@ import {
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
   logger: false,
-  freeportApiUrl: mediaClientConfig.development.freeportApiUrl,
+  freeportApiUrl: mediaClientConfig.development.davinci.freeportApiUrl,
   skipInitialHealthCheck: false,
 };
 

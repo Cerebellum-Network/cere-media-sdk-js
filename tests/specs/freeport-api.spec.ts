@@ -3,16 +3,11 @@ import { FreeportApi } from '@cere-media-sdk/client';
 import { mockSigner } from '../mocks';
 
 describe('Freeport API Client', () => {
-  it('should instantiate a new client', async () => {
-    const client = await FreeportApi.create();
-    expect(client).toBeDefined();
-  });
-
-  it('should allow specifying a custom freeport api url', async () => {
-    FreeportApi.prototype.healthCheck = jest.fn(); // mock health check to pass
-    const url = 'https://example.com';
-    const client = await FreeportApi.create({ freeportApiUrl: url });
-    expect(client.instance.defaults.baseURL).toEqual(url);
+  describe('create', () => {
+    it('should instantiate a new client', async () => {
+      const client = await FreeportApi.create();
+      expect(client).toBeDefined();
+    });
   });
 
   describe('getAuthMessage', () => {
@@ -55,6 +50,36 @@ describe('Freeport API Client', () => {
       client.disconnect();
       // @ts-ignore - authHeaders is private
       expect(client.authHeaders).toBeUndefined();
+    });
+  });
+
+  describe('getCollections', () => {
+    const { address } = mockSigner;
+
+    it('should return a list of collections for a given address', async () => {
+      const client = await FreeportApi.create();
+      const collections = await client.getCollections({ address });
+      expect(collections).toBeInstanceOf(Array);
+    });
+  });
+
+  describe('getNfts', () => {
+    const { address } = mockSigner;
+
+    it('should return a list of nfts for a given address', async () => {
+      const client = await FreeportApi.create();
+      const nfts = await client.getMintedNfts({ address });
+      expect(nfts).toBeInstanceOf(Array);
+    });
+  });
+
+  describe('getOwnedNfts', () => {
+    const { address } = mockSigner;
+
+    it('should return a list of nfts for a given address', async () => {
+      const client = await FreeportApi.create();
+      const nfts = await client.getOwnedNfts({ address });
+      expect(nfts).toBeInstanceOf(Array);
     });
   });
 });

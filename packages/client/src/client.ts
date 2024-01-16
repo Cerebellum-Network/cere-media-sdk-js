@@ -7,6 +7,7 @@ import { Deployment, MediaClientConfig, MediaClientOptions, mediaClientConfig } 
 
 export const defaultMediaClientOptions: MediaClientOptions = {
   deployment: 'development',
+  tenant: 'davinci',
   logger: false,
 };
 
@@ -19,9 +20,9 @@ export class MediaSdkClient {
 
   private freeportApi!: FreeportApi;
 
-  protected constructor({ deployment, logger }: MediaClientOptions = defaultMediaClientOptions) {
+  protected constructor({ deployment, tenant, logger }: MediaClientOptions = defaultMediaClientOptions) {
     this.deployment = deployment;
-    this.config = mediaClientConfig[deployment];
+    this.config = mediaClientConfig[deployment][tenant];
     this.logger = Logger('MediaClient', logger);
   }
 

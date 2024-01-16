@@ -63,7 +63,7 @@ describe('Freeport API Client', () => {
     });
   });
 
-  describe('getNfts', () => {
+  describe('getMintedNfts', () => {
     const { address } = mockSigner;
 
     it('should return a list of nfts for a given address', async () => {

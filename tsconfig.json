@@ -1,24 +1,9 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "rootDir": "src/",
-        "outDir": "dist",
-        "target": "esnext",
-        "module": "esnext",
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "moduleResolution": "node",
-        "declaration": true,
-        "declarationMap": true,
-        "skipLibCheck": true,
-        "allowJs": true,
-        "resolveJsonModule": true,
-        "paths": {
-            "@cere/global-nft-registry": ["src"],
-            "@cere/global-nft-registry/*": ["src/*"]
-        }
-    },
-    "include": ["src/"],
-    "exclude": ["**/*.test.ts", "**/*.stub.ts", "node_modules", "dist", "package", "tests"]
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@cere-media-sdk/*": ["packages/*/src"]
+    }
+  }
 }

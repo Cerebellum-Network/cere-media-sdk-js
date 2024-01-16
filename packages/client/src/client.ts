@@ -13,10 +13,14 @@ export class MediaSdkClient {
 
   private logger: Logger;
 
-  constructor({ deployment, logger }: MediaClientOptions = defaultMediaClientOptions) {
+  protected constructor({ deployment, logger }: MediaClientOptions = defaultMediaClientOptions) {
     this.deployment = deployment;
     this.config = mediaClientConfig[deployment];
     this.logger = Logger('MediaClient', logger);
     this.logger.debug('MediaClient initialized');
+  }
+
+  static async create(options: MediaClientOptions = defaultMediaClientOptions): Promise<MediaSdkClient> {
+    return new MediaSdkClient(options);
   }
 }

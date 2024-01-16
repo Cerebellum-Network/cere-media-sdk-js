@@ -7,8 +7,12 @@ import {
   AuthHeaders,
   FreeportApiClientOptions,
   GetByAddressRequest,
+  GetCollectionsResponse,
+  GetNftsResponse,
   getAuthMessageResponseSchema,
   getByAddressRequestSchema,
+  getCollectionsResponseSchema,
+  getNftsResponseSchema,
 } from './types';
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
@@ -88,5 +92,44 @@ export class FreeportApi {
       .then((res) => res.data)
       .then(getAuthMessageResponseSchema.parse);
     return response;
+  }
+
+  /**
+   * Get all of the collections for a given address
+   * @param request.address The address to get collections for
+   * @returns The collections deployed by the given address
+   */
+  public async getCollections(request: GetByAddressRequest): Promise<GetCollectionsResponse> {
+    const { address } = getByAddressRequestSchema.parse(request);
+    return this.instance
+      .get(`/api/wallet/${address}/collections`)
+      .then((res) => res.data)
+      .then(getCollectionsResponseSchema.parse);
+  }
+
+  /**
+   * Get all of the NFTs owned by a given address
+   * @param request.address The address to get NFTs for
+   * @returns The NFTs owned by the given address
+   */
+  public async getOwnedNfts(request: GetByAddressRequest): Promise<GetNftsResponse> {
+    const { address } = getByAddressRequestSchema.parse(request);
+    return this.instance
+      .get(`/api/wallet/${address}/owned`)
+      .then((res) => res.data)
+      .then(getNftsResponseSchema.parse);
+  }
+
+  /**
+   * Get all of the NFTs minted by a given address
+   * @param request.address The address to get NFTs for
+   * @returns The NFTs minted by the given address
+   */
+  public async getMintedNfts(request: GetByAddressRequest): Promise<GetNftsResponse> {
+    const { address } = getByAddressRequestSchema.parse(request);
+    return this.instance
+      .get(`/api/wallet/${address}/minted`)
+      .then((res) => res.data)
+      .then(getNftsResponseSchema.parse);
   }
 }

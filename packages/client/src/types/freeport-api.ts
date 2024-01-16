@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { collectionSchema, nftSchema } from '.';
+
 export interface FreeportApiClientOptions {
   freeportApiUrl: string;
   logger?: boolean;
@@ -9,9 +11,16 @@ export interface FreeportApiClientOptions {
 export type AuthHeaderKeys = 'x-message' | 'x-signature' | 'x-public-key';
 export type AuthHeaders = Record<AuthHeaderKeys, string>;
 
-export const getAuthMessageRequestSchema = z.object({
-  address: z.string(),
-});
-export type GetAuthMessageRequest = z.infer<typeof getAuthMessageRequestSchema>;
 export const getAuthMessageResponseSchema = z.string();
 export type GetAuthMessageResponse = z.infer<typeof getAuthMessageResponseSchema>;
+
+export const getByAddressRequestSchema = z.object({
+  address: z.string(),
+});
+export type GetByAddressRequest = z.infer<typeof getByAddressRequestSchema>;
+
+export const getCollectionsResponseSchema = z.array(collectionSchema);
+export type GetCollectionsResponse = z.infer<typeof getCollectionsResponseSchema>;
+
+export const getNftsResponseSchema = z.array(nftSchema);
+export type GetNftsResponse = z.infer<typeof getNftsResponseSchema>;

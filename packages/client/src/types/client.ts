@@ -6,8 +6,3 @@ export interface MediaClientOptions {
   deployment: Deployment;
   logger?: boolean;
 }
-
-export interface FreeportApiClientOptions {
-  logger?: boolean;
-  freeportApiUrl: string;
-}

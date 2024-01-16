@@ -22,5 +22,12 @@ module.exports = {
     'no-constant-condition': ['error', { checkLoops: false }],
     '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
     'import/no-unresolved': 'off', // Disable due to ts paths configuration
+    'import/order': [
+      2,
+      {
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      },
+    ],
   },
 };

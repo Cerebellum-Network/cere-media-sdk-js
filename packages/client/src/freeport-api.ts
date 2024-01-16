@@ -23,8 +23,16 @@ export class FreeportApi {
       baseURL: options.freeportApiUrl,
       timeout: 10000,
     });
+    await client.healthCheck();
 
     client.logger.debug('FreeportApi initialized');
     return client;
+  }
+
+  public async healthCheck(): Promise<void> {
+    const response = await this.instance.get('api/health-check');
+    if (response.status !== 200 || response.data !== 'OK') {
+      throw new Error('FreeportApi health check failed');
+    }
   }
 }

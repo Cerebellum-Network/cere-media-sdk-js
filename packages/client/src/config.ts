@@ -1,10 +1,6 @@
-export interface MediaClientConfig {
-  freeportApi: string;
-}
+import { Deployment, MediaClientConfig } from './types';
 
-export type Deployment = 'production' | 'staging' | 'development' | 'local';
-
-export const config: Record<Deployment, MediaClientConfig> = {
+export const mediaClientConfig: Record<Deployment, MediaClientConfig> = {
   local: {
     freeportApi: 'http://localhost:3012',
   },

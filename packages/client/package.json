@@ -1,7 +1,7 @@
 {
   "name": "@cere-media-sdk/client",
   "description": "Media SDK client",
-  "version": "2.0.0-rc.28",
+  "version": "1.0.0",
   "type": "module",
   "repository": {
     "type": "git",
@@ -27,6 +27,8 @@
     "clean": "rimraf dist package"
   },
   "dependencies": {
+    "pino": "^8.17.2",
+    "pino-pretty": "^10.3.1"
   },
   "publishConfig": {
     "access": "public"

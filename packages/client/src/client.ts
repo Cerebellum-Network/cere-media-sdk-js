@@ -34,6 +34,7 @@ export class MediaSdkClient {
       logger: options.logger,
       freeportApiUrl: client.config.freeportApiUrl,
     });
+    await client.freeportApi.authenticate(signer);
 
     client.logger.debug('MediaClient initialized');
     return client;

@@ -6,9 +6,9 @@ import { Logger } from './logger';
 import {
   AuthHeaders,
   FreeportApiClientOptions,
-  GetAuthMessageRequest,
-  getAuthMessageRequestSchema,
+  GetByAddressRequest,
   getAuthMessageResponseSchema,
+  getByAddressRequestSchema,
 } from './types';
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
@@ -18,28 +18,31 @@ export const defaultFreeportApiOptions: FreeportApiClientOptions = {
 };
 
 export class FreeportApi {
-  private static logger: Logger;
+  private logger: Logger;
 
-  public static instance: AxiosInstance;
+  public instance!: AxiosInstance;
 
-  private static authHeaders?: AuthHeaders;
+  private authHeaders?: AuthHeaders;
+
+  constructor(options: FreeportApiClientOptions) {
+    this.logger = Logger('FreeportApi', options.logger);
+    this.logger.debug('FreeportApi initialized');
+  }
 
   static async create(options: FreeportApiClientOptions = defaultFreeportApiOptions): Promise<FreeportApi> {
-    this.instance = axios.create({
+    const client = new FreeportApi(options);
+    client.instance = axios.create({
       baseURL: options.freeportApiUrl,
       timeout: 10000,
     });
-    this.authHeaders = undefined;
+    client.authHeaders = undefined;
     if (!options.skipInitialHealthCheck) {
-      await this.healthCheck();
+      await client.healthCheck();
     }
-
-    this.logger = Logger('FreeportApi', options.logger);
-    this.logger.debug('FreeportApi initialized');
-    return this;
+    return client;
   }
 
-  public static async healthCheck(): Promise<void> {
+  public async healthCheck(): Promise<void> {
     const response = await this.instance.get('api/health-check');
     if (response.status !== 200 || response.data !== 'OK') {
       throw new Error('FreeportApi health check failed');
@@ -50,7 +53,7 @@ export class FreeportApi {
    * Generate valid auth headers for the Freeport API
    * @param signer The signer to use to sign the auth message
    */
-  public static async authenticate(signer: Signer): Promise<void> {
+  public async authenticate(signer: Signer): Promise<void> {
     const address = await signer.getAddress();
     const message = await this.getAuthMessage({ address });
     const signature = await signer.signMessage(message);
@@ -60,23 +63,26 @@ export class FreeportApi {
       'x-signature': signature,
       'x-public-key': address,
     };
+
+    Object.assign(this.instance.defaults.headers, this.authHeaders);
+    this.logger.debug('FreeportApi authenticated');
   }
 
   /**
    * Disconnect from the Freeport API
    * This will clear the auth headers but will not destroy the instance
    */
-  public static disconnect(): void {
+  public disconnect(): void {
     this.authHeaders = undefined;
   }
 
   /**
    * Request an auth message from the Freeport API
-   * @param address The address to request an auth message for
+   * @param request.address The address to request an auth message for
    * @returns The time encoded auth message
    */
-  public static async getAuthMessage(request: GetAuthMessageRequest): Promise<string> {
-    const { address } = getAuthMessageRequestSchema.parse(request);
+  public async getAuthMessage(request: GetByAddressRequest): Promise<string> {
+    const { address } = getByAddressRequestSchema.parse(request);
     const response = await this.instance
       .get(`/api/wallet-auth/auth-message?walletPublicKey=${address}`)
       .then((res) => res.data)

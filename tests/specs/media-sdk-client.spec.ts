@@ -17,7 +17,7 @@ describe('Media SDK Client', () => {
   });
 
   it('should throw an error if the freeport api health check fails', async () => {
-    FreeportApi.healthCheck = jest.fn(() => {
+    FreeportApi.prototype.healthCheck = jest.fn(() => {
       throw new Error('Health check failed');
     });
 
@@ -26,7 +26,7 @@ describe('Media SDK Client', () => {
 
   deployments.forEach((deployment) => {
     it(`should allow specifying a ${deployment} deployment environment`, async () => {
-      FreeportApi.healthCheck = jest.fn(); // mock health check to pass
+      FreeportApi.prototype.healthCheck = jest.fn(); // mock health check to pass
 
       const client = await MediaSdkClient.create(mockSigner, { deployment });
       expect(client.deployment).toEqual(deployment);

@@ -1,8 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { Signer } from 'ethers';
 
-import { mediaClientConfig } from './config';
-import { Logger } from './logger';
+import { mediaClientConfig } from '../config';
 import {
   AuthHeaders,
   FreeportApiClientOptions,
@@ -13,7 +12,9 @@ import {
   getByAddressRequestSchema,
   getCollectionsResponseSchema,
   getNftsResponseSchema,
-} from './types';
+} from '../types';
+
+import { Logger } from './logger.service';
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
   logger: false,
@@ -21,7 +22,7 @@ export const defaultFreeportApiOptions: FreeportApiClientOptions = {
   skipInitialHealthCheck: false,
 };
 
-export class FreeportApi {
+export class FreeportApiService {
   private logger: Logger;
 
   public instance!: AxiosInstance;
@@ -33,8 +34,8 @@ export class FreeportApi {
     this.logger.debug('FreeportApi initialized');
   }
 
-  static async create(options: FreeportApiClientOptions = defaultFreeportApiOptions): Promise<FreeportApi> {
-    const client = new FreeportApi(options);
+  static async create(options: FreeportApiClientOptions = defaultFreeportApiOptions): Promise<FreeportApiService> {
+    const client = new FreeportApiService(options);
     client.instance = axios.create({
       baseURL: options.freeportApiUrl,
       timeout: 10000,

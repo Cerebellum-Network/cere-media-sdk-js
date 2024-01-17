@@ -1,4 +1,4 @@
-import { Deployment, FreeportApi, MediaSdkClient, Tenant } from '@cere-media-sdk/client';
+import { Deployment, FreeportApiService, MediaSdkClient, Tenant } from '@cere-media-sdk/client';
 
 import { mockSigner } from '../mocks/signer.mock';
 
@@ -25,7 +25,7 @@ describe('Media SDK Client', () => {
     });
 
     it('should throw an error if the freeport api health check fails', async () => {
-      FreeportApi.prototype.healthCheck = jest.fn(() => {
+      FreeportApiService.prototype.healthCheck = jest.fn(() => {
         throw new Error('Health check failed');
       });
 
@@ -35,8 +35,8 @@ describe('Media SDK Client', () => {
     deployments.forEach((deployment) => {
       tenants.forEach((tenant) => {
         it(`should instantiate a new client for deployment ${deployment} and tenant ${tenant}`, async () => {
-          FreeportApi.prototype.healthCheck = jest.fn(); // mock health check to pass
-          FreeportApi.prototype.authenticate = jest.fn(); // mock auth to pass
+          FreeportApiService.prototype.healthCheck = jest.fn(); // mock health check to pass
+          FreeportApiService.prototype.authenticate = jest.fn(); // mock auth to pass
 
           const client = await MediaSdkClient.create(mockSigner, { deployment, tenant });
           expect(client).toBeInstanceOf(MediaSdkClient);

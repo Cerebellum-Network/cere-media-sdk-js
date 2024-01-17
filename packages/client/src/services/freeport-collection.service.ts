@@ -2,10 +2,10 @@ import { createFreeportCollection, createProvider } from '@cere/freeport-sc-sdk'
 import axios from 'axios';
 import { Signer, providers } from 'ethers';
 
-import { Logger } from './logger';
-import { FreeportCollectionOptions } from './types/freeport-collection';
+import { networkConfig, NftMetadata, nftMetadataSchema, NftAsset } from '..';
+import { FreeportCollectionOptions } from '../types/freeport-collection';
 
-import { NftAsset, NftMetadata, networkConfig, nftMetadataSchema } from '.';
+import { Logger } from './logger.service';
 
 export const defaultFreeportCollectionOptions: FreeportCollectionOptions = {
   deployment: 'development',

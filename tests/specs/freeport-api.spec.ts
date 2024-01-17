@@ -1,18 +1,18 @@
-import { FreeportApi } from '@cere-media-sdk/client';
+import { FreeportApiService } from '@cere-media-sdk/client';
 
 import { mockSigner } from '../mocks';
 
 describe('Freeport API Client', () => {
   describe('create', () => {
     it('should instantiate a new client', async () => {
-      const client = await FreeportApi.create();
+      const client = await FreeportApiService.create();
       expect(client).toBeDefined();
     });
   });
 
   describe('getAuthMessage', () => {
     it('should return a valid auth message', async () => {
-      const client = await FreeportApi.create();
+      const client = await FreeportApiService.create();
       const authMessage = await client.getAuthMessage({ address: mockSigner.address });
 
       const regex = /Sign in to Cere with your wallet 0x[0-9a-fA-F]{40} at \d+/;
@@ -22,7 +22,7 @@ describe('Freeport API Client', () => {
 
   describe('authenticate', () => {
     it('should set the auth headers', async () => {
-      const client = await FreeportApi.create();
+      const client = await FreeportApiService.create();
       // @ts-ignore - authHeaders is private
       expect(client.authHeaders).toBeUndefined();
       await client.authenticate(mockSigner);
@@ -31,7 +31,7 @@ describe('Freeport API Client', () => {
     });
 
     it("should set the auth headers on the client's instance", async () => {
-      const client = await FreeportApi.create();
+      const client = await FreeportApiService.create();
       await client.authenticate(mockSigner);
       // @ts-ignore - authHeaders is private
       const authHeaders = client.authHeaders as AuthHeaders;
@@ -41,7 +41,7 @@ describe('Freeport API Client', () => {
     });
 
     it('should disconnect from the client', async () => {
-      const client = await FreeportApi.create();
+      const client = await FreeportApiService.create();
       // @ts-ignore - authHeaders is private
       expect(client.authHeaders).toBeUndefined();
       await client.authenticate(mockSigner);
@@ -57,7 +57,7 @@ describe('Freeport API Client', () => {
     const { address } = mockSigner;
 
     it('should return a list of collections for a given address', async () => {
-      const client = await FreeportApi.create();
+      const client = await FreeportApiService.create();
       const collections = await client.getCollections({ address });
       expect(collections).toBeInstanceOf(Array);
     });
@@ -67,7 +67,7 @@ describe('Freeport API Client', () => {
     const { address } = mockSigner;
 
     it('should return a list of nfts for a given address', async () => {
-      const client = await FreeportApi.create();
+      const client = await FreeportApiService.create();
       const nfts = await client.getMintedNfts({ address });
       expect(nfts).toBeInstanceOf(Array);
     });
@@ -77,7 +77,7 @@ describe('Freeport API Client', () => {
     const { address } = mockSigner;
 
     it('should return a list of nfts for a given address', async () => {
-      const client = await FreeportApi.create();
+      const client = await FreeportApiService.create();
       const nfts = await client.getOwnedNfts({ address });
       expect(nfts).toBeInstanceOf(Array);
     });

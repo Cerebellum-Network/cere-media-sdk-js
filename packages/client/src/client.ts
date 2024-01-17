@@ -1,15 +1,15 @@
 import { Signer } from 'ethers';
 
-import { FreeportApi } from './freeport-api';
-import { FreeportCollectionService } from './freeport-collection';
-import { Logger } from './logger';
 import { GetNftMetadataRequest } from './types/freeport-collection';
 
 import {
   Deployment,
+  FreeportApiService,
+  FreeportCollectionService,
   GetByAddressRequest,
   GetCollectionsResponse,
   GetNftsResponse,
+  Logger,
   MediaClientConfig,
   MediaClientOptions,
   NftAsset,
@@ -30,7 +30,7 @@ export class MediaSdkClient {
 
   private logger: Logger;
 
-  private freeportApi!: FreeportApi;
+  private freeportApi!: FreeportApiService;
 
   private freeportCollection!: FreeportCollectionService;
 
@@ -108,7 +108,7 @@ export class MediaSdkClient {
   }
 
   private static async initFreeportApi(client: MediaSdkClient, signer: Signer, options: MediaClientOptions) {
-    client.freeportApi = await FreeportApi.create({
+    client.freeportApi = await FreeportApiService.create({
       logger: options.logger,
       freeportApiUrl: client.config.freeportApiUrl,
     });

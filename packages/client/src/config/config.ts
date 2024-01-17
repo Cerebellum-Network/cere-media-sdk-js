@@ -1,4 +1,4 @@
-import { Deployment, MediaClientConfig, Tenant } from './types';
+import { Deployment, MediaClientConfig, Tenant } from '../types';
 
 export const mediaClientConfig: Record<Deployment, Record<Tenant, MediaClientConfig>> = {
   local: {

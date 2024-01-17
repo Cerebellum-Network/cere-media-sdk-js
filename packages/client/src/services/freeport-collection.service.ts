@@ -9,7 +9,7 @@ import { Logger } from './logger.service';
 
 export const defaultFreeportCollectionOptions: FreeportCollectionOptions = {
   deployment: 'development',
-  tenant: 'davinci',
+  tenant: 'cerefans',
   logger: false,
 };
 

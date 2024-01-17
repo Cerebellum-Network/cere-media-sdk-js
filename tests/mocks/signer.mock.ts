@@ -8,3 +8,10 @@ import { Wallet } from 'ethers';
  * @address 0x744B0ae06Cd090b9F3D27Cd276fD6E4bE2F86210
  */
 export const mockSigner = new Wallet('39554408769372d0d7de3e80bed7acdae184a05f8cdca60dfdc528a17b3e922c');
+
+/**
+ * This is a mock signer that has no access to any tokens on the Freeport Creator Suite
+ * @privateKey 99d6dfe688baef21a893697f7dc8d86e192c9c2fd0148a1e357a7fcfda0d21c0
+ * @address 0x2fd3b37FE281577ea193a751690e0f703b5aB3A0
+ */
+export const mockSignerNoAccess = new Wallet('99d6dfe688baef21a893697f7dc8d86e192c9c2fd0148a1e357a7fcfda0d21c0');

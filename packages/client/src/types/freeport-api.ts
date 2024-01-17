@@ -25,3 +25,32 @@ export type GetCollectionsResponse = z.infer<typeof getCollectionsResponseSchema
 
 export const getNftsResponseSchema = z.array(nftSchema);
 export type GetNftsResponse = z.infer<typeof getNftsResponseSchema>;
+
+export const getCanAccessRequestSchema = z.object({
+  collectionAddress: z.string(),
+  walletAddress: z.string(),
+  nftId: z.number(),
+});
+export type GetCanAccessRequest = z.infer<typeof getCanAccessRequestSchema>;
+
+export const getCanAccessResponseSchema = z.boolean();
+export type GetCanAccessResponse = z.infer<typeof getCanAccessResponseSchema>;
+
+export const getContentDekRequest = z.object({
+  collectionAddress: z.string(),
+  nftId: z.number(),
+  asset: z.string(),
+});
+export type GetContentDekRequest = z.infer<typeof getContentDekRequest>;
+
+export const getContentDekResponse = z.string();
+export type GetContentDekResponse = z.infer<typeof getContentDekResponse>;
+
+export const getContentRequest = z.object({
+  collectionAddress: z.string(),
+  nftId: z.number(),
+  asset: z.string(),
+});
+export type GetContentRequest = z.infer<typeof getContentRequest>;
+
+export type GetContentResponse = Blob;

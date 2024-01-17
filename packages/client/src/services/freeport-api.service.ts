@@ -6,19 +6,30 @@ import {
   AuthHeaders,
   FreeportApiClientOptions,
   GetByAddressRequest,
+  GetCanAccessRequest,
+  GetCanAccessResponse,
   GetCollectionsResponse,
+  GetContentDekRequest,
+  GetContentDekResponse,
+  GetContentRequest,
+  GetContentResponse,
   GetNftsResponse,
   getAuthMessageResponseSchema,
   getByAddressRequestSchema,
+  getCanAccessRequestSchema,
+  getCanAccessResponseSchema,
   getCollectionsResponseSchema,
+  getContentDekRequest,
+  getContentDekResponse,
+  getContentRequest,
   getNftsResponseSchema,
 } from '../types';
 
-import { Logger } from './logger.service';
+import { Logger, handleError } from './logger.service';
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
   logger: false,
-  freeportApiUrl: mediaClientConfig.development.davinci.freeportApiUrl,
+  freeportApiUrl: mediaClientConfig.development.cerefans.freeportApiUrl,
   skipInitialHealthCheck: false,
 };
 
@@ -91,7 +102,9 @@ export class FreeportApiService {
     const response = await this.instance
       .get(`/api/wallet-auth/auth-message?walletPublicKey=${address}`)
       .then((res) => res.data)
-      .then(getAuthMessageResponseSchema.parse);
+      .then(getAuthMessageResponseSchema.parse)
+      .catch(handleError(this.logger));
+
     return response;
   }
 
@@ -105,7 +118,8 @@ export class FreeportApiService {
     return this.instance
       .get(`/api/wallet/${address}/collections`)
       .then((res) => res.data)
-      .then(getCollectionsResponseSchema.parse);
+      .then(getCollectionsResponseSchema.parse)
+      .catch(handleError(this.logger));
   }
 
   /**
@@ -118,7 +132,8 @@ export class FreeportApiService {
     return this.instance
       .get(`/api/wallet/${address}/owned`)
       .then((res) => res.data)
-      .then(getNftsResponseSchema.parse);
+      .then(getNftsResponseSchema.parse)
+      .catch(handleError(this.logger));
   }
 
   /**
@@ -131,6 +146,54 @@ export class FreeportApiService {
     return this.instance
       .get(`/api/wallet/${address}/minted`)
       .then((res) => res.data)
-      .then(getNftsResponseSchema.parse);
+      .then(getNftsResponseSchema.parse)
+      .catch(handleError(this.logger));
+  }
+
+  /**
+   * Check if a wallet has access to an NFT's content
+   * @param request.collectionAddress The address of the collection to check
+   * @param request.walletAddress The address of the wallet to check
+   * @param request.nftId The ID of the NFT to check
+   * @returns true if the given wallet address can access the given NFT, false otherwise
+   */
+  public async getCanAccess(request: GetCanAccessRequest): Promise<GetCanAccessResponse> {
+    const { collectionAddress, walletAddress, nftId } = getCanAccessRequestSchema.parse(request);
+    return this.instance
+      .get(`/api/content/${collectionAddress}/${nftId}/${walletAddress}/access`)
+      .then((res) => res.data)
+      .then(getCanAccessResponseSchema.parse)
+      .catch(handleError(this.logger));
+  }
+
+  /**
+   * Get the DEK for a given NFT's content
+   * @param request.collectionAddress The address of the collection to check
+   * @param request.walletAddress The address of the wallet to check
+   * @param request.asset The identifier for the asset to get the DEK for
+   * @returns The DEK for the given NFT's content
+   */
+  public async getContentDek(request: GetContentDekRequest): Promise<GetContentDekResponse> {
+    const { collectionAddress, nftId, asset } = getContentDekRequest.parse(request);
+    return this.instance
+      .get(`/api/content/${collectionAddress}/${nftId}/${asset}/dek`)
+      .then((res) => res.data)
+      .then(getContentDekResponse.parse)
+      .catch(handleError(this.logger));
+  }
+
+  /**
+   * Get decrypted content for a given NFT
+   * @param request.collectionAddress The address of the collection to check
+   * @param request.walletAddress The address of the wallet to check
+   * @param request.asset The identifier for the asset to get the DEK for
+   * @returns The decrypted content for the given NFT
+   */
+  public async getContent(request: GetContentRequest): Promise<GetContentResponse> {
+    const { collectionAddress, nftId, asset } = getContentRequest.parse(request);
+    return this.instance
+      .get(`/api/content/${collectionAddress}/${nftId}/${asset}`, { responseType: 'blob' })
+      .then((res) => res.data)
+      .catch(handleError(this.logger));
   }
 }

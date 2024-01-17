@@ -19,7 +19,7 @@ import {
 
 export const defaultMediaClientOptions: MediaClientOptions = {
   deployment: 'development',
-  tenant: 'davinci',
+  tenant: 'cerefans',
   logger: false,
 };
 

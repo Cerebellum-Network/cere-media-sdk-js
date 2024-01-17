@@ -1,6 +1,10 @@
 import { FreeportApiService } from '@cere-media-sdk/client';
 
-import { mockSigner } from '../mocks';
+import { mockCollection, mockNft, mockSigner, mockSignerNoAccess } from '../mocks';
+
+const { nftId } = mockNft;
+const { address: collectionAddress } = mockCollection;
+const { address: walletAddress } = mockSigner;
 
 describe('Freeport API Client', () => {
   describe('create', () => {
@@ -80,6 +84,44 @@ describe('Freeport API Client', () => {
       const client = await FreeportApiService.create();
       const nfts = await client.getOwnedNfts({ address });
       expect(nfts).toBeInstanceOf(Array);
+    });
+  });
+
+  describe('getCanAccess', () => {
+    it('should return true if the address can access the NFT', async () => {
+      const client = await FreeportApiService.create();
+      const canAccess = await client.getCanAccess({ nftId, walletAddress, collectionAddress });
+      expect(canAccess).toEqual(true);
+    });
+
+    it('should return false if the address cannot access the NFT', async () => {
+      const client = await FreeportApiService.create();
+      const canAccess = await client.getCanAccess({
+        nftId,
+        walletAddress: mockSignerNoAccess.address,
+        collectionAddress,
+      });
+      expect(canAccess).toEqual(false);
+    });
+  });
+
+  describe.only('getContentDek', () => {
+    it('should return a valid DEK if authenticated', async () => {
+      const client = await FreeportApiService.create();
+      await client.authenticate(mockSigner);
+      const dek = await client.getContentDek({ nftId, asset: 'asset', collectionAddress });
+      expect(dek).toEqual(expect.any(String));
+    });
+
+    it('should throw an error if not authenticated', async () => {
+      const client = await FreeportApiService.create();
+      await expect(client.getContentDek({ nftId, asset: 'asset', collectionAddress })).rejects.toThrow();
+    });
+
+    it('should throw an error if authenticated with the wrong signer', async () => {
+      const client = await FreeportApiService.create();
+      await client.authenticate(mockSignerNoAccess);
+      await expect(client.getContentDek({ nftId, asset: 'asset', collectionAddress })).rejects.toThrow();
     });
   });
 });

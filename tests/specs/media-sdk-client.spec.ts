@@ -18,6 +18,12 @@ describe('Media SDK Client', () => {
       expect(client.freeportApi).toBeDefined();
     });
 
+    it('should instantiate a freeport collection instance', async () => {
+      const client = await MediaSdkClient.create(mockSigner);
+      // @ts-ignore -- access internal property
+      expect(client.freeportCollection).toBeDefined();
+    });
+
     it('should throw an error if the freeport api health check fails', async () => {
       FreeportApi.prototype.healthCheck = jest.fn(() => {
         throw new Error('Health check failed');

@@ -1,7 +1,9 @@
 import { Signer } from 'ethers';
 
 import { FreeportApi } from './freeport-api';
+import { FreeportCollectionService } from './freeport-collection';
 import { Logger } from './logger';
+import { GetNftMetadataRequest } from './types/freeport-collection';
 
 import {
   Deployment,
@@ -10,6 +12,8 @@ import {
   GetNftsResponse,
   MediaClientConfig,
   MediaClientOptions,
+  NftAsset,
+  NftMetadata,
   mediaClientConfig,
 } from '.';
 
@@ -27,6 +31,8 @@ export class MediaSdkClient {
   private logger: Logger;
 
   private freeportApi!: FreeportApi;
+
+  private freeportCollection!: FreeportCollectionService;
 
   private signer!: Signer;
 
@@ -47,11 +53,8 @@ export class MediaSdkClient {
     options: MediaClientOptions = defaultMediaClientOptions,
   ): Promise<MediaSdkClient> {
     const client = new MediaSdkClient(options);
-    client.freeportApi = await FreeportApi.create({
-      logger: options.logger,
-      freeportApiUrl: client.config.freeportApiUrl,
-    });
-    await client.freeportApi.authenticate(signer);
+    await this.initFreeportApi(client, signer, options);
+    await this.initFreeportCollection(client, signer, options);
 
     client.logger.debug('MediaClient initialized');
     return client;
@@ -59,31 +62,60 @@ export class MediaSdkClient {
 
   /**
    * Get collections for address
-   * @param request.address - address to get collections for (defaults to signer address)
+   * @param address - address to get collections for (defaults to signer address)
    * @returns collections - list of collections deployed by this account
    */
-  async getCollections(request: Partial<GetByAddressRequest>): Promise<GetCollectionsResponse> {
-    const address = request.address || (await this.signer.getAddress());
-    return this.freeportApi.getCollections({ address });
+  async getCollections({ address }: Partial<GetByAddressRequest>): Promise<GetCollectionsResponse> {
+    return this.freeportApi.getCollections({ address: address || (await this.signer.getAddress()) });
   }
 
   /**
    * Get minted nfts for address
-   * @param request.address - address to get minted nfts for (defaults to signer address)
+   * @param address - address to get minted nfts for (defaults to signer address)
    * @returns nfts - list of nfts minted by this account
    */
-  async getMintedNfts(request: Partial<GetByAddressRequest>): Promise<GetNftsResponse> {
-    const address = request.address || (await this.signer.getAddress());
-    return this.freeportApi.getMintedNfts({ address });
+  async getMintedNfts({ address }: Partial<GetByAddressRequest>): Promise<GetNftsResponse> {
+    return this.freeportApi.getMintedNfts({ address: address || (await this.signer.getAddress()) });
   }
 
   /**
    * Get owned nfts for address
-   * @param request - address to get owned nfts for (defaults to signer address)
+   * @param address - address to get owned nfts for (defaults to signer address)
    * @returns nfts - list of nfts owned by this account
    */
-  async getOwnedNfts(request: Partial<GetByAddressRequest>): Promise<GetNftsResponse> {
-    const address = request.address || (await this.signer.getAddress());
-    return this.freeportApi.getOwnedNfts({ address });
+  async getOwnedNfts({ address }: Partial<GetByAddressRequest>): Promise<GetNftsResponse> {
+    return this.freeportApi.getOwnedNfts({ address: address || (await this.signer.getAddress()) });
+  }
+
+  /**
+   * Get the formatted NFT metadata for a token including the assets that are associated with it
+   * @param contractAddress - address of the Freeport Collection smart contract
+   * @param nftId - id of the nft on the Freeport Collection smart contract
+   * @returns nftMetadata - formatted NFT metadata
+   */
+  async getNftMetadata({ contractAddress, nftId }: GetNftMetadataRequest): Promise<NftMetadata> {
+    return this.freeportCollection.getNftMetadata(contractAddress, nftId);
+  }
+
+  /**
+   * Get the assets for a token
+   * @param contractAddress - address of the Freeport Collection smart contract
+   * @param nftId - id of the nft on the Freeport Collection smart contract
+   * @returns nftAssets - list of assets for the token
+   */
+  async getNftAssets({ contractAddress, nftId }: GetNftMetadataRequest): Promise<NftAsset[]> {
+    return this.freeportCollection.getNftAssets(contractAddress, nftId);
+  }
+
+  private static async initFreeportApi(client: MediaSdkClient, signer: Signer, options: MediaClientOptions) {
+    client.freeportApi = await FreeportApi.create({
+      logger: options.logger,
+      freeportApiUrl: client.config.freeportApiUrl,
+    });
+    await client.freeportApi.authenticate(signer);
+  }
+
+  private static async initFreeportCollection(client: MediaSdkClient, signer: Signer, options: MediaClientOptions) {
+    client.freeportCollection = await FreeportCollectionService.create(signer, options);
   }
 }

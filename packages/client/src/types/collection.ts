@@ -5,5 +5,6 @@ export const collectionSchema = z.object({
   address: z.string(),
   uri: z.string(),
   name: z.string(),
+  tenant: z.enum(['CEREFANS', 'DAVINCI']),
 });
 export type Collection = z.infer<typeof collectionSchema>;

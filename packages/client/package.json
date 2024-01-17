@@ -27,6 +27,7 @@
     "clean": "rimraf dist package"
   },
   "dependencies": {
+    "@cere/freeport-sc-sdk": "0.17.0",
     "axios": "^1.6.5",
     "ethers": "^5.7.2",
     "pino": "^8.17.2",

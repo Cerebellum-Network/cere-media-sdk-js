@@ -18,3 +18,10 @@ export const mediaClientConfig: Record<Deployment, Record<Tenant, MediaClientCon
     cerefans: { freeportApiUrl: '' },
   },
 };
+
+export const networkConfig: Record<Deployment, string> = {
+  local: 'https://polygon-mumbai.blockpi.network/v1/rpc/public',
+  development: 'https://polygon-mumbai.blockpi.network/v1/rpc/public',
+  staging: 'https://polygon-mumbai.blockpi.network/v1/rpc/public',
+  production: 'https://polygon-mainnet.blockpi.network/v1/rpc/public',
+};

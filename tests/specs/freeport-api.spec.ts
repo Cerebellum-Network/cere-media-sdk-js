@@ -105,7 +105,7 @@ describe('Freeport API Client', () => {
     });
   });
 
-  describe.only('getContentDek', () => {
+  describe('getContentDek', () => {
     it('should return a valid DEK if authenticated', async () => {
       const client = await FreeportApiService.create();
       await client.authenticate(mockSigner);

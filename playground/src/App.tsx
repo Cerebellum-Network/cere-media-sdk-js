@@ -1,15 +1,25 @@
 import cereLogo from '/cere.png';
 import './App.css';
+import { ConnectWallet, useSigner } from '@thirdweb-dev/react';
+import { Playground } from './components';
 
-function App() {
+const App = () => {
+  const signer = useSigner();
+
+  if (signer) {
+    return <Playground />;
+  }
+
   return (
     <>
-      <div>
+      <div style={{ justifyContent: 'center' }}>
         <img src={cereLogo} className="logo" alt="Cere logo" />
-        <p>Cere Media SDK </p>
+        <h2>Cere Media SDK Playground</h2>
+        <p>Connect Wallet to Get Started</p>
+        <ConnectWallet />
       </div>
     </>
   );
-}
+};
 
 export default App;

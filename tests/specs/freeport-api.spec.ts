@@ -124,4 +124,24 @@ describe('Freeport API Client', () => {
       await expect(client.getContentDek({ nftId, asset: 'asset', collectionAddress })).rejects.toThrow();
     });
   });
+
+  describe('getContent', () => {
+    it("should return the NFT's content if authenticated", async () => {
+      const client = await FreeportApiService.create();
+      await client.authenticate(mockSigner);
+      const content = await client.getContent({ nftId, asset: 'asset', collectionAddress });
+      expect(content).toBeDefined();
+    });
+
+    it('should throw an error if not authenticated', async () => {
+      const client = await FreeportApiService.create();
+      await expect(client.getContent({ nftId, asset: 'asset', collectionAddress })).rejects.toThrow();
+    });
+
+    it('should throw an error if authenticated with the wrong signer', async () => {
+      const client = await FreeportApiService.create();
+      await client.authenticate(mockSignerNoAccess);
+      await expect(client.getContent({ nftId, asset: 'asset', collectionAddress })).rejects.toThrow();
+    });
+  });
 });

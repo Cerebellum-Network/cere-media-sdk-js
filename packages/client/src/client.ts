@@ -7,7 +7,12 @@ import {
   FreeportApiService,
   FreeportCollectionService,
   GetByAddressRequest,
+  GetCanAccessRequest,
   GetCollectionsResponse,
+  GetContentDekRequest,
+  GetContentDekResponse,
+  GetContentRequest,
+  GetContentResponse,
   GetNftsResponse,
   Logger,
   MediaClientConfig,
@@ -104,6 +109,39 @@ export class MediaSdkClient {
    */
   async getNftAssets({ contractAddress, nftId }: GetNftMetadataRequest): Promise<NftAsset[]> {
     return this.freeportCollection.getNftAssets(contractAddress, nftId);
+  }
+
+  /**
+   * Check if a wallet has access to an NFT's content
+   * @param contractAddress - address of the Freeport Collection smart contract
+   * @param nftId - id of the nft on the Freeport Collection smart contract
+   * @param address - address to check access for (defaults to signer address)
+   * @returns true if the given wallet address can access the given NFT, false otherwise
+   */
+  async getCanAccess({ collectionAddress, nftId, walletAddress }: GetCanAccessRequest): Promise<boolean> {
+    return this.freeportApi.getCanAccess({ collectionAddress, nftId, walletAddress });
+  }
+
+  /**
+   * Get the DEK for a given NFT's content
+   * @param request.collectionAddress The address of the collection to check
+   * @param request.walletAddress The address of the wallet to check
+   * @param request.asset The identifier for the asset to get the DEK for
+   * @returns The DEK for the given NFT's content
+   */
+  async getContentDek({ collectionAddress, nftId, asset }: GetContentDekRequest): Promise<GetContentDekResponse> {
+    return this.freeportApi.getContentDek({ collectionAddress, nftId, asset });
+  }
+
+  /**
+   * Get decrypted content for a given NFT
+   * @param request.collectionAddress The address of the collection to check
+   * @param request.walletAddress The address of the wallet to check
+   * @param request.asset The identifier for the asset to get the DEK for
+   * @returns The decrypted content for the given NFT
+   */
+  public async getContent({ collectionAddress, nftId, asset }: GetContentRequest): Promise<GetContentResponse> {
+    return this.freeportApi.getContent({ collectionAddress, nftId, asset });
   }
 
   private static async initFreeportApi(client: MediaSdkClient, signer: Signer, options: MediaClientOptions) {

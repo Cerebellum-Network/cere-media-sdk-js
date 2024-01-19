@@ -1,9 +1,15 @@
 import { Deployment, FreeportApiService, MediaSdkClient, Tenant } from '@cere-media-sdk/client';
 
-import { mockSigner } from '../mocks/signer.mock';
+import { mockCollection, mockMetadata, mockNft, mockSigner, mockSignerNoAccess } from '../mocks';
 
 const deployments: Deployment[] = ['local', 'development', 'staging', 'production'];
 const tenants: Tenant[] = ['davinci', 'cerefans'];
+
+const walletAddress = mockSigner.address;
+const { nftId } = mockNft;
+const { address: contractAddress } = mockCollection;
+const collectionAddress = contractAddress;
+const asset = 'asset';
 
 describe('Media SDK Client', () => {
   describe('client', () => {
@@ -56,6 +62,17 @@ describe('Media SDK Client', () => {
     });
   });
 
+  describe('getOwnedNfts', () => {
+    const { address } = mockSigner;
+
+    it('should return a list of nfts for a given address', async () => {
+      const client = await MediaSdkClient.create(mockSigner);
+      const nfts = await client.getOwnedNfts({ address });
+      expect(nfts).toBeDefined();
+      expect(nfts).toBeInstanceOf(Array);
+    });
+  });
+
   describe('getMintedNfts', () => {
     const { address } = mockSigner;
 
@@ -67,14 +84,68 @@ describe('Media SDK Client', () => {
     });
   });
 
-  describe('getOwnedNfts', () => {
-    const { address } = mockSigner;
-
-    it('should return a list of nfts for a given address', async () => {
+  describe('getNftMetadata', () => {
+    it('should return the metadata for a given nft', async () => {
       const client = await MediaSdkClient.create(mockSigner);
-      const nfts = await client.getOwnedNfts({ address });
-      expect(nfts).toBeDefined();
-      expect(nfts).toBeInstanceOf(Array);
+      const metadata = await client.getNftMetadata({ contractAddress, nftId });
+      expect(metadata).toBeDefined();
+      expect(metadata).toEqual(mockMetadata);
+    });
+  });
+
+  describe('getNftAssets', () => {
+    it('should return the assets for a given nft', async () => {
+      const client = await MediaSdkClient.create(mockSigner);
+      const assets = await client.getNftAssets({ contractAddress, nftId });
+      expect(assets).toBeDefined();
+      expect(assets).toBeInstanceOf(Array);
+    });
+  });
+
+  describe('getCanAccess', () => {
+    it('should return true if the user can access', async () => {
+      const client = await MediaSdkClient.create(mockSigner);
+      const canAccess = await client.getCanAccess({ collectionAddress, nftId, walletAddress });
+      expect(canAccess).toBeDefined();
+      expect(canAccess).toBe(true);
+    });
+
+    it('should return false if the user cannot access', async () => {
+      const client = await MediaSdkClient.create(mockSignerNoAccess);
+      const canAccess = await client.getCanAccess({ collectionAddress, nftId, walletAddress });
+      expect(canAccess).toBeDefined();
+      expect(canAccess).toBe(false);
+    });
+  });
+
+  describe('getContentDek', () => {
+    it('should return the DEK for a given nft asset', async () => {
+      const client = await MediaSdkClient.create(mockSigner);
+      const dek = await client.getContentDek({ collectionAddress, nftId, asset });
+      expect(dek).toBeDefined();
+    });
+
+    it('should throw an error if the user cannot access', async () => {
+      const client = await MediaSdkClient.create(mockSignerNoAccess);
+      await expect(client.getContentDek({ collectionAddress, nftId, asset })).rejects.toThrow(
+        'Error Occurred: Request failed with status code 403',
+      );
+    });
+  });
+
+  describe('getContent', () => {
+    it('should return the content for a given nft asset', async () => {
+      const client = await MediaSdkClient.create(mockSigner);
+      const content = await client.getContent({ collectionAddress, nftId, asset });
+      expect(content).toBeDefined();
+    });
+
+    it('should throw an error if the user cannot access', async () => {
+      const client = await MediaSdkClient.create(mockSignerNoAccess);
+
+      await expect(client.getContent({ collectionAddress, nftId, asset })).rejects.toThrow(
+        'Error Occurred: Request failed with status code 403',
+      );
     });
   });
 });

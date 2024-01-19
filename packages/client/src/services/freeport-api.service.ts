@@ -164,7 +164,7 @@ export class FreeportApiService {
       .get(`/api/content/${collectionAddress}/${nftId}/${walletAddress}/access`)
       .then((res) => res.data)
       .then(getCanAccessResponseSchema.parse)
-      .catch(handleError(this.logger));
+      .catch(() => false);
   }
 
   /**

@@ -12,7 +12,15 @@ export const useMediaClient = (signer?: Signer, options?: MediaClientOptions) =>
     return MediaSdkClient.create(signer, options);
   };
 
-  const { data, error, isLoading } = useSWR(['media-client', signer], createClient);
+  const { data: address } = useSWR(['address'], signer?.getAddress || (() => undefined));
+
+  const { data, error, isLoading } = useSWR(['media-client', address], createClient, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    refreshWhenOffline: false,
+    refreshWhenHidden: false,
+    refreshInterval: 0,
+  });
 
   return {
     client: data as MediaSdkClient,

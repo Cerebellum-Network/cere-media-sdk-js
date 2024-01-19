@@ -6,7 +6,7 @@ import { useMediaClient } from '@cere-media-sdk/react';
 export const Playground = () => {
   const signer = useSigner();
 
-  const { client } = useMediaClient(signer, { tenant: 'cerefans', deployment: 'development' });
+  const client = useMediaClient(signer, { tenant: 'cerefans', deployment: 'development', logger: true });
 
   console.log({ client });
 

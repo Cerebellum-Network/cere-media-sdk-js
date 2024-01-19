@@ -16,22 +16,18 @@ export const defaultFreeportCollectionOptions: FreeportCollectionOptions = {
 export class FreeportCollectionService {
   private logger: Logger;
 
-  private options!: FreeportCollectionOptions;
-
-  private signer!: Signer;
-
-  private provider!: providers.JsonRpcProvider;
-
-  protected constructor(signer: Signer, options: FreeportCollectionOptions) {
-    this.provider = createProvider(networkConfig[options.deployment]);
-    this.signer = signer.connect(this.provider);
-    this.options = options;
+  protected constructor(
+    private readonly signer: Signer,
+    private readonly provider: providers.JsonRpcProvider,
+    private readonly options: FreeportCollectionOptions,
+  ) {
     this.logger = Logger('FreeportCollection', options.logger);
     this.logger.debug('FreeportApi initialized');
   }
 
   static async create(signer: Signer, options: FreeportCollectionOptions = defaultFreeportCollectionOptions) {
-    const client = new FreeportCollectionService(signer, options);
+    const provider = createProvider(networkConfig[options.deployment]);
+    const client = new FreeportCollectionService(signer, provider, options);
 
     return client;
   }
@@ -53,5 +49,15 @@ export class FreeportCollectionService {
 
   private getFreeportCollection(contractAddress: string) {
     return createFreeportCollection({ signer: this.signer, contractAddress });
+  }
+
+  private static async validateNetwork(signer: Signer, provider: providers.JsonRpcProvider) {
+    const signerNetwork = await signer.provider?.getNetwork();
+    const providerNetwork = provider.network;
+    if (signerNetwork?.chainId !== providerNetwork.chainId) {
+      throw new Error(
+        `Signer and provider are connected to different networks. Signer: ${signerNetwork?.chainId}, provider: ${providerNetwork.chainId}`,
+      );
+    }
   }
 }

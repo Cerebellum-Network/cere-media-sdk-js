@@ -55,7 +55,6 @@ export class MediaSdkClient {
     const client = new MediaSdkClient(options);
     await this.initFreeportApi(client, signer, options);
     await this.initFreeportCollection(client, signer, options);
-
     client.logger.debug('MediaClient initialized');
     return client;
   }

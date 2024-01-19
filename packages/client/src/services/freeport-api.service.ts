@@ -72,6 +72,7 @@ export class FreeportApiService {
   public async authenticate(signer: Signer): Promise<void> {
     const address = await signer.getAddress();
     const message = await this.getAuthMessage({ address });
+    this.logger.debug('Awaiting signature');
     const signature = await signer.signMessage(message);
 
     this.authHeaders = {

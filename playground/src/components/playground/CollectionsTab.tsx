@@ -1,7 +1,7 @@
 import { useCollections } from '@cere-media-sdk/react';
 import { Collection } from '@cere-media-sdk/client';
-import { useAddress, useChain } from '@thirdweb-dev/react';
-import { Box, CircularProgress, Divider, Link, Typography } from '@mui/material';
+import { useAddress } from '@thirdweb-dev/react';
+import { Box, CircularProgress, Divider, Typography } from '@mui/material';
 
 export const CollectionsTab = () => {
   const address = useAddress();
@@ -23,7 +23,7 @@ export const CollectionsTab = () => {
           gap="10px"
         >
           {collections.map((collection) => (
-            <CollectionItem collection={collection} />
+            <CollectionItem key={collection.id} collection={collection} />
           ))}
         </Box>
       )}

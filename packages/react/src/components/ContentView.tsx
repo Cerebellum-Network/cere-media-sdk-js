@@ -1,13 +1,35 @@
-import { useMediaClient } from '../hooks';
+import { NFT, NftAsset, NftMetadata } from '@cere-media-sdk/client';
+import { useEncryptedContent, useMediaClient } from '../hooks';
 
 export interface ContentViewProps {
-  collectionAddress: string;
-  nftId: number;
-  assetId: number;
+  nft: NFT;
+  metadata: NftMetadata;
+  assetIndex: number;
 }
 
-export const ContentView = ({ collectionAddress, nftId, assetId }: ContentViewProps) => {
-  const { client } = useMediaClient();
+export const ContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => {
+  const { content, isLoading, isVideo, contentType, asset } = useEncryptedContent(nft, metadata, assetIndex);
 
-  if (!client) return;
+  if (isLoading) {
+    return <>Loading...</>;
+  }
+
+  if (['image/png', 'image/jpeg', 'image/gif'].includes(contentType)) {
+    return <>{content && <img alt={asset?.name} src={content} width="100%" height="100%" />}</>;
+  }
+
+  if (['audio/mp4', 'audio/mpeg', 'audio/x-wav', 'audio/ogg'].includes(contentType)) {
+    return (
+      <audio title={asset?.name} controls autoPlay>
+        <source src={content} />
+      </audio>
+    );
+  }
+
+  if (isVideo) {
+    return <>Video not supported yet</>;
+  }
+
+  console.error(`Unhandled media type ${contentType}`);
+  return null;
 };

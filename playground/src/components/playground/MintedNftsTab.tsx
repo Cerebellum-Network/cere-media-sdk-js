@@ -21,7 +21,7 @@ export const MintedNftsTab = () => {
           gap="5px"
         >
           {mintedNfts.map((nft) => (
-            <NftItem nft={nft} />
+            <NftItem key={nft.id} nft={nft} />
           ))}
         </Box>
       )}

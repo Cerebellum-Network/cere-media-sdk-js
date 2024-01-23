@@ -1,7 +1,8 @@
-import { useNftMetadata, useOwnedNfts } from '@cere-media-sdk/react';
-import { NFT } from '@cere-media-sdk/client';
+import { ContentView, useNftMetadata, useOwnedNfts } from '@cere-media-sdk/react';
+import { NFT, NftMetadata } from '@cere-media-sdk/client';
 import { useAddress } from '@thirdweb-dev/react';
-import { Box, CircularProgress, Divider, Link, Skeleton, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Divider, Link, Skeleton, Typography } from '@mui/material';
+import React from 'react';
 
 export const OwnedNftsTab = () => {
   const address = useAddress();
@@ -21,7 +22,7 @@ export const OwnedNftsTab = () => {
           gap="5px"
         >
           {ownedNfts.map((nft) => (
-            <NftItem nft={nft} />
+            <NftItem key={nft.id} nft={nft} />
           ))}
         </Box>
       )}
@@ -78,8 +79,9 @@ export const NftItem = ({ nft }: { nft: NFT }) => {
         <Divider />
         <Typography fontWeight="bold">Assets</Typography>
         <Box display="flex" flexDirection="column" gap="5px" width="100%" textAlign="left">
-          {metadata?.assets.map((asset) => (
+          {metadata?.assets.map((asset, index) => (
             <Box
+              key={`${asset.name}-${index.toFixed()}`}
               display="flex"
               flexDirection="row"
               alignItems="center"
@@ -88,15 +90,22 @@ export const NftItem = ({ nft }: { nft: NFT }) => {
               bgcolor="#e9f9fc"
               borderRadius="10px"
             >
-              <img src={asset.preview} width="50px" />
               <Box display="flex" flexDirection="column" gap="5px" width="100%" textAlign="left">
                 <Typography fontWeight="bold">Name: {asset.name}</Typography>
                 <Typography>Description: {asset.description}</Typography>
-                <Typography>
-                  Preview:
-                  <Link href={asset.preview} target="_blank">
-                    {asset.preview}
-                  </Link>
+              </Box>
+
+              <Box>
+                <img src={asset.preview} width="100px" />
+                <Typography textAlign="center" fontWeight="bold">
+                  Preview
+                </Typography>
+              </Box>
+
+              <Box>
+                <ClickableContentView nft={nft} metadata={metadata} assetIndex={index} />
+                <Typography textAlign="center" fontWeight="bold">
+                  Asset
                 </Typography>
               </Box>
             </Box>
@@ -105,4 +114,24 @@ export const NftItem = ({ nft }: { nft: NFT }) => {
       </Box>
     </Box>
   );
+};
+
+const ClickableContentView = ({
+  nft,
+  metadata,
+  assetIndex,
+}: {
+  nft: NFT;
+  metadata: NftMetadata;
+  assetIndex: number;
+}) => {
+  const [showContent, setShowContent] = React.useState(false);
+
+  const toggleShowContent = () => setShowContent(!showContent);
+
+  if (!showContent) {
+    return <Button onClick={toggleShowContent}>View Content</Button>;
+  }
+
+  return <ContentView nft={nft} metadata={metadata} assetIndex={assetIndex} />;
 };

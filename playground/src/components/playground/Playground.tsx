@@ -1,7 +1,7 @@
+import { MediaSdkClientProvider } from '@cere-media-sdk/react';
+import { Box } from '@mui/material';
 import { ConnectWallet, useSigner } from '@thirdweb-dev/react';
 import { PlaygroundNavigation } from './PlaygroundNavigation';
-import { Box } from '@mui/material';
-import { MediaSdkClientProvider, useMediaClient } from '@cere-media-sdk/react';
 
 export const Playground = () => {
   const signer = useSigner();

@@ -1,7 +1,8 @@
 import { MediaClientOptions, MediaSdkClient } from '@cere-media-sdk/client';
 import { Signer } from 'ethers';
-import { UseMediaClientReturn } from '../types';
 import useSWR from 'swr';
+
+import { UseMediaClientReturn } from '../types';
 
 /**
  * Creates a new instance of the media client. Only use this if not using the MediaSdkClientProvider.

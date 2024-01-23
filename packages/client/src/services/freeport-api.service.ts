@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { Signer } from 'ethers';
+import { getAddress } from 'ethers/lib/utils';
 
 import { mediaClientConfig } from '../config';
 import {
@@ -26,6 +27,7 @@ import {
 } from '../types';
 
 import { Logger, handleError } from './logger.service';
+
 import {
   WalletCredentials,
   clearCachedCredentials,
@@ -33,7 +35,6 @@ import {
   hoursToMilliseconds,
   setCachedCredentials,
 } from '.';
-import { getAddress } from 'ethers/lib/utils';
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
   logger: false,

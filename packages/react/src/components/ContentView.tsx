@@ -1,5 +1,6 @@
-import { NFT, NftAsset, NftMetadata } from '@cere-media-sdk/client';
-import { useEncryptedContent, useMediaClient } from '../hooks';
+import { NFT, NftMetadata } from '@cere-media-sdk/client';
+
+import { useEncryptedContent } from '../hooks';
 
 export interface ContentViewProps {
   nft: NFT;

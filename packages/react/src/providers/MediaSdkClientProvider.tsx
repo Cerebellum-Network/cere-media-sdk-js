@@ -1,8 +1,10 @@
 import { MediaClientOptions, defaultMediaClientOptions } from '@cere-media-sdk/client';
-import { PropsWithChildren, useMemo } from 'react';
-import { useStaticMediaClient } from '..';
-import { MediaSdkClientContext } from './MediaSdkClientContext';
 import { Signer } from 'ethers';
+import { PropsWithChildren, useMemo } from 'react';
+
+import { useStaticMediaClient } from '..';
+
+import { MediaSdkClientContext } from './MediaSdkClientContext';
 
 export interface MediaSdkClientProviderProps extends PropsWithChildren {
   signer?: Signer;

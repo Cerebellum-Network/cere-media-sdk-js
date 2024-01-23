@@ -1,5 +1,6 @@
-import { useMediaClient } from '.';
 import useSWR from 'swr';
+
+import { useMediaClient } from '.';
 
 /**
  * Get all of the Freeport Collections for an address

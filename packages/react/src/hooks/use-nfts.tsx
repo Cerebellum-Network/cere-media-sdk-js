@@ -1,5 +1,6 @@
-import { useMediaClient } from '.';
 import useSWR from 'swr';
+
+import { useMediaClient } from '.';
 
 /**
  * Get all of the Freeport NFTs minted by an address

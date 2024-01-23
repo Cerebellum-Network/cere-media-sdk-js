@@ -1,5 +1,6 @@
 import { NFT, NftMetadata } from '@cere-media-sdk/client';
 import useSWR from 'swr';
+
 import { useMediaClient } from '.';
 
 export const useEncryptedContent = (nft: NFT, metadata: NftMetadata, assetIndex: number) => {

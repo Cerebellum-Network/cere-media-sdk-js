@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { UseMediaClientReturn } from '../types';
 
 export interface MediaSdkClientContext extends UseMediaClientReturn {}

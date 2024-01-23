@@ -16,7 +16,12 @@ export const CollectionsTab = () => {
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Box sx={{ width: '100%', height: '100%', typography: 'body1' }}>
+        <Box
+          sx={{ width: '100%', height: '100%', typography: 'body1' }}
+          display="flex"
+          flexDirection="column"
+          gap="10px"
+        >
           {collections.map((collection) => (
             <CollectionItem collection={collection} />
           ))}
@@ -28,7 +33,15 @@ export const CollectionsTab = () => {
 
 const CollectionItem = ({ collection }: { collection: Collection }) => {
   return (
-    <Box display="flex" flexDirection="row" alignItems="center" p="10px" gap="10px">
+    <Box
+      display="flex"
+      flexDirection="row"
+      alignItems="center"
+      p="10px"
+      gap="10px"
+      bgcolor="#caf0fa"
+      borderRadius="10px"
+    >
       <Typography fontWeight="bold">{collection.name}</Typography>
       <Typography fontStyle="italic">({collection.address})</Typography>
     </Box>

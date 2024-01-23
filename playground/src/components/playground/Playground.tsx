@@ -7,7 +7,7 @@ export const Playground = () => {
   const signer = useSigner();
 
   return (
-    <MediaSdkClientProvider signer={signer}>
+    <MediaSdkClientProvider signer={signer} options={{ deployment: 'development', tenant: 'davinci' }}>
       <Box sx={{ position: 'fixed', top: '10px', right: '10px' }}>
         <ConnectWallet />
       </Box>

@@ -5,6 +5,8 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useState } from 'react';
 import { CollectionsTab } from './CollectionsTab';
+import { OwnedNftsTab } from './OwnedNftsTab';
+import { MintedNftsTab } from './MintedNftsTab';
 
 export const PlaygroundNavigation = () => {
   const [value, setValue] = useState('1');
@@ -19,13 +21,19 @@ export const PlaygroundNavigation = () => {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Collections" value="1" />
-            <Tab label="NFTs" value="2" />
+            <Tab label="Owned Nfts" value="2" />
+            <Tab label="Minted Nfts" value="3" />
           </TabList>
         </Box>
         <TabPanel value="1">
           <CollectionsTab />
         </TabPanel>
-        <TabPanel value="2">Tokens</TabPanel>
+        <TabPanel value="2">
+          <OwnedNftsTab />
+        </TabPanel>
+        <TabPanel value="3">
+          <MintedNftsTab />
+        </TabPanel>
       </TabContext>
     </Box>
   );

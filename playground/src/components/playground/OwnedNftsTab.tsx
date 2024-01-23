@@ -1,7 +1,7 @@
 import { useNftMetadata, useOwnedNfts } from '@cere-media-sdk/react';
 import { NFT } from '@cere-media-sdk/client';
 import { useAddress } from '@thirdweb-dev/react';
-import { Box, CircularProgress, Divider, Link, Typography } from '@mui/material';
+import { Box, CircularProgress, Divider, Link, Skeleton, Typography } from '@mui/material';
 
 export const OwnedNftsTab = () => {
   const address = useAddress();
@@ -30,7 +30,11 @@ export const OwnedNftsTab = () => {
 };
 
 export const NftItem = ({ nft }: { nft: NFT }) => {
-  const { metadata, error } = useNftMetadata(nft.collection.address, nft.nftId);
+  const { metadata, isLoading, error } = useNftMetadata(nft.collection.address, nft.nftId);
+
+  if (isLoading) {
+    return <Skeleton variant="rectangular" width="100%" height="100px" />;
+  }
 
   if (error) {
     return (

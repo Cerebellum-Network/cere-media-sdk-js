@@ -4,6 +4,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useState } from 'react';
+import { CollectionsTab } from './CollectionsTab';
 
 export const PlaygroundNavigation = () => {
   const [value, setValue] = useState('1');
@@ -21,7 +22,9 @@ export const PlaygroundNavigation = () => {
             <Tab label="NFTs" value="2" />
           </TabList>
         </Box>
-        <TabPanel value="1">Collections</TabPanel>
+        <TabPanel value="1">
+          <CollectionsTab />
+        </TabPanel>
         <TabPanel value="2">Tokens</TabPanel>
       </TabContext>
     </Box>

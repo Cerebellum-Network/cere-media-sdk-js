@@ -7,7 +7,6 @@ export interface WalletCredentials {
 }
 
 export const getCachedCredentials = (): WalletCredentials | undefined => {
-  console.log('calling cached');
   if (typeof window === 'undefined') {
     console.log("typeof window === 'undefined'");
     return undefined;

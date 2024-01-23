@@ -5,6 +5,7 @@ import './index.css';
 import { ThirdwebProvider, en, localWallet, metamaskWallet, walletConnect } from '@thirdweb-dev/react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from './components/theme/theme.ts';
+import { MediaSdkClientProvider } from '@cere-media-sdk/react';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

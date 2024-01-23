@@ -4,7 +4,6 @@
     "baseUrl": ".",
     "paths": {
       "@cere-media-sdk/*": ["packages/*/src"]
-    },
-    "jsx": "react-jsx"
+    }
   }
 }

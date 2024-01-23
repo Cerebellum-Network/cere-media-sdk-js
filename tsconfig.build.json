@@ -12,7 +12,8 @@
     "declarationMap": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "jsx": "react-jsx"
   },
   "include": ["packages/", "tests/"],
   "exclude": ["node_modules", "dist", "package"]

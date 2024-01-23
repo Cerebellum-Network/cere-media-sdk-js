@@ -75,6 +75,33 @@ export const NftItem = ({ nft }: { nft: NFT }) => {
             {metadata?.preview}
           </Link>
         </Typography>
+        <Divider />
+        <Typography fontWeight="bold">Assets</Typography>
+        <Box display="flex" flexDirection="column" gap="5px" width="100%" textAlign="left">
+          {metadata?.assets.map((asset) => (
+            <Box
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              gap="10px"
+              p="10px"
+              bgcolor="#e9f9fc"
+              borderRadius="10px"
+            >
+              <img src={asset.preview} width="50px" />
+              <Box display="flex" flexDirection="column" gap="5px" width="100%" textAlign="left">
+                <Typography fontWeight="bold">Name: {asset.name}</Typography>
+                <Typography>Description: {asset.description}</Typography>
+                <Typography>
+                  Preview:
+                  <Link href={asset.preview} target="_blank">
+                    {asset.preview}
+                  </Link>
+                </Typography>
+              </Box>
+            </Box>
+          ))}
+        </Box>
       </Box>
     </Box>
   );

@@ -26,6 +26,14 @@ import {
 } from '../types';
 
 import { Logger, handleError } from './logger.service';
+import {
+  WalletCredentials,
+  clearCachedCredentials,
+  getCachedCredentials,
+  hoursToMilliseconds,
+  setCachedCredentials,
+} from '.';
+import { getAddress } from 'ethers/lib/utils';
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
   logger: false,
@@ -70,16 +78,38 @@ export class FreeportApiService {
    * @param signer The signer to use to sign the auth message
    */
   public async authenticate(signer: Signer): Promise<void> {
+    const credentialCache = getCachedCredentials();
+
     const address = await signer.getAddress();
     const message = await this.getAuthMessage({ address });
+
+    if (credentialCache) {
+      if (getAddress(credentialCache['x-public-key']) !== getAddress(address)) {
+        // Accounts have changed since the last time credentials were generated
+        clearCachedCredentials();
+        this.logger.debug('Cached credentials do not match signer address');
+      } else {
+        // 1 hour expiry on credentials has passed
+        const newTime = message.split(' ').pop();
+        const cachedTime = credentialCache['x-message'].split(' ').pop();
+        if (Number(newTime) - Number(cachedTime) < hoursToMilliseconds(1)) {
+          this.logger.debug('Using cached credentials');
+          return;
+        }
+        this.logger.debug('Cached credentials have expired');
+      }
+    }
+
     this.logger.debug('Awaiting signature');
     const signature = await signer.signMessage(message);
 
-    this.authHeaders = {
+    const credentials: WalletCredentials = {
       'x-message': message,
       'x-signature': signature,
       'x-public-key': address,
     };
+    this.authHeaders = credentials;
+    setCachedCredentials(credentials);
 
     Object.assign(this.instance.defaults.headers, this.authHeaders);
     this.logger.debug('FreeportApi authenticated');

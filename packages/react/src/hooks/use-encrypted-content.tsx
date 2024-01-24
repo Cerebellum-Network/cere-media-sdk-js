@@ -23,7 +23,8 @@ export const useEncryptedContent = (nft: NFT, metadata: NftMetadata, assetIndex:
   };
 
   const { data: content, isLoading: isLoadingContent } = useSWR(['encryptedContent', nft, metadata, assetIndex], () =>
-    client ? getContent() : undefined,
+    // If the content is video, it is not fetched here. This requires using the VideoPlayer with HlsEncryptionLoader
+    client && !isVideo ? getContent() : undefined,
   );
 
   return {

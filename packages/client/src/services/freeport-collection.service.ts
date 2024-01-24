@@ -45,21 +45,13 @@ export class FreeportCollectionService {
   }
 
   async getNftAssets(contractAddress: string, nftId: number): Promise<NftAsset[]> {
-    const metadata = await this.getNftMetadata(contractAddress, nftId);
+    const metadata = await this.getNftMetadata(contractAddress, nftId)
+      .then(handleDebug(this.logger, 'Nft Metadata Asset'))
+      .catch(handleError(this.logger));
     return metadata.assets;
   }
 
   private getFreeportCollection(contractAddress: string) {
     return createFreeportCollection({ signer: this.signer, contractAddress });
-  }
-
-  private static async validateNetwork(signer: Signer, provider: providers.JsonRpcProvider) {
-    const signerNetwork = await signer.provider?.getNetwork();
-    const providerNetwork = provider.network;
-    if (signerNetwork?.chainId !== providerNetwork.chainId) {
-      throw new Error(
-        `Signer and provider are connected to different networks. Signer: ${signerNetwork?.chainId}, provider: ${providerNetwork.chainId}`,
-      );
-    }
   }
 }

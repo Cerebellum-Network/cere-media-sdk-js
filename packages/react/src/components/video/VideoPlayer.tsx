@@ -89,10 +89,10 @@ export const VideoPlayer = ({ src, loader }: VideoPlayerProps) => {
 
   return (
     <div>
-      <div className="cere-video-wrapper" ref={wrapperRef}></div>
+      <div className="cere-video-wrapper" ref={wrapperRef} />
       {isLoading && (
         <div className="loading-container">
-          <>loading video...</>
+          <>Loading video...</>
         </div>
       )}
     </div>

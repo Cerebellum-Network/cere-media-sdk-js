@@ -8,7 +8,6 @@ export interface WalletCredentials {
 
 export const getCachedCredentials = (): WalletCredentials | undefined => {
   if (typeof window === 'undefined') {
-    console.log("typeof window === 'undefined'");
     return undefined;
   }
   const cached = localStorage.getItem(WALLET_CREDENTIAL_CACHE_KEY);

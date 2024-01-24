@@ -1,5 +1,7 @@
-export type Deployment = 'production' | 'staging' | 'development' | 'local';
-export type Tenant = 'davinci' | 'cerefans';
+export const deployments = ['production', 'staging', 'development', 'local'] as const;
+export type Deployment = (typeof deployments)[number];
+export const tenants = ['davinci', 'cerefans'] as const;
+export type Tenant = (typeof tenants)[number];
 
 export interface MediaClientConfig {
   freeportApiUrl: string;

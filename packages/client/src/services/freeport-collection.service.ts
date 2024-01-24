@@ -5,7 +5,7 @@ import { Signer, providers } from 'ethers';
 import { networkConfig, NftMetadata, nftMetadataSchema, NftAsset } from '..';
 import { FreeportCollectionOptions } from '../types/freeport-collection';
 
-import { Logger } from './logger.service';
+import { Logger, handleDebug, handleError } from './logger.service';
 
 export const defaultFreeportCollectionOptions: FreeportCollectionOptions = {
   deployment: 'development',
@@ -39,7 +39,9 @@ export class FreeportCollectionService {
     return axios
       .get(uri)
       .then((response) => response.data)
-      .then(nftMetadataSchema.parse);
+      .then(nftMetadataSchema.parse)
+      .then(handleDebug(this.logger, 'NftMetadata'))
+      .catch(handleError(this.logger));
   }
 
   async getNftAssets(contractAddress: string, nftId: number): Promise<NftAsset[]> {

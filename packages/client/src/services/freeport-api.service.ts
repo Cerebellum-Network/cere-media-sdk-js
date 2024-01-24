@@ -26,7 +26,7 @@ import {
   getNftsResponseSchema,
 } from '../types';
 
-import { Logger, handleError } from './logger.service';
+import { Logger, handleDebug, handleError } from './logger.service';
 
 import {
   WalletCredentials,
@@ -135,6 +135,7 @@ export class FreeportApiService {
       .get(`/api/wallet-auth/auth-message?walletPublicKey=${address}`)
       .then((res) => res.data)
       .then(getAuthMessageResponseSchema.parse)
+      .then(handleDebug(this.logger, `Get Auth Message for ${address}`))
       .catch(handleError(this.logger));
 
     return response;
@@ -151,6 +152,7 @@ export class FreeportApiService {
       .get(`/api/wallet/${address}/collections`)
       .then((res) => res.data)
       .then(getCollectionsResponseSchema.parse)
+      .then(handleDebug(this.logger, `Get Collections for ${address}`))
       .catch(handleError(this.logger));
   }
 
@@ -165,6 +167,7 @@ export class FreeportApiService {
       .get(`/api/wallet/${address}/owned`)
       .then((res) => res.data)
       .then(getNftsResponseSchema.parse)
+      .then(handleDebug(this.logger, `Get Owned NFTs for ${address}`))
       .catch(handleError(this.logger));
   }
 
@@ -179,6 +182,7 @@ export class FreeportApiService {
       .get(`/api/wallet/${address}/minted`)
       .then((res) => res.data)
       .then(getNftsResponseSchema.parse)
+      .then(handleDebug(this.logger, `Get Minted NFTs for ${address}`))
       .catch(handleError(this.logger));
   }
 
@@ -195,6 +199,7 @@ export class FreeportApiService {
       .get(`/api/content/${collectionAddress}/${nftId}/${walletAddress}/access`)
       .then((res) => res.data)
       .then(getCanAccessResponseSchema.parse)
+      .then(handleDebug(this.logger, `Get Can Access for ${walletAddress}`))
       .catch(() => false);
   }
 
@@ -211,6 +216,7 @@ export class FreeportApiService {
       .get(`/api/content/${collectionAddress}/${nftId}/${asset}/dek`)
       .then((res) => res.data)
       .then(getContentDekResponse.parse)
+      .then(handleDebug(this.logger, `Get Content DEK for ${collectionAddress}/${nftId}/${asset}`))
       .catch(handleError(this.logger));
   }
 
@@ -226,6 +232,7 @@ export class FreeportApiService {
     return this.instance
       .get(`/api/content/${collectionAddress}/${nftId}/${asset}`, { responseType: 'blob' })
       .then((res) => res.data)
+      .then(handleDebug(this.logger, `Get Content for ${collectionAddress}/${nftId}/${asset}`))
       .catch(handleError(this.logger));
   }
 }

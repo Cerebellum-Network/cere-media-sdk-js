@@ -15,7 +15,7 @@ export const useStaticMediaClient = (signer?: Signer, options?: MediaClientOptio
 
   const { data: address } = useSWR(['address'], signer?.getAddress || (() => undefined));
 
-  const { data, error, isLoading } = useSWR(['media-client', address], createClient, {
+  const { data, error, isLoading } = useSWR(['media-client', address, options], createClient, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     refreshWhenOffline: false,

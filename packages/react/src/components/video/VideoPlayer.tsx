@@ -12,7 +12,6 @@ interface VideoPlayerProps {
 
 const plyrOptions: Plyr.Options = {
   autoplay: true,
-  iconUrl: '/icons.svg',
 };
 
 export const VideoPlayer = ({ src, loader }: VideoPlayerProps) => {
@@ -75,6 +74,9 @@ export const VideoPlayer = ({ src, loader }: VideoPlayerProps) => {
 
     return () => {
       hls.destroy();
+      if (playerRef.current) {
+        playerRef.current.remove();
+      }
       playerRef.current = null;
     };
   }, [isSupported, loader, src, wrapperRef]);

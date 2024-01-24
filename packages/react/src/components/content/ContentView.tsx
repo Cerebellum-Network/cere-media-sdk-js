@@ -5,8 +5,17 @@ import { HlsEncryptionLoader, VideoPlayer } from '..';
 import { useEncryptedContent, useMediaClient } from '../../hooks';
 
 export interface ContentViewProps {
+  /**
+   * The NFT to display content for
+   */
   nft: NFT;
+  /**
+   * The metadata of the NFT. This can be retrieved using the `useNftMetadata` hook
+   */
   metadata: NftMetadata;
+  /**
+   * The index of the asset to view content for (starting at 0)
+   */
   assetIndex: number;
 }
 

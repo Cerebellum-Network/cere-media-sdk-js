@@ -1,6 +1,6 @@
 import { NftMetadata, NFT } from '@cere-media-sdk/client';
 import { useNftMetadata, ContentView } from '@cere-media-sdk/react';
-import { Skeleton, Box, Typography, Link, Divider, Button } from '@mui/material';
+import { Skeleton, Box, Typography, Link, Divider, Button, Modal, IconButton } from '@mui/material';
 import React from 'react';
 
 export const NftItem = ({ nft }: { nft: NFT }) => {
@@ -99,17 +99,29 @@ const ClickableContentView = ({
   metadata: NftMetadata;
   assetIndex: number;
 }) => {
-  const [showContent, setShowContent] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
-  const toggleShowContent = () => setShowContent(!showContent);
+  const onOpen = () => setIsOpen(true);
+  const onClose = () => setIsOpen(false);
 
-  if (!showContent) {
-    return <Button onClick={toggleShowContent}>View Content</Button>;
+  if (!isOpen) {
+    return <Button onClick={onOpen}>View Content</Button>;
   }
 
   return (
-    <Box width="100px">
-      <ContentView nft={nft} metadata={metadata} assetIndex={assetIndex} />
-    </Box>
+    <Modal open={isOpen} onClose={onClose} aria-labelledby="modal-nft-content">
+      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%" height="100%">
+        <Box width="50%">
+          <IconButton
+            sx={{ position: 'absolute', top: '30px', right: '30px', color: 'lightblue' }}
+            aria-label="close"
+            onClick={onClose}
+          >
+            X
+          </IconButton>
+          <ContentView nft={nft} metadata={metadata} assetIndex={assetIndex} />
+        </Box>
+      </Box>
+    </Modal>
   );
 };

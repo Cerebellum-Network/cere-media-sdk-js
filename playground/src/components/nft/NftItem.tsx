@@ -107,5 +107,9 @@ const ClickableContentView = ({
     return <Button onClick={toggleShowContent}>View Content</Button>;
   }
 
-  return <ContentView nft={nft} metadata={metadata} assetIndex={assetIndex} />;
+  return (
+    <Box width="100px">
+      <ContentView nft={nft} metadata={metadata} assetIndex={assetIndex} />
+    </Box>
+  );
 };

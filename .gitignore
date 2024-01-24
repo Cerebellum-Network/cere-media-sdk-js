@@ -14,5 +14,8 @@ tests/temp.spec.ts
 *.iml
 *.iws
 
+# VSCode
+.vscode
+
 # Lerna
 .nx/cache

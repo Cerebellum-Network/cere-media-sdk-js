@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    name: Deploy
+    name: 🚀 Deploy
     runs-on: ubuntu-latest
 
     environment:
@@ -22,29 +22,31 @@ jobs:
         with:
           submodules: 'true'
 
-      - name: Get Node.js version
+      - name: ⚙️ Get Node.js version
         id: nvm
         run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_OUTPUT
 
-      - name: Setup Node.js
+      - name: 🏗️ Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
 
-      - name: Setup GitHub Pages
+      - name: 📄 Setup GitHub Pages
         uses: actions/configure-pages@v3
 
-      - name: Install packages
+      - name: 📦 Install packages
         run: npm ci
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
 
-      - name: Build packages
+      - name: 👷 Build packages
         run: npm run build
 
-      - name: Upload playground
+      - name: ⬆️ Upload playground
         uses: actions/upload-pages-artifact@v1
         with:
           path: './playground/dist'
 
-      - name: Deploy
+      - name: 🚀 Deploy
         id: deployment
         uses: actions/deploy-pages@v2

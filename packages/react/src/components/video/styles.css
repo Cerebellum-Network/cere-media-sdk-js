@@ -1,0 +1,38 @@
+:root {
+  --plyr-color-main: linear-gradient(79.06deg, #9227e3 0%, #e34dc5 100%);
+}
+
+.cere-video-wrapper {
+  height: 100%;
+}
+
+.cere-video {
+  height: 100%;
+}
+
+.player {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+}
+
+.video-container {
+  background: #ffffff;
+  border-radius: 0;
+  height: 100%;
+}
+
+.loading-container {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #ffffffaa;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}

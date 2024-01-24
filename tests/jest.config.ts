@@ -1,5 +1,6 @@
 import 'ts-jest';
 import * as path from 'path';
+
 import type { Config } from 'jest';
 
 const config: Config = {
@@ -10,8 +11,8 @@ const config: Config = {
   testTimeout: 100000,
 
   testMatch: ['<rootDir>/specs/**/*.spec.ts'],
-  globalTeardown: './setup/globalTeardown.ts',
-  globalSetup: './setup/globalSetup.ts',
+  globalSetup: './setup/global-setup.ts',
+  globalTeardown: './setup/global-teardown.ts',
   setupFilesAfterEnv: ['./setup/setup.ts'],
 
   transform: {

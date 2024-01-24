@@ -1,0 +1,88 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn global remove eslint
+
+PATH: 
+  /Users/mfbevan/.bun/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/mfbevan/.bun/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/mfbevan/.fig/bin:/Users/mfbevan/.local/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.12.1
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: Failed to replace env in config: ${NPM_TOKEN}
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:94933:13
+      at String.replace (<anonymous>)
+      at envReplace (/usr/local/lib/node_modules/yarn/lib/cli.js:94928:16)
+      at Function.normalizeConfig (/usr/local/lib/node_modules/yarn/lib/cli.js:31938:69)
+      at NpmRegistry.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:31968:34)
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "cere-media-sdk",
+    "description": "Cere Media SDK for JavaScript",
+    "private": true,
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Cerebellum-Network/cere-media-sdk-js.git"
+    },
+    "author": "Cere Network <contact@cere.io (https://www.cere.io/)",
+    "license": "Apache-2.0",
+    "scripts": {
+      "lint": "eslint --quiet '**/*.{ts,tsx,js,cjs,mjs,jsx,json}'",
+      "lint:fix": "npm run lint -- --fix",
+      "test": "lerna run test",
+      "test:ci": "lerna run test -- --silent",
+      "test:clean": "lerna run test:clean",
+      "test:env": "lerna run test:env",
+      "clean": "lerna run clean",
+      "build": "lerna run build",
+      "build:watch": "lerna watch -- lerna run build",
+      "package": "lerna run package",
+      "release": "lerna version --conventional-graduate",
+      "release:no-push": "npm run release -- --no-push --no-git-tag-version",
+      "release:rc": "lerna version --conventional-prerelease",
+      "release:rc:no-push": "npm run release:rc -- --no-push --no-git-tag-version",
+      "release:publish": "lerna publish from-package",
+      "check-types": "tsc --noEmit",
+      "check-types:ci": "npm run check-types -- -p ./tsconfig.build.json",
+      "playground": "lerna run playground"
+    },
+    "dependencies": {
+      "@types/node": "^18.17.1",
+      "clean-publish": "^4.2.0",
+      "eslint": "^8.56.0",
+      "lerna": "^8.0.1",
+      "microbundle": "^0.15.1",
+      "npm-run-all": "^4.1.5",
+      "prettier": "^3.1.1",
+      "rimraf": "^5.0.5",
+      "ts-node": "^10.9.2",
+      "tsconfig-paths": "^4.2.0",
+      "typescript": "^5.3.3",
+      "wait-port": "^1.1.0"
+    },
+    "workspaces": {
+      "packages": [
+        "packages/*",
+        "playground",
+        "tests"
+      ],
+      "nohoist": [
+        "playground/**"
+      ]
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

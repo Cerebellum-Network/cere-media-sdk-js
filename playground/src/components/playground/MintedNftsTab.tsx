@@ -1,7 +1,7 @@
 import { useMintedNfts } from '@cere-media-sdk/react';
 import { Box, CircularProgress, Divider, Typography } from '@mui/material';
 import { useAddress } from '@thirdweb-dev/react';
-import { NftItem } from './OwnedNftsTab';
+import { NftItem } from '../nft/NftItem';
 
 export const MintedNftsTab = () => {
   const address = useAddress();

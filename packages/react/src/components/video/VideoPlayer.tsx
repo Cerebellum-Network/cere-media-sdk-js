@@ -72,6 +72,11 @@ export const VideoPlayer = ({ src, loader }: VideoPlayerProps) => {
     });
 
     hls.loadSource(src);
+
+    return () => {
+      hls.destroy();
+      playerRef.current = null;
+    };
   }, [isSupported, loader, src, wrapperRef]);
 
   if (!isSupported) {

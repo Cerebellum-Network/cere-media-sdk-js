@@ -155,7 +155,7 @@ export class HlsEncryptionLoader extends Hls.DefaultConfig.loader {
   }
 
   //
-  // The following helpers were recreated from the @polkadot/... packages as the current webpack config of the marketplace does not support using them directly
+  // The following helpers were recreated from the @polkadot/... packages as the some webpack configs do not support using these packages directly
   // They directly use the tweetnacl and blakejs libraries
   //
 

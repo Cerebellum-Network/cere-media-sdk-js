@@ -18,6 +18,7 @@
     "clean": "lerna run clean",
     "build": "lerna run build",
     "build:watch": "lerna watch -- lerna run build",
+    "preview": "lerna run build && lerna run preview",
     "package": "lerna run package",
     "release": "lerna version --conventional-graduate",
     "release:no-push": "npm run release -- --no-push --no-git-tag-version",

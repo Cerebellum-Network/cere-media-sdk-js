@@ -7,7 +7,8 @@
     "start": "vite --open",
     "build": "tsc && vite build",
     "playground": "npm run start",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@cere-media-sdk/client": "^1.0.0",

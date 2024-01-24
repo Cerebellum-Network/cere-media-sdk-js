@@ -1,6 +1,8 @@
 import { NFT, NftMetadata } from '@cere-media-sdk/client';
+import { useMemo } from 'react';
 
-import { useEncryptedContent } from '../../hooks';
+import { HlsEncryptionLoader, VideoPlayer } from '..';
+import { useEncryptedContent, useMediaClient } from '../../hooks';
 
 export interface ContentViewProps {
   nft: NFT;
@@ -9,9 +11,23 @@ export interface ContentViewProps {
 }
 
 export const ContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => {
+  const { client, isLoading: isLoadingClient } = useMediaClient();
   const { content, isLoading, isVideo, contentType, asset } = useEncryptedContent(nft, metadata, assetIndex);
 
-  if (isLoading) {
+  const loader = useMemo(
+    () =>
+      isVideo && !!client
+        ? HlsEncryptionLoader.create({
+            collectionAddress: nft.collection.address,
+            nftId: nft.nftId,
+            assetId: `asset-${assetIndex}`,
+            client,
+          })
+        : undefined,
+    [nft, assetIndex, isVideo],
+  );
+
+  if (isLoading || isLoadingClient) {
     return <>Loading...</>;
   }
 
@@ -28,7 +44,7 @@ export const ContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => 
   }
 
   if (isVideo) {
-    return <>Video not supported yet</>;
+    return <VideoPlayer src={asset.asset} loader={loader} />;
   }
 
   console.error(`Unhandled media type ${contentType}`);

@@ -1,27 +1,32 @@
+import { MediaSdkClient } from '@cere-media-sdk/client';
 import { blake2b } from 'blakejs';
 import Hls, { LoaderCallbacks, LoaderConfiguration, LoaderContext, LoaderResponse, LoaderStats } from 'hls.js';
 import nacl from 'tweetnacl';
 
 interface EncryptionConfig {
   collectionAddress: string;
-  nftId: string;
+  nftId: number;
   assetId: string;
+  client: MediaSdkClient;
 }
 
 export class HlsEncryptionLoader extends Hls.DefaultConfig.loader {
+  private static client: MediaSdkClient;
+
   public static collectionAddress: string;
 
-  public static nftId: string;
+  public static nftId: number;
 
   public static assetId: string;
 
   public static dek?: Uint8Array;
 
-  public static create({ collectionAddress, nftId, assetId }: EncryptionConfig) {
+  public static create({ collectionAddress, nftId, assetId, client }: EncryptionConfig) {
     this.collectionAddress = collectionAddress;
     this.nftId = nftId;
     this.assetId = assetId;
     this.dek = undefined;
+    this.client = client;
 
     return this;
   }
@@ -105,14 +110,12 @@ export class HlsEncryptionLoader extends Hls.DefaultConfig.loader {
       return this.dek;
     }
 
-    // TODO get from service
-    // const hexDek = await DdcContentService.getContentDek({
-    //   collectionAddress: HlsEncryptionLoader.collectionAddress,
-    //   nftId: Number(HlsEncryptionLoader.nftId),
-    //   asset: HlsEncryptionLoader.assetId,
-    // });
+    const hexDek = await this.client.getContentDek({
+      collectionAddress: HlsEncryptionLoader.collectionAddress,
+      nftId: Number(HlsEncryptionLoader.nftId),
+      asset: HlsEncryptionLoader.assetId,
+    });
 
-    const hexDek = '';
     this.dek = this.hexToU8a(hexDek);
     return this.dek;
   }

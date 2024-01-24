@@ -1,1 +1,2 @@
-export * from './ContentView';
+export * from './content';
+export * from './video';

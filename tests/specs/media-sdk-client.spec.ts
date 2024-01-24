@@ -1,15 +1,12 @@
 import { Deployment, FreeportApiService, MediaSdkClient, Tenant } from '@cere-media-sdk/client';
 
-import { mockCollection, mockMetadata, mockNft, mockSigner, mockSignerNoAccess } from '../mocks';
+import { mockCollection, mockMetadata, mockNft, mockSigner } from '../mocks';
 
 const deployments: Deployment[] = ['local', 'development', 'staging', 'production'];
 const tenants: Tenant[] = ['davinci', 'cerefans'];
 
-const walletAddress = mockSigner.address;
 const { nftId } = mockNft;
 const { address: contractAddress } = mockCollection;
-const collectionAddress = contractAddress;
-const asset = 'asset';
 
 describe('Media SDK Client', () => {
   describe('client', () => {

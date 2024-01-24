@@ -28,8 +28,12 @@
   },
   "dependencies": {
     "@cere-media-sdk/client": "1.0.0",
+    "blakejs": "^1.2.1",
     "ethers": "^5.7.2",
-    "swr": "^2.2.4"
+    "hls.js": "^1.4.13",
+    "plyr": "^3.6.12",
+    "swr": "^2.2.4",
+    "tweetnacl": "^1.0.3"
   },
   "peerDependencies": {
     "react": "^18.2.0",

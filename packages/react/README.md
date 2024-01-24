@@ -13,6 +13,9 @@
     - [`useOwnedNfts`](#useownednfts)
     - [`useNftMetadata`](#usenftmetadata)
     - [`useEncryptedContent`](#useencryptedcontent)
+  - [Components](#components)
+    - [`ContentView`](#contentview)
+    - [`VideoPlayer`](#videoplayer)
 
 ## Installation
 
@@ -262,3 +265,65 @@ if (isVideo) {
 return <img src={content} alt="NFT Content" />;
 ```
 
+## Components
+
+### `ContentView`
+
+The ContentView component is designed to render media content associated with a specific NFT. It supports various media types like images, audio, and video. The component relies on the useMediaClient and useEncryptedContent hooks to fetch and display the content.
+
+**Props**
+
+- `nft` (NFT): The NFT for which the content is to be displayed.
+- `metadata` (NftMetadata): Metadata associated with the NFT. This can be retrieved using the useNftMetadata hook.
+- `assetIndex` (number): The index of the asset within the NFT's metadata for which content is to be viewed. Indexing starts at 0.
+
+
+**Usage Example**
+
+```tsx
+const nft = // Get NFT using useMintedNfts() or useOwnedNfts()
+const { metadata } = useNftMetadata(nft);
+
+<ContentView nft={nft} metadata={metadata} assetIndex={0} />
+```
+
+**Behavior**
+
+- Loading State: Displays a loading message when the content or client is loading.
+- Image Content: If the asset's content type is an image (image/png, image/jpeg, image/gif), it renders an <img> element.
+Audio Content: For audio content types (audio/mp4, audio/mpeg, audio/x-wav, audio/ogg), it renders an <audio> element with playback controls.
+- Video Content: If the content is a video, it uses the VideoPlayer component for rendering.
+- Error Handling: Logs an error and displays a message for unhandled media types.
+
+### `VideoPlayer`
+
+> This component is automatically used by the above `<ContentView />` component if the content is a video
+
+The VideoPlayer component is a customizable video player designed for playing HLS (HTTP Live Streaming) video content. It uses Hls.js for HLS support and Plyr as the video player interface. It also supports client side encrypted video streaming from the DDC.
+
+**Props**
+
+- `src` (string): The source URL of the HLS video stream.
+- `loader` (optional): A custom HLS segment loader. This can be used to modify how video segments are loaded, such as adding custom headers or implementing advanced caching mechanisms.
+
+**Usage Example**
+
+The `HlsEncryptionLoader` is available for client-side encrypted content streaming. This is automatically used for streaming encrypted content via the `<ContentView />` component. If the content is not encrypted, the loader is not needed.
+
+*With HlsEncryptionLoader*
+```tsx
+const loader = HlsEncryptionLoader.create({
+  collectionAddress: nft.collection.address,
+  nftId: nft.nftId,
+  assetId: `asset-${assetIndex}`,
+  client,
+})
+
+<VideoPlayer src={/* encrypted asset url */} loader={loader} />
+
+```
+
+*Without Loader*
+```tsx
+<VideoPlayer src={/* public asset url */}  />
+```

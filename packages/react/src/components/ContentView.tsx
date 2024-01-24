@@ -32,5 +32,5 @@ export const ContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => 
   }
 
   console.error(`Unhandled media type ${contentType}`);
-  return null;
+  return <>Unhandled media type {contentType}</>;
 };

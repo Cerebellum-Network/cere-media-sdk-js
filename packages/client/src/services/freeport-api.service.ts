@@ -95,6 +95,8 @@ export class FreeportApiService {
         const cachedTime = credentialCache['x-message'].split(' ').pop();
         if (Number(newTime) - Number(cachedTime) < hoursToMilliseconds(1)) {
           this.logger.debug('Using cached credentials');
+          this.authHeaders = credentialCache;
+          Object.assign(this.instance.defaults.headers, this.authHeaders);
           return;
         }
         this.logger.debug('Cached credentials have expired');
@@ -109,10 +111,11 @@ export class FreeportApiService {
       'x-signature': signature,
       'x-public-key': address,
     };
+
     this.authHeaders = credentials;
     setCachedCredentials(credentials);
-
     Object.assign(this.instance.defaults.headers, this.authHeaders);
+
     this.logger.debug('FreeportApi authenticated');
   }
 

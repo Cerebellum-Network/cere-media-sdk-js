@@ -93,15 +93,15 @@ const AssetItem = ({
         <Typography>Description: {asset.description}</Typography>
       </Box>
 
-      <Box>
+      <Box display="flex" flexDirection="column" justifyContent="flex-end" alignItems="center" gap="5px">
         <img src={asset.preview} width="100px" />
         <Typography textAlign="center" fontWeight="bold">
           Preview
         </Typography>
-        <Button onClick={() => downloadPreview()}>{isDownloadingPreview ? 'Loading...' : 'Preview'}</Button>
+        <Button onClick={() => downloadPreview()}>{isDownloadingPreview ? 'Loading...' : 'Download'}</Button>
       </Box>
 
-      <Box>
+      <Box display="flex" flexDirection="column" justifyContent="flex-end" alignItems="center" gap="5px">
         <ClickableContentView nft={nft} metadata={metadata} assetIndex={index} />
         <Typography textAlign="center" fontWeight="bold">
           Asset

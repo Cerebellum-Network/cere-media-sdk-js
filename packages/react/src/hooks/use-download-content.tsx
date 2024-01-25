@@ -19,7 +19,7 @@ export const useDownloadContent = (nft: NFT, asset: string) => {
       collection: { address: collectionAddress },
     } = nft;
     const response = await client?.getContent({ collectionAddress, nftId, asset });
-    FileDownload(response!, fileName || formatFileName(collectionAddress, nftId, asset));
+    FileDownload(response!, fileName || formatFileName(collectionAddress, nftId, asset), response?.type);
     setIsLoading(false);
   };
 

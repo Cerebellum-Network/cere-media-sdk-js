@@ -300,6 +300,8 @@ const { download, isLoading } = useDownloadContent(nft, "asset-1")
 const { download, isLoading } = useDownloadContent(nft, "preview")
 // For default asset
 const { download, isLoading } = useDownloadContent(nft, "asset")
+
+<Button onClick={() => download("some-file-name")} />
 ```
 
 ## Components

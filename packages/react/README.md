@@ -13,6 +13,7 @@
     - [`useOwnedNfts`](#useownednfts)
     - [`useNftMetadata`](#usenftmetadata)
     - [`useEncryptedContent`](#useencryptedcontent)
+    - [`useDownloadContent`](#usedownloadcontent)
   - [Components](#components)
     - [`ContentView`](#contentview)
     - [`VideoPlayer`](#videoplayer)
@@ -263,6 +264,42 @@ if (isVideo) {
   return <video src={content} type={contentType} />;
 }
 return <img src={content} alt="NFT Content" />;
+```
+
+### `useDownloadContent`
+
+Downloads content and decrypts it
+
+**Parameters:**
+
+- `nft`: The NFT object.
+- `asset`: An identifier for the asset in format `<"asset" | "preview">-<asset index>`
+
+**Returns:**
+
+- `download`: A function to download the file, taking an optional filename as a parameter
+- `isLoading`: A boolean indicating whether the content is currently being loaded.
+
+**Usage Example:**
+
+```tsx
+import { useDownloadContent } from '@cere-media-sdk/react';
+
+const nft = { /* NFT data */ }
+
+// For preview index 0
+const { download, isLoading } = useDownloadContent(nft, "preview-0")
+// For asset index 0
+const { download, isLoading } = useDownloadContent(nft, "asset-0")
+// For preview index 1
+const { download, isLoading } = useDownloadContent(nft, "preview-1")
+// For asset index 1
+const { download, isLoading } = useDownloadContent(nft, "asset-1")
+
+// For default preview
+const { download, isLoading } = useDownloadContent(nft, "preview")
+// For default asset
+const { download, isLoading } = useDownloadContent(nft, "asset")
 ```
 
 ## Components

@@ -1,4 +1,4 @@
-import { MediaClientOptions, MediaSdkClient } from '@cere-media-sdk/client';
+import { MediaClientOptions, MediaSdkClient } from '@cere/media-sdk-client';
 import { Signer } from 'ethers';
 import useSWR from 'swr';
 

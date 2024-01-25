@@ -1,4 +1,4 @@
-import { Deployment, Tenant, tenants, deployments } from '@cere-media-sdk/client';
+import { Deployment, Tenant, tenants, deployments } from '@cere/media-sdk-client';
 import { Box, Divider, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 
 export interface SelectTenantProps {

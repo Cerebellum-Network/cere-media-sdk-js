@@ -27,7 +27,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ✨ playground navigation setup ([96c175a](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/96c175ac44b4cae2251e9f5532a82b9ea875cb07))
 - ✨ preview script ([10dd660](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/10dd660e38588b99645dd86e1c7e58f5289d8e7a))
 - ✨ sdk config selection via playground ([ffe3278](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/ffe327825922d633f205a011951201a26d75b123))
-- ✨ setup @cere-media-sdk/react ([f4f77ef](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/f4f77ef2ab11c9b7a7a7ce6b203257634e9947b5))
+- ✨ setup @cere/media-sdk-react ([f4f77ef](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/f4f77ef2ab11c9b7a7a7ce6b203257634e9947b5))
 - ✨ setup playground app ([fa48b4f](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/fa48b4f501145567c9d9c0404930c65ad94b4208))
 - ✨ use collection hook ([665a2cf](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/665a2cf115af34d02be90084f8e2b153266fe137))
 - ✨ use nfts and metadata hooks ([f7b2aee](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/f7b2aeebde90ca2c4d2c9ae2b9bed86803e2be11))

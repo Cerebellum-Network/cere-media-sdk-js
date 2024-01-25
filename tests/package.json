@@ -1,5 +1,5 @@
 {
-  "name": "@cere-media-sdk/tests",
+  "name": "@cere/media-sdk-tests",
   "version": "1.1.0-rc.2",
   "description": "Cere Media SDK tests",
   "private": true,
@@ -9,7 +9,7 @@
     "test:env": "ts-node ./scripts/env.ts"
   },
   "dependencies": {
-    "@cere-media-sdk/client": "1.1.0-rc.2",
+    "@cere/media-sdk-client": "1.1.0-rc.2",
     "@cere/freeport-sc-sdk": "0.17.0",
     "@types/jest": "^29.5.11",
     "axios": "^1.6.5",

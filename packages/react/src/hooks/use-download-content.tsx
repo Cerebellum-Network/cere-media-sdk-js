@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMediaClient } from '../hooks';
 import FileDownload from 'js-file-download';
-import { NFT } from '@cere-media-sdk/client';
+import { NFT } from '@cere/media-sdk-client';
 
 export interface UseDownloadContentReturn {
   download: () => Promise<void>;

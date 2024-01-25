@@ -1,4 +1,4 @@
-import { MediaSdkClient } from '@cere-media-sdk/client';
+import { MediaSdkClient } from '@cere/media-sdk-client';
 import { blake2b } from 'blakejs';
 import Hls, { LoaderCallbacks, LoaderConfiguration, LoaderContext, LoaderResponse, LoaderStats } from 'hls.js';
 import nacl from 'tweetnacl';

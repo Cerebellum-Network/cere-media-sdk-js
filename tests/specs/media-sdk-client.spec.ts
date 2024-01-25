@@ -1,4 +1,4 @@
-import { Deployment, FreeportApiService, MediaSdkClient, Tenant } from '@cere-media-sdk/client';
+import { Deployment, FreeportApiService, MediaSdkClient, Tenant } from '@cere/media-sdk-client';
 
 import { mockCollection, mockMetadata, mockNft, mockSigner } from '../mocks';
 

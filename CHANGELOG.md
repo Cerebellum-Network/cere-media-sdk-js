@@ -49,7 +49,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ✨ react SDK docs ([b3e4872](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/b3e48724a534b0b237a21555a553c1cb3b3f32c9))
 - ✨ readme and exposed endpoints ([4e2a31e](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/4e2a31ea7d3d087e89c5381773f8bf38c5b28b59))
 - ✨ sdk config selection via playground ([ffe3278](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/ffe327825922d633f205a011951201a26d75b123))
-- ✨ setup @cere-media-sdk/react ([f4f77ef](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/f4f77ef2ab11c9b7a7a7ce6b203257634e9947b5))
+- ✨ setup @cere/media-sdk-react ([f4f77ef](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/f4f77ef2ab11c9b7a7a7ce6b203257634e9947b5))
 - ✨ setup freeport api config ([1f39c28](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/1f39c28fab5784098dc9f4baa4a68cfa5d5b0424))
 - ✨ setup playground app ([fa48b4f](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/fa48b4f501145567c9d9c0404930c65ad94b4208))
 - ✨ use collection hook ([665a2cf](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/665a2cf115af34d02be90084f8e2b153266fe137))

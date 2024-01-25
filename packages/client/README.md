@@ -1,6 +1,6 @@
-# @cere-media-sdk/client
+# @cere/media-sdk-client
 
-- [@cere-media-sdk/client](#cere-media-sdkclient)
+- [@cere/media-sdk-client](#cere-media-sdkclient)
   - [Installation](#installation)
   - [Create an instance](#create-an-instance)
   - [API](#api)
@@ -21,13 +21,13 @@ Install the package:
 ***NPM***
 
 ```bash
-npm install @cere-media-sdk/client --save
+npm install @cere/media-sdk-client --save
 ```
 
 ***Yarn***
 
 ```bash
-yarn add @cere-media-sdk/client
+yarn add @cere/media-sdk-client
 ```
 
 ## Create an instance
@@ -56,7 +56,7 @@ type Tenant = 'davinci' | 'cerefans';
 ***Example***
 
 ```ts
-import { MediaClientOptions } from '@cere-media-sdk/client';
+import { MediaClientOptions } from '@cere/media-sdk-client';
 
 const signer = // Get Signer from currently connected wallet
 

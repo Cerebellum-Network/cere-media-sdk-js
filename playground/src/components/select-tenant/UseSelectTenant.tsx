@@ -1,4 +1,4 @@
-import { Tenant, Deployment } from '@cere-media-sdk/client';
+import { Tenant, Deployment } from '@cere/media-sdk-client';
 import { useState } from 'react';
 
 export const useSelectTenant = () => {

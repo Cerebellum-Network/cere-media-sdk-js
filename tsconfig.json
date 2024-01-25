@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@cere-media-sdk/*": ["packages/*/src"]
+      "@cere/media-sdk-*": ["packages/*/src"]
     }
   }
 }

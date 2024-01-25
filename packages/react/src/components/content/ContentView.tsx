@@ -1,4 +1,4 @@
-import { NFT, NftMetadata } from '@cere-media-sdk/client';
+import { NFT, NftMetadata } from '@cere/media-sdk-client';
 import { useMemo } from 'react';
 
 import { HlsEncryptionLoader, VideoPlayer } from '..';

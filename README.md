@@ -4,7 +4,7 @@ The Media SDK is a development kit that can be used to upload and retrieve encry
 
 ## Packages
 
-- [@cere-media-sdk/client](packages/client/README.md) - The entrypoint for interaction with the Freeport API to query tokens and their associated assets
+- [@cere/media-sdk-client](packages/client/README.md) - The entrypoint for interaction with the Freeport API to query tokens and their associated assets
 
 ## Demo
 

@@ -1,6 +1,6 @@
-# @cere-media-sdk/react
+# @cere/media-sdk-react
 
-- [@cere-media-sdk/react](#cere-media-sdkreact)
+- [@cere/media-sdk-react](#cere-media-sdkreact)
   - [Installation](#installation)
   - [Setting up the provider](#setting-up-the-provider)
     - [Example](#example)
@@ -20,18 +20,18 @@
 
 ## Installation
 
-Install the package, note that the `@cere-media-sdk/client` package is a required dependency
+Install the package, note that the `@cere/media-sdk-client` package is a required dependency
 
 ***NPM***
 
 ```bash
-npm install @cere-media-sdk/client @cere-media-sdk/react --save
+npm install @cere/media-sdk-client @cere/media-sdk-react --save
 ```
 
 ***Yarn***
 
 ```bash
-yarn add @cere-media-sdk/client @cere-media-sdk/react
+yarn add @cere/media-sdk-client @cere/media-sdk-react
 ```
 
 ## Setting up the provider
@@ -76,7 +76,7 @@ return (
 From components within the provider, you can then use the `useMediaClient` hook to access the provided client. All hooks will used within the provider will automatically use this client as well
 
 ```ts
-import { useMediaClient } from '@cere-media-sdk/react';
+import { useMediaClient } from '@cere/media-sdk-react';
 
 // default
 const { client } = useMediaClient()
@@ -113,7 +113,7 @@ type Tenant = 'davinci' | 'cerefans';
 ***Example***
 
 ```ts
-import { useStaticMediaClient } from '@cere-media-sdk/react';
+import { useStaticMediaClient } from '@cere/media-sdk-react';
 
 const signer = // Get Signer from currently connected wallet
 
@@ -149,7 +149,7 @@ The `useCollections` hook is designed to fetch all Freeport Collections associat
 **Usage Example:**
 
 ```tsx
-import { useCollections } from '@cere-media-sdk/react';
+import { useCollections } from '@cere/media-sdk-react';
 
 const { collections, isLoading } = useCollections('0x123...');
 
@@ -175,7 +175,7 @@ Additional properties from the useSWR hook.
 **Usage Example:**
 
 ```tsx
-import { useMintedNfts } from '@cere-media-sdk/react';
+import { useMintedNfts } from '@cere/media-sdk-react';
 
 const { mintedNfts, isLoading } = useMintedNfts('0x456...');
 
@@ -201,7 +201,7 @@ Additional properties from the useSWR hook.
 **Usage Example:**
 
 ```tsx
-import { useOwnedNfts } from '@cere-media-sdk/react';
+import { useOwnedNfts } from '@cere/media-sdk-react';
 
 const { ownedNfts, isLoading } = useOwnedNfts('0x789...');
 
@@ -228,7 +228,7 @@ Retrieves metadata for a specific Freeport NFT.
 **Usage:**
 
 ```tsx
-import { useNftMetadata } from '@cere-media-sdk/react';
+import { useNftMetadata } from '@cere/media-sdk-react';
 
 const { metadata, isLoading } = useNftMetadata('0xABC...', 123);
 // Render NFT metadata or loading state
@@ -255,7 +255,7 @@ Fetches and decrypts content for a given NFT and its metadata.
 **Usage Example:**
 
 ```tsx
-import { useEncryptedContent } from '@cere-media-sdk/react';
+import { useEncryptedContent } from '@cere/media-sdk-react';
 
 const { isVideo, content, contentType, isLoading } = useEncryptedContent(nft, metadata, 0);
 
@@ -283,7 +283,7 @@ Downloads content and decrypts it
 **Usage Example:**
 
 ```tsx
-import { useDownloadContent } from '@cere-media-sdk/react';
+import { useDownloadContent } from '@cere/media-sdk-react';
 
 const nft = { /* NFT data */ }
 

@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.0...v1.1.0-rc.1) (2024-01-24)
 
-**Note:** Version bump only for package @cere-media-sdk/client
+**Note:** Version bump only for package @cere/media-sdk-client
 
 ## 1.1.0-rc.0 (2024-01-24)
 

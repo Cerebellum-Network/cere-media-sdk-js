@@ -1,4 +1,4 @@
-import { useMintedNfts } from '@cere-media-sdk/react';
+import { useMintedNfts } from '@cere/media-sdk-react';
 import { Box, CircularProgress, Divider, Typography } from '@mui/material';
 import { useAddress } from '@thirdweb-dev/react';
 import { NftItem } from '../nft/NftItem';

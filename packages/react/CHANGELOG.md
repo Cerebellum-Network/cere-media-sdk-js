@@ -19,7 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.0...v1.1.0-rc.1) (2024-01-24)
 
-**Note:** Version bump only for package @cere-media-sdk/react
+**Note:** Version bump only for package @cere/media-sdk-react
 
 ## 1.1.0-rc.0 (2024-01-24)
 
@@ -31,7 +31,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ✨ provider swr config ([e75a766](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/e75a7665012f551f333e90fb84e55bd6bbc6563b))
 - ✨ react sdk docs ([d17fb8f](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/d17fb8f8f1ad8bca894f0db707dc1cb9a580944c))
 - ✨ react SDK docs ([b3e4872](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/b3e48724a534b0b237a21555a553c1cb3b3f32c9))
-- ✨ setup @cere-media-sdk/react ([f4f77ef](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/f4f77ef2ab11c9b7a7a7ce6b203257634e9947b5))
+- ✨ setup @cere/media-sdk-react ([f4f77ef](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/f4f77ef2ab11c9b7a7a7ce6b203257634e9947b5))
 - ✨ use collection hook ([665a2cf](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/665a2cf115af34d02be90084f8e2b153266fe137))
 - ✨ use nfts and metadata hooks ([f7b2aee](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/f7b2aeebde90ca2c4d2c9ae2b9bed86803e2be11))
 - **wip:** ✨ encrypted video player ([587060a](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/587060aa5076b566b9348cdc1c732fcd0c58376f))

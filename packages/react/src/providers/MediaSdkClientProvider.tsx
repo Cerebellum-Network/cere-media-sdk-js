@@ -1,4 +1,4 @@
-import { MediaClientOptions, defaultMediaClientOptions } from '@cere-media-sdk/client';
+import { MediaClientOptions, defaultMediaClientOptions } from '@cere/media-sdk-client';
 import { Signer } from 'ethers';
 import { PropsWithChildren, useMemo } from 'react';
 import { SWRConfig } from 'swr';

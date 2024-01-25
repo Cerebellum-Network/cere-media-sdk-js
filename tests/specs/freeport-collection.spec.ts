@@ -1,4 +1,4 @@
-import { FreeportCollectionService } from '@cere-media-sdk/client';
+import { FreeportCollectionService } from '@cere/media-sdk-client';
 
 import { mockSigner, mockCollection, mockNft, mockMetadata, mockAsset } from '../mocks';
 

@@ -1,4 +1,4 @@
-import { networkConfig } from '@cere-media-sdk/client';
+import { networkConfig } from '@cere/media-sdk-client';
 import { Wallet, providers } from 'ethers';
 
 export const mockProvider = new providers.JsonRpcProvider(networkConfig.development);

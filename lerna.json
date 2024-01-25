@@ -11,7 +11,7 @@
       "preid": "rc",
       "changelog": true,
       "conventionalCommits": true,
-      "changelogPreset": "@cere-media-sdk/changelog-preset",
+      "changelogPreset": "@cere/media-sdk-changelog-preset",
       "message": "Release %s"
     }
   }

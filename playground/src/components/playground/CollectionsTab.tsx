@@ -1,5 +1,5 @@
-import { useCollections } from '@cere-media-sdk/react';
-import { Collection } from '@cere-media-sdk/client';
+import { useCollections } from '@cere/media-sdk-react';
+import { Collection } from '@cere/media-sdk-client';
 import { useAddress } from '@thirdweb-dev/react';
 import { Box, CircularProgress, Divider, Typography } from '@mui/material';
 

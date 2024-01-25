@@ -1,4 +1,4 @@
-import { useOwnedNfts } from '@cere-media-sdk/react';
+import { useOwnedNfts } from '@cere/media-sdk-react';
 import { useAddress } from '@thirdweb-dev/react';
 import { Box, CircularProgress, Divider, Typography } from '@mui/material';
 import { NftItem } from '../nft/NftItem';

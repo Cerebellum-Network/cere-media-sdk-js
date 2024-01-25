@@ -1,5 +1,5 @@
 {
-  "name": "@cere-media-sdk/eslint-config",
+  "name": "@cere/media-sdk-eslint-config",
   "version": "1.1.0-rc.2",
   "main": "index.js",
   "private": true,

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { NftMetadata, NFT, NftAsset } from '@cere-media-sdk/client';
-import { useNftMetadata, ContentView, useDownloadContent } from '@cere-media-sdk/react';
+import { NftMetadata, NFT, NftAsset } from '@cere/media-sdk-client';
+import { useNftMetadata, ContentView, useDownloadContent } from '@cere/media-sdk-react';
 import { Skeleton, Box, Typography, Link, Divider, Button, Modal, IconButton } from '@mui/material';
 import React from 'react';
 

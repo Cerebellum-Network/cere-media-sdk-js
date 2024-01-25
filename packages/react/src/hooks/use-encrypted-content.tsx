@@ -1,4 +1,4 @@
-import { NFT, NftMetadata } from '@cere-media-sdk/client';
+import { NFT, NftMetadata } from '@cere/media-sdk-client';
 import useSWR from 'swr';
 
 import { useMediaClient } from '.';

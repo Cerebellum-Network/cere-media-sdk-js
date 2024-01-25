@@ -1,4 +1,4 @@
-import { Collection, NFT, NftAsset, NftMetadata } from '@cere-media-sdk/client';
+import { Collection, NFT, NftAsset, NftMetadata } from '@cere/media-sdk-client';
 
 // The mocks in this file have been deployed to CereFans on development via the mockSigner in tests/mocks/signer.mock.ts
 // If tests are failing, then it may be because this collection/nft/metadata/asset has been updated/deleted

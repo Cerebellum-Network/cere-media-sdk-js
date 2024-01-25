@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0-rc.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.1...v1.1.0-rc.2) (2024-01-25)
+
+### Documentation
+
+- 📝 updated documentation ([8cc93cd](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/8cc93cd14475e67f9891820cf4996d5a6615a007))
+
 ## [1.1.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.0...v1.1.0-rc.1) (2024-01-24)
 
 **Note:** Version bump only for package @cere-media-sdk/client

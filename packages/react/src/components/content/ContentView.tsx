@@ -37,7 +37,7 @@ export const ContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => 
   );
 
   if (isLoading || isLoadingClient) {
-    return <>Loading...</>;
+    return <div style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>Loading...</div>;
   }
 
   if (['image/png', 'image/jpeg', 'image/gif'].includes(contentType)) {

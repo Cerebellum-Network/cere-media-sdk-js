@@ -1,5 +1,6 @@
-import { NftMetadata, NFT } from '@cere-media-sdk/client';
-import { useNftMetadata, ContentView } from '@cere-media-sdk/react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import { NftMetadata, NFT, NftAsset } from '@cere-media-sdk/client';
+import { useNftMetadata, ContentView, useDownloadContent } from '@cere-media-sdk/react';
 import { Skeleton, Box, Typography, Link, Divider, Button, Modal, IconButton } from '@mui/material';
 import React from 'react';
 
@@ -53,38 +54,59 @@ export const NftItem = ({ nft }: { nft: NFT }) => {
         <Divider />
         <Typography fontWeight="bold">Assets</Typography>
         <Box display="flex" flexDirection="column" gap="5px" width="100%" textAlign="left">
-          {metadata?.assets.map((asset, index) => (
-            <Box
-              key={`${asset.name}-${index.toFixed()}`}
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              gap="10px"
-              p="10px"
-              bgcolor="#e9f9fc"
-              borderRadius="10px"
-            >
-              <Box display="flex" flexDirection="column" gap="5px" width="100%" textAlign="left">
-                <Typography fontWeight="bold">Name: {asset.name}</Typography>
-                <Typography>Description: {asset.description}</Typography>
-              </Box>
-
-              <Box>
-                <img src={asset.preview} width="100px" />
-                <Typography textAlign="center" fontWeight="bold">
-                  Preview
-                </Typography>
-              </Box>
-
-              <Box>
-                <ClickableContentView nft={nft} metadata={metadata} assetIndex={index} />
-                <Typography textAlign="center" fontWeight="bold">
-                  Asset
-                </Typography>
-              </Box>
-            </Box>
-          ))}
+          {metadata?.assets.map((asset, index) => {
+            return <AssetItem nft={nft} metadata={metadata} asset={asset} index={index} />;
+          })}
         </Box>
+      </Box>
+    </Box>
+  );
+};
+
+const AssetItem = ({
+  nft,
+  asset,
+  metadata,
+  index,
+}: {
+  nft: NFT;
+  metadata: NftMetadata;
+  asset: NftAsset;
+  index: number;
+}) => {
+  const { download: downloadPreview, isLoading: isDownloadingPreview } = useDownloadContent(nft, `preview-${index}`);
+  const { download: downloadAsset, isLoading: isDownloadingAsset } = useDownloadContent(nft, `asset-${index}`);
+
+  return (
+    <Box
+      key={`${asset.name}-${index.toFixed()}`}
+      display="flex"
+      flexDirection="row"
+      alignItems="center"
+      gap="10px"
+      p="10px"
+      bgcolor="#e9f9fc"
+      borderRadius="10px"
+    >
+      <Box display="flex" flexDirection="column" gap="5px" width="100%" textAlign="left">
+        <Typography fontWeight="bold">Name: {asset.name}</Typography>
+        <Typography>Description: {asset.description}</Typography>
+      </Box>
+
+      <Box display="flex" flexDirection="column" justifyContent="flex-end" alignItems="center" gap="5px">
+        <img src={asset.preview} width="100px" />
+        <Typography textAlign="center" fontWeight="bold">
+          Preview
+        </Typography>
+        <Button onClick={() => downloadPreview()}>{isDownloadingPreview ? 'Loading...' : 'Download'}</Button>
+      </Box>
+
+      <Box display="flex" flexDirection="column" justifyContent="flex-end" alignItems="center" gap="5px">
+        <ClickableContentView nft={nft} metadata={metadata} assetIndex={index} />
+        <Typography textAlign="center" fontWeight="bold">
+          Asset
+        </Typography>
+        <Button onClick={() => downloadAsset()}>{isDownloadingAsset ? 'Loading...' : 'Download'}</Button>
       </Box>
     </Box>
   );

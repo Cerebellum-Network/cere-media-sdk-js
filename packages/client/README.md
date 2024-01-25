@@ -74,7 +74,7 @@ const client = await MediaSdkClient.create({ ...options, logger: true })
 
 The methods provided by the `MediaSdkClient` are:
 
-### create()
+### `create()`
 
 Creates and initializes a new instance of MediaSdkClient.
 
@@ -87,7 +87,7 @@ Creates and initializes a new instance of MediaSdkClient.
 
 MediaSdkClient - A promise that resolves to a new instance of MediaSdkClient.
 
-### getCollection()
+### `getCollection()`
 
 Retrieves a list of collections associated with a specified Ethereum address.
 
@@ -99,7 +99,7 @@ Retrieves a list of collections associated with a specified Ethereum address.
 
 GetCollectionsResponse - An array of Collection objects, each containing details like id, address, uri, name, and tenant.
 
-### getMintedNfts()
+### `getMintedNfts()`
 
 
 Fetches a list of NFTs minted by a specified Ethereum address.
@@ -112,7 +112,7 @@ Fetches a list of NFTs minted by a specified Ethereum address.
 
 GetNftsResponse - An array of NFT objects, each detailing the minted NFTs including id, nftId, supply, and collection information.
 
-### getOwnedNfts()
+### `getOwnedNfts()`
 
 Retrieves NFTs currently owned by a specified Ethereum address.
 
@@ -124,7 +124,7 @@ address (string): The Ethereum address to get owned NFTs for.
 
  GetNftsResponse - An array of NFT objects similar to the getMintedNfts response, detailing the NFTs owned.
 
-### getNftMetadata()
+### `getNftMetadata()`
 
 Gets detailed metadata for a specific NFT.
 
@@ -137,7 +137,7 @@ Gets detailed metadata for a specific NFT.
 
 NftMetadata - An object containing NFT details like name, description, preview, and associated assets.
 
-### getNftAssets()
+### `getNftAssets()`
 
 Retrieves assets associated with a specific NFT.
 
@@ -150,7 +150,7 @@ Retrieves assets associated with a specific NFT.
 
 NftAsset[] - An array of NftAsset objects, each detailing an asset associated with the NFT including name, description, asset link, preview link, and content type.
 
-### getCanAccess()
+### `getCanAccess()`
 
 Checks if a wallet has access to an NFT's content.
 
@@ -164,7 +164,7 @@ Checks if a wallet has access to an NFT's content.
 
 boolean - Returns true if the given wallet address can access the given NFT, false otherwise.
 
-### getContentDek()
+### `getContentDek()`
 
 Retrieves the Data Encryption Key (DEK) for a given NFT's content.
 
@@ -178,7 +178,7 @@ Retrieves the Data Encryption Key (DEK) for a given NFT's content.
 
 GetContentDekResponse (string) - The DEK for the given NFT's content.
 
-### getContent()
+### `getContent()`
 
 Gets the decrypted content for a given NFT.
 

@@ -6,8 +6,8 @@ export const mediaClientConfig: Record<Deployment, Record<Tenant, MediaClientCon
     cerefans: { freeportApiUrl: 'http://localhost:3012' },
   },
   development: {
-    davinci: { freeportApiUrl: 'https://dev-video-streaming.core-dev.aws.cere.io' },
-    cerefans: { freeportApiUrl: 'https://dev-video-streaming-cerefans.core-dev.aws.cere.io' },
+    davinci: { freeportApiUrl: 'https://dev-freeport-api.network-dev.aws.cere.io' },
+    cerefans: { freeportApiUrl: 'https://dev-freeport-api-cerefans.network-dev.aws.cere.io/' },
   },
   staging: {
     davinci: { freeportApiUrl: '' },

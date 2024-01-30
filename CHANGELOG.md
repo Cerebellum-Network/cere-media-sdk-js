@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0-rc.5](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.4...v1.1.0-rc.5) (2024-01-30)
+
+### Bug Fixes
+
+- 📌 re-lock ([ca1a9ef](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/ca1a9ef4833b53e05ce3ce3707e406a8d291bb12))
+
 ## [1.1.0-rc.4](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.3...v1.1.0-rc.4) (2024-01-30)
 
 ### Bug Fixes

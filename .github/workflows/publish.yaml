@@ -50,6 +50,7 @@ jobs:
         run: npm ci
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+          NX_NON_NATIVE_HASHER: true
 
       - name: Build packages
         run: npm run build

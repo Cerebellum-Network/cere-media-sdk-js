@@ -1,4 +1,4 @@
 {
-  "extends": "@cere/media-sdk-eslint-config",
+  "extends": "./packages/eslint-config",
   "root": true,
 }

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.6...v1.1.0) (2024-01-30)
+
+**Note:** Version bump only for package cere-media-sdk
+
+## [1.1.0-rc.6](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.5...v1.1.0-rc.6) (2024-01-30)
+
+### Bug Fixes
+
+- 🚨 linter fixes ([a91296f](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/a91296f631ca0fadf647a4c0c1daa4548e69c1ea))
+
+## [1.1.0-rc.5](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.4...v1.1.0-rc.5) (2024-01-30)
+
+### Bug Fixes
+
+- 📌 re-lock ([ca1a9ef](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/ca1a9ef4833b53e05ce3ce3707e406a8d291bb12))
+
+## [1.1.0-rc.4](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.3...v1.1.0-rc.4) (2024-01-30)
+
+### Bug Fixes
+
+- 💚 ci install cmd ([63d14d8](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/63d14d8f67103f8c7182d9cc8d608ced36fcc272))
+
 ## [1.1.0-rc.3](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.2...v1.1.0-rc.3) (2024-01-25)
 
 **Note:** Version bump only for package cere-media-sdk

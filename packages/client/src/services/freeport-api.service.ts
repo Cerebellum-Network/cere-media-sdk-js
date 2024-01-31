@@ -111,6 +111,7 @@ export class FreeportApiService {
       'x-signature': signature,
       'x-public-key': address,
     };
+    this.logger.debug('Authentication message signed', { credentials });
 
     this.authHeaders = credentials;
     setCachedCredentials(credentials);

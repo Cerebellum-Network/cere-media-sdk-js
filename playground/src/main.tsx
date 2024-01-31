@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import { theme } from './components/theme/theme.ts';
 import './index.css';
+import { cereWallet } from './cere-wallet/CereWalletConfig.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -14,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         activeChain="mumbai"
         autoSwitch
         locale={en()}
-        supportedWallets={[metamaskWallet(), walletConnect(), localWallet()]}
+        supportedWallets={[metamaskWallet(), walletConnect(), localWallet(), cereWallet()]}
       >
         <App />
       </ThirdwebProvider>

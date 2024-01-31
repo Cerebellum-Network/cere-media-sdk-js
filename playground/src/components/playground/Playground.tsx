@@ -23,6 +23,8 @@ export const Playground = () => {
           borderColor: '#25a4ff',
           p: '10px',
           zIndex: 1,
+          flexDirection: 'column',
+          display: 'flex',
         }}
       >
         <ConnectWallet />

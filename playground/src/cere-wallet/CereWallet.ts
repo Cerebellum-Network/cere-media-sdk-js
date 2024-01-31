@@ -10,7 +10,6 @@ export class CereWallet extends AbstractClientWallet {
   }
 
   async getConnector(): Promise<Connector> {
-    console.log('New Cere Wallet');
     return new CereWalletConnector(this.idToken);
   }
 }

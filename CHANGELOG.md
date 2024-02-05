@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0...v1.2.0-rc.0) (2024-02-05)
+
+### Features
+
+- ✨ hls disabled video player ([3cac2dc](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/3cac2dc2a2ab4fbc1b262e92dd8cbea47215c071))
+- ✨ react router + navigation ([ed0de2d](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/ed0de2da56fd194813d25d2d5927428bc22e33b5))
+
+### Bug Fixes
+
+- 🐛 router elements ([901106e](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/901106ee8f8d48fc0a63dfc1c4c15c91a4f9a68e))
+
 ## [1.1.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.6...v1.1.0) (2024-01-30)
 
 **Note:** Version bump only for package cere-media-sdk

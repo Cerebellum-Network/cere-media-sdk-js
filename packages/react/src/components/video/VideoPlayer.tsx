@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 interface VideoPlayerProps {
   src: string;
+  hlsEnabled?: boolean;
   loader?: HlsConfig['loader'];
 }
 
@@ -14,12 +15,12 @@ const plyrOptions: Plyr.Options = {
   autoplay: true,
 };
 
-export const VideoPlayer = ({ src, loader }: VideoPlayerProps) => {
+export const VideoPlayer = ({ src, hlsEnabled = true, loader }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const isSupported = useMemo(() => Hls.isSupported(), []);
+  const isSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);
 
   useEffect(() => {
     if (!isSupported) return;
@@ -37,40 +38,53 @@ export const VideoPlayer = ({ src, loader }: VideoPlayerProps) => {
 
     const hls = new Hls(hlsOptions);
 
-    const updateQuality = (newQuality: number) => {
-      if (newQuality === 0) {
-        hls.currentLevel = -1;
-      } else {
-        hls.levels.forEach((level, levelIndex) => {
-          if (level.height === newQuality) {
-            hls.currentLevel = levelIndex;
-          }
-        });
-      }
-    };
-
-    hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      const availableQualities = hls.levels.map((l) => l.height);
-      plyrOptions.quality = {
-        default: -1, // auto
-        options: availableQualities,
-        forced: true,
-        onChange: (quality: number) => updateQuality(quality),
+    if (hlsEnabled) {
+      const updateQuality = (newQuality: number) => {
+        if (newQuality === 0) {
+          hls.currentLevel = -1;
+        } else {
+          hls.levels.forEach((level, levelIndex) => {
+            if (level.height === newQuality) {
+              hls.currentLevel = levelIndex;
+            }
+          });
+        }
       };
+
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        const availableQualities = hls.levels.map((l) => l.height);
+        plyrOptions.quality = {
+          default: -1, // auto
+          options: availableQualities,
+          forced: true,
+          onChange: (quality: number) => updateQuality(quality),
+        };
+        const video = document.createElement('video');
+        video.className = 'cere-video';
+        playerRef.current = video;
+        videoWrapper.appendChild(video);
+        hls.attachMedia(video);
+        const player = new Plyr(video, plyrOptions);
+        player.on('canplaythrough', () => setIsLoading(false));
+      });
+
+      hls.on(Hls.Events.FRAG_LOADED, () => {
+        setIsLoading(false);
+      });
+
+      hls.loadSource(src);
+    } else {
       const video = document.createElement('video');
       video.className = 'cere-video';
       playerRef.current = video;
       videoWrapper.appendChild(video);
-      hls.attachMedia(video);
+      video.src = src;
       const player = new Plyr(video, plyrOptions);
       player.on('canplaythrough', () => setIsLoading(false));
-    });
-
-    hls.on(Hls.Events.FRAG_LOADED, () => {
-      setIsLoading(false);
-    });
-
-    hls.loadSource(src);
+      video.addEventListener('error', () => setIsLoading(false));
+      video.addEventListener('stalled', () => setIsLoading(false));
+      video.addEventListener('suspend', () => setIsLoading(false));
+    }
 
     return () => {
       hls.destroy();

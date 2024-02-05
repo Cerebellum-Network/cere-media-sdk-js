@@ -1,25 +1,13 @@
-import { Box, CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ThirdwebProvider, en, localWallet, metamaskWallet, walletConnect } from '@thirdweb-dev/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './pages/home/App.tsx';
+import App from './App.tsx';
 import { theme } from './components/theme/theme.ts';
-import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import { VideoExample } from './pages/video-example/VideoExample.tsx';
-import { Navigation } from './components/navigation/Navigation.tsx';
 
 import './index.css';
 import './components/css/plyr.css';
 import './components/css/styles.css';
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route>
-      <Route path="/" element={<App />} />
-      <Route path="/video-example" element={<VideoExample />} />
-    </Route>,
-  ),
-);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -31,10 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         locale={en()}
         supportedWallets={[metamaskWallet(), walletConnect(), localWallet()]}
       >
-        <Navigation />
-        <Box sx={{ pt: '80px' }}>
-          <RouterProvider router={router} />
-        </Box>
+        <App />
       </ThirdwebProvider>
     </ThemeProvider>
   </React.StrictMode>,

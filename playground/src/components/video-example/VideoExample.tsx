@@ -5,7 +5,7 @@ const src = 'https://assets-cms-freeport.network.aws.cere.io/pexels_videos_20223
 
 export const VideoExample = () => {
   return (
-    <Box sx={{ width: '400px', h: '200px' }}>
+    <Box>
       <VideoPlayer src={src} hlsEnabled={false} />
     </Box>
   );

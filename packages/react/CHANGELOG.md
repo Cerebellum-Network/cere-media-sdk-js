@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.0-rc.1...v1.2.0) (2024-02-05)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.2.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.0-rc.0...v1.2.0-rc.1) (2024-02-05)
+
+### Features
+
+- ✨ video css support in playground ([4b29cd7](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/4b29cd7eaefcec5d75c98c4899f03ca813f3b3de))
+
+## [1.2.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0...v1.2.0-rc.0) (2024-02-05)
+
+### Features
+
+- ✨ hls disabled video player ([3cac2dc](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/3cac2dc2a2ab4fbc1b262e92dd8cbea47215c071))
+
 ## [1.1.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.6...v1.1.0) (2024-01-30)
 
 **Note:** Version bump only for package @cere/media-sdk-react

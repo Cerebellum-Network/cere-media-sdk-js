@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { CollectionsTab } from './CollectionsTab';
 import { OwnedNftsTab } from './OwnedNftsTab';
 import { MintedNftsTab } from './MintedNftsTab';
+import { VideoExample } from 'playground/src/components/video-example/VideoExample';
 
 export const PlaygroundNavigation = () => {
   const [value, setValue] = useState('1');
@@ -23,6 +24,7 @@ export const PlaygroundNavigation = () => {
             <Tab label="Collections" value="1" />
             <Tab label="Owned Nfts" value="2" />
             <Tab label="Minted Nfts" value="3" />
+            <Tab label="Video Example" value="4" />
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -33,6 +35,9 @@ export const PlaygroundNavigation = () => {
         </TabPanel>
         <TabPanel value="3">
           <MintedNftsTab />
+        </TabPanel>
+        <TabPanel value="4">
+          <VideoExample />
         </TabPanel>
       </TabContext>
     </Box>

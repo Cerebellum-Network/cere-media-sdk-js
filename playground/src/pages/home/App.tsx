@@ -1,7 +1,7 @@
 import cereLogo from '/cere.png';
 import './App.css';
 import { ConnectWallet, useSigner } from '@thirdweb-dev/react';
-import { Playground } from './components';
+import { Playground } from '../../components';
 
 const App = () => {
   const signer = useSigner();

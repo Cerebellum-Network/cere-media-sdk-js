@@ -4,10 +4,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './pages/home/App.tsx';
 import { theme } from './components/theme/theme.ts';
-import './index.css';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import { VideoExample } from './pages/video-example/VideoExample.tsx';
 import { Navigation } from './components/navigation/Navigation.tsx';
+
+import './index.css';
+import './components/css/plyr.css';
+import './components/css/styles.css';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

@@ -11,7 +11,7 @@ import { Navigation } from './components/navigation/Navigation.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
+    <Route>
       <Route path="/" element={<App />} />
       <Route path="/video-example" element={<VideoExample />} />
     </Route>,

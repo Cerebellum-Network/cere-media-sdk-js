@@ -39,8 +39,8 @@
   },
   "peerDependencies": {
     "@cere/freeport-sc-sdk": "0.19.0-legacy",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "publishConfig": {
     "access": "public"

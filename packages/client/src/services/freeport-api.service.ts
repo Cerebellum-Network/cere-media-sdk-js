@@ -26,7 +26,7 @@ import {
   getNftsResponseSchema,
 } from '../types';
 
-import { Logger, handleDebug, handleError } from './logger.service';
+import { LoggerLike, Logger, handleDebug, handleError } from './logger.service';
 
 import {
   WalletCredentials,
@@ -43,7 +43,7 @@ export const defaultFreeportApiOptions: FreeportApiClientOptions = {
 };
 
 export class FreeportApiService {
-  private logger: Logger;
+  private logger: LoggerLike;
 
   public instance!: AxiosInstance;
 

@@ -14,6 +14,7 @@ import {
   GetContentRequest,
   GetContentResponse,
   GetNftsResponse,
+  LoggerLike,
   Logger,
   MediaClientConfig,
   MediaClientOptions,
@@ -33,7 +34,7 @@ export class MediaSdkClient {
 
   public config: MediaClientConfig;
 
-  private logger: Logger;
+  private logger: LoggerLike;
 
   private freeportApi!: FreeportApiService;
 

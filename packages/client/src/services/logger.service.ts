@@ -1,4 +1,6 @@
-export const Logger = (name: string, enabled: boolean = false) => {
+export type LoggerLike = Pick<Console, 'debug' | 'error' | 'info' | 'log' | 'trace' | 'warn'>;
+
+export const Logger = (name: string, enabled: boolean = false): LoggerLike => {
   if (!enabled) {
     return {
       debug: () => {},
@@ -13,14 +15,12 @@ export const Logger = (name: string, enabled: boolean = false) => {
   return console;
 };
 
-export type Logger = typeof console;
-
-export const handleError = (logger: Logger, message?: string) => (error: Error) => {
+export const handleError = (logger: LoggerLike, message?: string) => (error: Error) => {
   logger.error(error.message);
   throw new Error(`Error Occurred: ${message ?? error.message}`);
 };
 
-export const handleDebug = (logger: Logger, message?: string) => (res: any) => {
+export const handleDebug = (logger: LoggerLike, message?: string) => (res: any) => {
   logger.debug(message, res);
   return res;
 };

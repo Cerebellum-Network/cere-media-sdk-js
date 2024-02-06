@@ -9,7 +9,7 @@
     "test:env": "ts-node ./scripts/env.ts"
   },
   "dependencies": {
-    "@cere/freeport-sc-sdk": "0.17.0",
+    "@cere/freeport-sc-sdk": "0.19.0",
     "@cere/media-sdk-client": "1.2.1-rc.1",
     "@types/jest": "^29.5.11",
     "axios": "^1.6.5",

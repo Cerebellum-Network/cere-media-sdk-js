@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@cere/media-sdk-client": "1.2.1-rc.1",
+    "@cere/freeport-sc-sdk": "0.19.0-legacy",
     "blakejs": "^1.2.1",
     "ethers": "^5.7.2",
     "hls.js": "^1.4.13",

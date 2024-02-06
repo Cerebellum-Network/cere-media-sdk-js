@@ -1,7 +1,7 @@
 {
   "name": "@cere/media-sdk-react",
   "description": "Media SDK React Hooks & Components",
-  "version": "1.2.1-rc.1",
+  "version": "1.2.1-rc.2",
   "type": "module",
   "repository": {
     "type": "git",
@@ -28,8 +28,8 @@
     "clean": "rimraf dist package"
   },
   "dependencies": {
-    "@cere/media-sdk-client": "1.2.1-rc.1",
     "@cere/freeport-sc-sdk": "0.19.0-legacy",
+    "@cere/media-sdk-client": "1.2.1-rc.2",
     "blakejs": "^1.2.1",
     "ethers": "^5.7.2",
     "hls.js": "^1.4.13",

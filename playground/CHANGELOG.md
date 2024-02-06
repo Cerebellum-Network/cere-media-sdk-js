@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.0...v1.2.1-rc.1) (2024-02-06)
+
+**Note:** Version bump only for package playground
+
 ## [1.2.1-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.0...v1.2.1-rc.0) (2024-02-06)
 
 **Note:** Version bump only for package playground

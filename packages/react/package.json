@@ -28,7 +28,6 @@
     "clean": "rimraf dist package"
   },
   "dependencies": {
-    "@cere/freeport-sc-sdk": "0.19.0-legacy",
     "@cere/media-sdk-client": "1.2.1-rc.2",
     "blakejs": "^1.2.1",
     "ethers": "^5.7.2",
@@ -39,6 +38,7 @@
     "tweetnacl": "^1.0.3"
   },
   "peerDependencies": {
+    "@cere/freeport-sc-sdk": "0.19.0-legacy",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

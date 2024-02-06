@@ -10,21 +10,7 @@ export const Logger = (name: string, enabled: boolean = false) => {
     };
   }
 
-  if (typeof window !== 'undefined') {
-    // Browser logger
-    return console;
-  }
-
-  const PinoLogger = require('pino');
-  const Pretty = require('pino-pretty');
-
-  return PinoLogger(
-    Pretty({
-      colorize: true,
-      translateTime: true,
-      ignore: 'pid,hostname',
-    }),
-  );
+  return console;
 };
 
 export type Logger = typeof console;

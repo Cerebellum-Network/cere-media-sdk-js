@@ -25,7 +25,7 @@ export const VideoPlayer = ({ src, hlsEnabled = true, loader = Hls.DefaultConfig
     () => document.createElement('video').canPlayType('application/vnd.apple.mpegurl'),
     [iosVideoRef],
   );
-  const isSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : false), [hlsEnabled]);
+  const isSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);
 
   useEffect(() => {
     if (playerRef.current) return;

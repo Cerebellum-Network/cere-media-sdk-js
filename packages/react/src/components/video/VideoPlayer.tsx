@@ -15,15 +15,19 @@ const plyrOptions: Plyr.Options = {
   autoplay: true,
 };
 
-export const VideoPlayer = ({ src, hlsEnabled = true, loader }: VideoPlayerProps) => {
+export const VideoPlayer = ({ src, hlsEnabled = true, loader = Hls.DefaultConfig.loader }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
+  const iosVideoRef = useRef<HTMLVideoElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const isSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);
+  const isIosSupported = useMemo(
+    () => document.createElement('video').canPlayType('application/vnd.apple.mpegurl'),
+    [iosVideoRef],
+  );
+  const isSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : false), [hlsEnabled]);
 
   useEffect(() => {
-    if (!isSupported) return;
     if (playerRef.current) return;
 
     const videoWrapper = wrapperRef.current;
@@ -38,7 +42,7 @@ export const VideoPlayer = ({ src, hlsEnabled = true, loader }: VideoPlayerProps
 
     const hls = new Hls(hlsOptions);
 
-    if (hlsEnabled) {
+    if (hlsEnabled && isSupported) {
       const updateQuality = (newQuality: number) => {
         if (newQuality === 0) {
           hls.currentLevel = -1;
@@ -73,6 +77,14 @@ export const VideoPlayer = ({ src, hlsEnabled = true, loader }: VideoPlayerProps
       });
 
       hls.loadSource(src);
+    } else if (hlsEnabled && isIosSupported) {
+      const video = iosVideoRef.current;
+      if (!video) return;
+      videoWrapper.appendChild(video);
+      video.src = src;
+      video.addEventListener('canplay', function () {
+        setIsLoading(false);
+      });
     } else {
       const video = document.createElement('video');
       video.className = 'cere-video';
@@ -95,7 +107,7 @@ export const VideoPlayer = ({ src, hlsEnabled = true, loader }: VideoPlayerProps
     };
   }, [isSupported, loader, src, wrapperRef]);
 
-  if (!isSupported) {
+  if (!isSupported && !isIosSupported) {
     return (
       <div className="cere-video-wrapper flex items-center">
         <p className="w-full text-center">Your browser does not support HLS.</p>
@@ -106,6 +118,8 @@ export const VideoPlayer = ({ src, hlsEnabled = true, loader }: VideoPlayerProps
   return (
     <div>
       <div className="cere-video-wrapper" ref={wrapperRef} />
+      {isIosSupported && <video ref={iosVideoRef} controls autoPlay disableRemotePlayback />}
+
       {isLoading && (
         <div className="loading-container">
           <>Loading video...</>

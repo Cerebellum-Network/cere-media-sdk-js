@@ -1,6 +1,6 @@
 # @cere/media-sdk-react
 
-- [@cere/media-sdk-react](#cere-media-sdkreact)
+- [@cere/media-sdk-react](#ceremedia-sdk-react)
   - [Installation](#installation)
   - [Setting up the provider](#setting-up-the-provider)
     - [Example](#example)
@@ -359,7 +359,24 @@ const loader = HlsEncryptionLoader.create({
 })
 
 <VideoPlayer src={/* encrypted asset url */} loader={loader} />
+```
 
+*With Server Side Decryption*
+```tsx
+const src = 'https://cdn.testnet.cere.network/49/baebb4iancdrt67gzjndihdqn4qpwin6majvly4xajvuu4bjb3mdhs4hsxi';
+  const { url } = useServerSideUrl({
+    src,
+    nft: { /* NFT data */ }
+  });
+
+
+// Fetching the server side URL requires requesting a new stream key, so you must await this response
+if (isLoading) {
+  return "Loading..."
+}
+
+// This converts the CDN URL into a web URL to fetch and decrypt the content via the Freeport API
+return <VideoPlayer src={url} />
 ```
 
 *Without Loader*

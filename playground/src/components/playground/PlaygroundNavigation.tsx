@@ -10,7 +10,7 @@ import { MintedNftsTab } from './MintedNftsTab';
 import { VideoExample } from 'playground/src/components/video-example/VideoExample';
 
 export const PlaygroundNavigation = () => {
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState('4');
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);

@@ -16,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ThirdwebProvider
         activeChain="mumbai"
         autoSwitch
+        autoConnect
         locale={en()}
         supportedWallets={[metamaskWallet(), walletConnect(), localWallet()]}
       >

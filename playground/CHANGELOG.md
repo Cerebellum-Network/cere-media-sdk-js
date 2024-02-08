@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0-rc.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.1...v1.3.0-rc.2) (2024-02-08)
+
+### Bug Fixes
+
+- 🐛 hls disabled video player ([4dfb012](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/4dfb01254d0a34c7d5c462fc88542b960eece188))
+
 ## [1.3.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.0...v1.3.0-rc.1) (2024-02-08)
 
 ### Features

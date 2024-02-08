@@ -349,7 +349,7 @@ The VideoPlayer component is a customizable video player designed for playing HL
 
 The `HlsEncryptionLoader` is available for client-side encrypted content streaming. This is automatically used for streaming encrypted content via the `<ContentView />` component. If the content is not encrypted, the loader is not needed.
 
-*With HlsEncryptionLoader*
+*With Custom Loader*
 ```tsx
 const loader = HlsEncryptionLoader.create({
   collectionAddress: nft.collection.address,
@@ -361,25 +361,18 @@ const loader = HlsEncryptionLoader.create({
 <VideoPlayer src={/* encrypted asset url */} loader={loader} />
 ```
 
+*With Wrapped EncryptedVideoPlayer*
+```tsx
+<EncryptedVideoPlayer src={...} collectionAddress={...} nftId={...} assetIndex={...} />
+```
+
 *With Server Side Decryption*
 ```tsx
-const src = 'https://cdn.testnet.cere.network/49/baebb4iancdrt67gzjndihdqn4qpwin6majvly4xajvuu4bjb3mdhs4hsxi';
-  const { url } = useServerSideUrl({
-    src,
-    nft: { /* NFT data */ }
-  });
-
-
-// Fetching the server side URL requires requesting a new stream key, so you must await this response
-if (isLoading) {
-  return "Loading..."
-}
-
-// This converts the CDN URL into a web URL to fetch and decrypt the content via the Freeport API
-return <VideoPlayer src={url} />
+<EncryptedVideoPlayer src={...} collectionAddress={...} nftId={...} assetIndex={...} serverSide />
 ```
 
 *Without Loader*
 ```tsx
-<VideoPlayer src={/* public asset url */}  />
+// This will work for playing normal, non HLS and non encrypted video
+<VideoPlayer src={/* public asset url */} hlsEnabled={false} />
 ```

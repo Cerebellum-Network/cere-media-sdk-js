@@ -1,6 +1,7 @@
 import './plyr.css';
 import './styles.css';
 
+import clsx from 'clsx';
 import Hls, { HlsConfig } from 'hls.js';
 import Plyr from 'plyr';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -9,13 +10,21 @@ interface VideoPlayerProps {
   src: string;
   hlsEnabled?: boolean;
   loader?: HlsConfig['loader'];
+  className?: string;
+  loadingComponent?: React.ReactNode;
 }
 
 const plyrOptions: Plyr.Options = {
   autoplay: true,
 };
 
-export const VideoPlayer = ({ src, hlsEnabled = true, loader = Hls.DefaultConfig.loader }: VideoPlayerProps) => {
+export const VideoPlayer = ({
+  src,
+  hlsEnabled = true,
+  loader = Hls.DefaultConfig.loader,
+  className,
+  loadingComponent,
+}: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const iosVideoRef = useRef<HTMLVideoElement | null>(null);
@@ -117,12 +126,12 @@ export const VideoPlayer = ({ src, hlsEnabled = true, loader = Hls.DefaultConfig
 
   return (
     <div>
-      <div className="cere-video-wrapper" ref={wrapperRef} />
+      <div className={clsx('cere-video-wrapper', className)} ref={wrapperRef} />
       {isIosSupported && <video ref={iosVideoRef} controls autoPlay disableRemotePlayback />}
 
       {isLoading && (
         <div className="loading-container">
-          <>Loading video...</>
+          {loadingComponent ? loadingComponent : <div className="loading-container">Loading video...</div>}
         </div>
       )}
     </div>

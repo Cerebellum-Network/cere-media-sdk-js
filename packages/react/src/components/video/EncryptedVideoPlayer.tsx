@@ -11,6 +11,8 @@ export interface EncryptedVideoPlayerProps {
   nftId: number;
   assetIndex: number;
   serverSide?: boolean;
+  className?: string;
+  loadingComponent?: React.ReactNode;
 }
 
 export const EncryptedVideoPlayer = ({
@@ -19,6 +21,7 @@ export const EncryptedVideoPlayer = ({
   nftId,
   assetIndex,
   serverSide,
+  ...props
 }: EncryptedVideoPlayerProps) => {
   const { client } = useMediaClient();
   const { url } = useServerSideUrl({ src, collectionAddress, nftId });
@@ -39,8 +42,8 @@ export const EncryptedVideoPlayer = ({
   }
 
   if (serverSide && url) {
-    return <VideoPlayer src={url} />;
+    return <VideoPlayer src={url} {...props} />;
   }
 
-  return <VideoPlayer src={src} loader={loader} />;
+  return <VideoPlayer src={src} loader={loader} {...props} />;
 };

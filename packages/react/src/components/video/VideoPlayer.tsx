@@ -4,7 +4,7 @@ import './styles.css';
 import clsx from 'clsx';
 import Hls, { HlsConfig } from 'hls.js';
 import Plyr from 'plyr';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 
 interface VideoPlayerProps {
   src: string;
@@ -12,6 +12,8 @@ interface VideoPlayerProps {
   loader?: HlsConfig['loader'];
   className?: string;
   loadingComponent?: React.ReactNode;
+  type?: string;
+  videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
 }
 
 const plyrOptions: Plyr.Options = {
@@ -24,17 +26,19 @@ export const VideoPlayer = ({
   loader = Hls.DefaultConfig.loader,
   className,
   loadingComponent,
+  type = 'video/mp4',
+  videoOverrides = { crossOrigin: 'anonymous' },
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const iosVideoRef = useRef<HTMLVideoElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const isIosSupported = useMemo(
-    () => document.createElement('video').canPlayType('application/vnd.apple.mpegurl'),
+  const isVideoSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);
+  const isIosHlsSupported = useMemo(
+    () => document.createElement('video').canPlayType('application/vnd.apple.mpegurl') !== '',
     [iosVideoRef],
   );
-  const isSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);
 
   useEffect(() => {
     if (playerRef.current) return;
@@ -51,7 +55,7 @@ export const VideoPlayer = ({
 
     const hls = new Hls(hlsOptions);
 
-    if (hlsEnabled && isSupported) {
+    if (hlsEnabled && isVideoSupported) {
       const updateQuality = (newQuality: number) => {
         if (newQuality === 0) {
           hls.currentLevel = -1;
@@ -74,6 +78,7 @@ export const VideoPlayer = ({
         };
         const video = document.createElement('video');
         video.className = 'cere-video';
+        Object.assign(video, videoOverrides);
         playerRef.current = video;
         videoWrapper.appendChild(video);
         hls.attachMedia(video);
@@ -81,16 +86,14 @@ export const VideoPlayer = ({
         player.on('canplaythrough', () => setIsLoading(false));
       });
 
-      hls.on(Hls.Events.FRAG_LOADED, () => {
-        setIsLoading(false);
-      });
-
+      hls.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
       hls.loadSource(src);
-    } else if (hlsEnabled && isIosSupported) {
+    } else if (hlsEnabled && isIosHlsSupported) {
       const video = iosVideoRef.current;
       if (!video) return;
       videoWrapper.appendChild(video);
       video.src = src;
+      Object.assign(video, videoOverrides);
       video.addEventListener('canplay', function () {
         setIsLoading(false);
       });
@@ -100,6 +103,7 @@ export const VideoPlayer = ({
       playerRef.current = video;
       videoWrapper.appendChild(video);
       video.src = src;
+      Object.assign(video, videoOverrides);
       const player = new Plyr(video, plyrOptions);
       player.on('canplaythrough', () => setIsLoading(false));
       video.addEventListener('error', () => setIsLoading(false));
@@ -114,26 +118,35 @@ export const VideoPlayer = ({
       }
       playerRef.current = null;
     };
-  }, [isSupported, loader, src, wrapperRef]);
+  }, [isVideoSupported, loader, src, wrapperRef]);
 
-  if (!isSupported && !isIosSupported) {
+  if (!isVideoSupported && !isIosHlsSupported) {
     return (
       <div className="cere-video-wrapper flex items-center">
-        <p className="w-full text-center">Your browser does not support HLS.</p>
+        <p className="w-full text-center">Your browser does not support playback of this type.</p>
+      </div>
+    );
+  }
+
+  if (isVideoSupported && !isIosHlsSupported) {
+    return (
+      <div>
+        <div className={clsx('cere-video-wrapper', className)} ref={wrapperRef} />
+
+        {isLoading && (
+          <div className="loading-container">
+            {loadingComponent ? loadingComponent : <div className="loading-container">Loading video...</div>}
+          </div>
+        )}
       </div>
     );
   }
 
   return (
-    <div>
-      <div className={clsx('cere-video-wrapper', className)} ref={wrapperRef} />
-      {isIosSupported && <video ref={iosVideoRef} controls autoPlay disableRemotePlayback />}
-
-      {isLoading && (
-        <div className="loading-container">
-          {loadingComponent ? loadingComponent : <div className="loading-container">Loading video...</div>}
-        </div>
-      )}
-    </div>
+    <>
+      <video controls {...videoOverrides}>
+        <source src={src} type={hlsEnabled ? 'application/vnd.apple.mpegurl' : type} />
+      </video>
+    </>
   );
 };

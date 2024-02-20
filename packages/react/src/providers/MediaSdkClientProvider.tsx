@@ -1,6 +1,6 @@
 import { MediaClientOptions, defaultMediaClientOptions } from '@cere/media-sdk-client';
 import { Signer } from 'ethers';
-import { PropsWithChildren, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { SWRConfig } from 'swr';
 
 import { useStaticMediaClient } from '..';
@@ -15,10 +15,11 @@ const defaultSwrConfig = {
   refreshInterval: 0,
 };
 
-export interface MediaSdkClientProviderProps extends PropsWithChildren {
+export interface MediaSdkClientProviderProps {
   signer?: Signer;
   options?: MediaClientOptions;
   swrConfig?: Record<string, unknown>;
+  children: React.ReactNode;
 }
 
 export const MediaSdkClientProvider = ({

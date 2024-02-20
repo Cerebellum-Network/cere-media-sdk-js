@@ -4,3 +4,4 @@ export * from './use-collections';
 export * from './use-nfts';
 export * from './use-encrypted-content';
 export * from './use-download-content';
+export * from './use-serverside-url';

@@ -54,3 +54,13 @@ export const getContentRequest = z.object({
 export type GetContentRequest = z.infer<typeof getContentRequest>;
 
 export type GetContentResponse = Blob;
+
+export const getStreamKeyRequest = z.object({
+  collectionAddress: z.string(),
+  nftId: z.number(),
+  bucketId: z.number(),
+  cid: z.string(),
+});
+export type GetStreamKeyRequest = z.infer<typeof getStreamKeyRequest>;
+export const getStreamKeyResponse = z.string();
+export type GetStreamKeyResponse = z.infer<typeof getStreamKeyResponse>;

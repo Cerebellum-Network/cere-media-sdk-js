@@ -5,7 +5,7 @@ import { Signer, providers } from 'ethers';
 import { networkConfig, NftMetadata, nftMetadataSchema, NftAsset } from '..';
 import { FreeportCollectionOptions } from '../types/freeport-collection';
 
-import { Logger, handleDebug, handleError } from './logger.service';
+import { LoggerLike, Logger, handleDebug, handleError } from './logger.service';
 
 export const defaultFreeportCollectionOptions: FreeportCollectionOptions = {
   deployment: 'development',
@@ -14,7 +14,7 @@ export const defaultFreeportCollectionOptions: FreeportCollectionOptions = {
 };
 
 export class FreeportCollectionService {
-  private logger: Logger;
+  private logger: LoggerLike;
 
   protected constructor(
     private readonly signer: Signer,

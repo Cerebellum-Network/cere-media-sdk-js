@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.6...v1.3.0) (2024-02-20)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.3.0-rc.6](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.5...v1.3.0-rc.6) (2024-02-20)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.3.0-rc.5](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.4...v1.3.0-rc.5) (2024-02-19)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.3.0-rc.4](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.3...v1.3.0-rc.4) (2024-02-12)
+
+### Features
+
+- ✨ async sdk provider ([aa5596e](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/aa5596e76386710edfacd663f7c176b79eb956b5))
+
+## [1.3.0-rc.3](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.2...v1.3.0-rc.3) (2024-02-12)
+
+### Features
+
+- ✨ video player custom class name/loader ([1f527a9](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/1f527a9ec546effad46c99b2d8b73dbda0f9fa87))
+
+## [1.3.0-rc.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.1...v1.3.0-rc.2) (2024-02-08)
+
+### Bug Fixes
+
+- 🐛 hls disabled video player ([4dfb012](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/4dfb01254d0a34c7d5c462fc88542b960eece188))
+
+## [1.3.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.0...v1.3.0-rc.1) (2024-02-08)
+
+### Features
+
+- ✨ encrypted video player component ([5a392a0](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/5a392a0a38fed92a234c4c1e0f02966b8f90564a))
+
+## [1.3.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.4...v1.3.0-rc.0) (2024-02-08)
+
+### Features
+
+- ✨ use stream key for ss video stream auth ([67532c4](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/67532c4f85f346c5796f8517595e4ed0fc613bdb))
+
+## [1.2.1-rc.4](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.3...v1.2.1-rc.4) (2024-02-06)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.2.1-rc.3](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.2...v1.2.1-rc.3) (2024-02-06)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.2.1-rc.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.1...v1.2.1-rc.2) (2024-02-06)
+
+### Bug Fixes
+
+- 🐛 sc-sdk versioning ([4846aed](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/4846aed2cbc70e04755915ef438926e55e46c883))
+
+## [1.2.1-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.0...v1.2.1-rc.1) (2024-02-06)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.2.1-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.0...v1.2.1-rc.0) (2024-02-06)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
 ## [1.2.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.0-rc.1...v1.2.0) (2024-02-05)
 
 **Note:** Version bump only for package @cere/media-sdk-react

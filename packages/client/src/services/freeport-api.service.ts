@@ -59,10 +59,7 @@ export class FreeportApiService {
 
   static async create(options: FreeportApiClientOptions = defaultFreeportApiOptions): Promise<FreeportApiService> {
     const client = new FreeportApiService(options);
-    client.instance = axios.create({
-      baseURL: options.freeportApiUrl,
-      timeout: 10000,
-    });
+    client.instance = axios.create({ baseURL: options.freeportApiUrl });
     client.authHeaders = undefined;
     if (!options.skipInitialHealthCheck) {
       await client.healthCheck();

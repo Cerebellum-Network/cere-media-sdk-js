@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0-rc.6](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.5...v1.3.0-rc.6) (2024-02-20)
+
+### Bug Fixes
+
+- 🐛 remove axios timeout ([1b2661c](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/1b2661c22edde727fa0328c4638fddbdf0319b13))
+- 🚨 lint ([303e960](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/303e96020cfd27df40ae780eacfe1d0df6c715b5))
+
 ## [1.3.0-rc.5](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.4...v1.3.0-rc.5) (2024-02-19)
 
 **Note:** Version bump only for package cere-media-sdk

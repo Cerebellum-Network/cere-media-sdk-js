@@ -6,11 +6,11 @@ import { useMediaClient } from '.';
 export const useEncryptedContent = (nft: NFT, metadata: NftMetadata, assetIndex: number) => {
   const { client, isLoading: isLoadingClient } = useMediaClient();
 
-  const asset = metadata.assets[assetIndex];
-  const contentType = asset.contentType;
+  const asset = metadata?.assets[assetIndex];
+  const contentType = asset?.contentType;
   const identifier = `asset-${assetIndex}`;
 
-  const isVideo = asset.contentType && ['video/mp4', 'video/webm', 'video/ogg'].includes(contentType);
+  const isVideo = asset?.contentType && ['video/mp4', 'video/webm', 'video/ogg'].includes(contentType);
 
   const getContent = async () => {
     const decryptedContent = await client?.getContent({

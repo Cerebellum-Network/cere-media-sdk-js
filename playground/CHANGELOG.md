@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0...v1.4.0-rc.0) (2024-02-22)
+
+### Features
+
+- ✨ create encrypted audio player ([db0e43a](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/db0e43a07f11235b1d0b70d68ca3fabb0b8a006e))
+
 ## [1.3.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.6...v1.3.0) (2024-02-20)
 
 **Note:** Version bump only for package playground

@@ -1,5 +1,9 @@
+import 'react-h5-audio-player/lib/styles.css';
+import './styles.css';
+
 import { NFT } from '@cere/media-sdk-client';
 import { ReactNode } from 'react';
+import AudioPlayer from 'react-h5-audio-player';
 
 import { useEncryptedContent, useNftMetadata } from '../../hooks';
 
@@ -16,7 +20,6 @@ export const EncryptedAudioPlayer = ({
   collectionAddress,
   nftId,
   assetIndex,
-  title = 'Cere Audio Player',
   className = '',
   loadingComponent,
 }: EncryptedAudioPlayerProps) => {
@@ -32,10 +35,8 @@ export const EncryptedAudioPlayer = ({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <img src={preview} alt="Audio preview" />
-      <audio title={title} controls autoPlay className={className}>
-        <source src={content} />
-      </audio>
+      <img src={preview} alt="Audio preview" style={{ width: '100%' }} />
+      <AudioPlayer src={content} customAdditionalControls={[]} style={{ boxShadow: 'none', marginTop: '-88px' }} />
     </div>
   );
 };

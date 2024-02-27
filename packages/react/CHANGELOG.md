@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.0...v1.4.0-rc.1) (2024-02-27)
+
+### Bug Fixes
+
+- Update Freeport SC SDK ([9613a7b](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/9613a7bc87239f8683c00b95d58bce2c590638b5))
+
 ## [1.4.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0...v1.4.0-rc.0) (2024-02-22)
 
 ### Features

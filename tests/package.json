@@ -1,6 +1,6 @@
 {
   "name": "@cere/media-sdk-tests",
-  "version": "1.4.0-rc.2",
+  "version": "1.4.0-rc.3",
   "description": "Cere Media SDK tests",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@cere/freeport-sc-sdk": "0.19.0",
-    "@cere/media-sdk-client": "1.4.0-rc.2",
+    "@cere/media-sdk-client": "1.4.0-rc.3",
     "@types/jest": "^29.5.11",
     "axios": "^1.6.5",
     "ethers": "^5.7.2",

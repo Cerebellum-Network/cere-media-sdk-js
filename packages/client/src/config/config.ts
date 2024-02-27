@@ -10,12 +10,12 @@ export const mediaClientConfig: Record<Deployment, Record<Tenant, MediaClientCon
     cerefans: { freeportApiUrl: 'https://dev-freeport-api-cerefans.network-dev.aws.cere.io/' },
   },
   staging: {
-    davinci: { freeportApiUrl: '' },
-    cerefans: { freeportApiUrl: '' },
+    davinci: { freeportApiUrl: 'https://stage-freeport-api.network-stage.aws.cere.io/' },
+    cerefans: { freeportApiUrl: 'https://stage-freeport-api-cerefans.network-stage.aws.cere.io/' },
   },
   production: {
-    davinci: { freeportApiUrl: '' },
-    cerefans: { freeportApiUrl: '' },
+    davinci: { freeportApiUrl: 'https://prod-freeport-api.network.aws.cere.io/' },
+    cerefans: { freeportApiUrl: 'https://prod-freeport-api-cerefans.network.aws.cere.io/' },
   },
 };
 

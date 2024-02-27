@@ -9,6 +9,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.4.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.0...v1.4.0-rc.1) (2024-02-27)
 
+### Features
+
+- ✨ staging and production config ([824e9d0](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/824e9d02988d1931efe2702e98041936eefb174a))
+
+## [1.4.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0...v1.4.0-rc.0) (2024-02-22)
+
 ### Bug Fixes
 
 - Update Freeport SC SDK ([9613a7b](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/9613a7bc87239f8683c00b95d58bce2c590638b5))

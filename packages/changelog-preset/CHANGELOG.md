@@ -11,6 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @cere/media-sdk-changelog-preset
 
+
 ## [1.4.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0...v1.4.0-rc.0) (2024-02-22)
 
 **Note:** Version bump only for package @cere/media-sdk-changelog-preset

@@ -11,7 +11,7 @@ import { VideoExample } from 'playground/src/components/video-example/VideoExamp
 import { AudioExample } from '../audio-example';
 
 export const PlaygroundNavigation = () => {
-  const [value, setValue] = useState('5');
+  const [value, setValue] = useState('1');
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);

@@ -18,7 +18,12 @@ const publicDdcVideo =
  * This is an example of a video from the DDC that is not HLS encoded
  */
 const PublicDdcVideo = () => (
-  <VideoPlayer src={publicDdcVideo} hlsEnabled={false} loadingComponent={<CircularProgress />} />
+  <VideoPlayer
+    src={publicDdcVideo}
+    hlsEnabled={false}
+    loadingComponent={<CircularProgress />}
+    videoOverrides={{ autoPlay: true }}
+  />
 );
 
 const CmsVideo = () => (

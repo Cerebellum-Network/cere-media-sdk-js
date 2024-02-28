@@ -3,14 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.4.0-rc.3](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.2...v1.4.0-rc.3) (2024-02-27)
+## [1.4.0-rc.4](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.2...v1.4.0-rc.4) (2024-02-28)
 
+### Features
+
+- ✨ video and audio player autoplay overrides ([1ce1b59](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/1ce1b599d3220177489ef47982e1c74c6b62e9ca))
 
 ### Bug Fixes
 
-* Update Freeport SC SDK ([5dd367c](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/5dd367c79c09776be5544005f0a5bdb87a3ff832))
+- Update Freeport SC SDK ([5dd367c](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/5dd367c79c09776be5544005f0a5bdb87a3ff832))
 
+## [1.4.0-rc.3](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.2...v1.4.0-rc.3) (2024-02-27)
 
+### Bug Fixes
+
+- Update Freeport SC SDK ([5dd367c](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/5dd367c79c09776be5544005f0a5bdb87a3ff832))
 
 ## [1.4.0-rc.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.1...v1.4.0-rc.2) (2024-02-27)
 

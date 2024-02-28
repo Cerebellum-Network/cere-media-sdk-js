@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { VideoHTMLAttributes, useMemo } from 'react';
 
 import { useMediaClient, useServerSideUrl } from '../../hooks';
 
@@ -13,6 +13,7 @@ export interface EncryptedVideoPlayerProps {
   serverSide?: boolean;
   className?: string;
   loadingComponent?: React.ReactNode;
+  videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
 }
 
 export const EncryptedVideoPlayer = ({

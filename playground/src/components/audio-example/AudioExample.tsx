@@ -18,5 +18,6 @@ const EncryptedDdcAudio = () => (
     nftId={nftId}
     assetIndex={assetIndex}
     loadingComponent={<CircularProgress />}
+    playerOverrides={{ autoPlay: true }}
   />
 );

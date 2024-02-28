@@ -16,10 +16,6 @@ interface VideoPlayerProps {
   videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
 }
 
-const plyrOptions: Plyr.Options = {
-  autoplay: true,
-};
-
 export const VideoPlayer = ({
   src,
   hlsEnabled = true,
@@ -54,6 +50,9 @@ export const VideoPlayer = ({
     };
 
     const hls = new Hls(hlsOptions);
+    const plyrOptions: Plyr.Options = {
+      autoplay: videoOverrides.autoPlay,
+    };
 
     if (hlsEnabled && isVideoSupported) {
       const updateQuality = (newQuality: number) => {

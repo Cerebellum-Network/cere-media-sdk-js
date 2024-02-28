@@ -7,6 +7,8 @@ import AudioPlayer from 'react-h5-audio-player';
 
 import { useEncryptedContent, useNftMetadata } from '../../hooks';
 
+import { EncryptedAudioPlayerOptions } from './types';
+
 export interface EncryptedAudioPlayerProps {
   collectionAddress: string;
   nftId: number;
@@ -14,14 +16,15 @@ export interface EncryptedAudioPlayerProps {
   loadingComponent?: ReactNode;
   title?: string;
   className?: string;
+  playerOverrides?: EncryptedAudioPlayerOptions;
 }
 
 export const EncryptedAudioPlayer = ({
   collectionAddress,
   nftId,
   assetIndex,
-  className = '',
   loadingComponent,
+  playerOverrides,
 }: EncryptedAudioPlayerProps) => {
   const nft = { collection: { address: collectionAddress }, nftId } as NFT;
   const { metadata } = useNftMetadata(collectionAddress, nftId);
@@ -36,7 +39,12 @@ export const EncryptedAudioPlayer = ({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <img src={preview} alt="Audio preview" style={{ width: '100%' }} />
-      <AudioPlayer src={content} customAdditionalControls={[]} style={{ boxShadow: 'none', marginTop: '-88px' }} />
+      <AudioPlayer
+        src={content}
+        customAdditionalControls={[]}
+        style={{ boxShadow: 'none', marginTop: '-88px' }}
+        {...playerOverrides}
+      />
     </div>
   );
 };

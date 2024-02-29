@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0-rc.5](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.4...v1.4.0-rc.5) (2024-02-29)
+
+### Bug Fixes
+
+- 💚 npm package release ([07ec051](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/07ec0517977e0c83982b2724bcd7c9de87b82df7))
+
 ## [1.4.0-rc.4](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.2...v1.4.0-rc.4) (2024-02-28)
 
 ### Features

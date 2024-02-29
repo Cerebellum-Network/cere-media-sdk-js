@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { EncryptedAudioPlayer, VideoPlayer, useServerSideUrl } from '@cere/media-sdk-react';
-import { Box, CircularProgress } from '@mui/material';
+import { EncryptedAudioPlayer } from '@cere/media-sdk-react';
+import { CircularProgress } from '@mui/material';
 
 export const AudioExample = () => {
   return <EncryptedDdcAudio />;

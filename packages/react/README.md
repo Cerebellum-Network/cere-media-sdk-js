@@ -1,6 +1,6 @@
 # @cere/media-sdk-react
 
-- [@cere/media-sdk-react](#cere-media-sdkreact)
+- [@cere/media-sdk-react](#ceremedia-sdk-react)
   - [Installation](#installation)
   - [Setting up the provider](#setting-up-the-provider)
     - [Example](#example)
@@ -349,7 +349,7 @@ The VideoPlayer component is a customizable video player designed for playing HL
 
 The `HlsEncryptionLoader` is available for client-side encrypted content streaming. This is automatically used for streaming encrypted content via the `<ContentView />` component. If the content is not encrypted, the loader is not needed.
 
-*With HlsEncryptionLoader*
+*With Custom Loader*
 ```tsx
 const loader = HlsEncryptionLoader.create({
   collectionAddress: nft.collection.address,
@@ -359,10 +359,20 @@ const loader = HlsEncryptionLoader.create({
 })
 
 <VideoPlayer src={/* encrypted asset url */} loader={loader} />
+```
 
+*With Wrapped EncryptedVideoPlayer*
+```tsx
+<EncryptedVideoPlayer src={...} collectionAddress={...} nftId={...} assetIndex={...} />
+```
+
+*With Server Side Decryption*
+```tsx
+<EncryptedVideoPlayer src={...} collectionAddress={...} nftId={...} assetIndex={...} serverSide />
 ```
 
 *Without Loader*
 ```tsx
-<VideoPlayer src={/* public asset url */}  />
+// This will work for playing normal, non HLS and non encrypted video
+<VideoPlayer src={/* public asset url */} hlsEnabled={false} />
 ```

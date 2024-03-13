@@ -3,6 +3,120 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0-rc.5](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.4...v1.4.0-rc.5) (2024-02-29)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.4.0-rc.4](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.2...v1.4.0-rc.4) (2024-02-28)
+
+### Bug Fixes
+
+- Update Freeport SC SDK ([5dd367c](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/5dd367c79c09776be5544005f0a5bdb87a3ff832))
+
+## [1.4.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.0...v1.4.0-rc.1) (2024-02-27)
+
+### Features
+
+- ✨ staging and production config ([824e9d0](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/824e9d02988d1931efe2702e98041936eefb174a))
+
+## [1.4.0-rc.3](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.2...v1.4.0-rc.3) (2024-02-27)
+
+### Features
+
+- ✨ staging and production config ([824e9d0](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/824e9d02988d1931efe2702e98041936eefb174a))
+
+### Bug Fixes
+
+- Update Freeport SC SDK ([5dd367c](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/5dd367c79c09776be5544005f0a5bdb87a3ff832))
+
+## [1.4.0-rc.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.1...v1.4.0-rc.2) (2024-02-27)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.4.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.0...v1.4.0-rc.1) (2024-02-27)
+
+### Features
+
+- ✨ staging and production config ([824e9d0](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/824e9d02988d1931efe2702e98041936eefb174a))
+
+### Bug Fixes
+
+- Update Freeport SC SDK ([9613a7b](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/9613a7bc87239f8683c00b95d58bce2c590638b5))
+
+## [1.4.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0...v1.4.0-rc.0) (2024-02-22)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.3.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.6...v1.3.0) (2024-02-20)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.3.0-rc.6](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.5...v1.3.0-rc.6) (2024-02-20)
+
+### Bug Fixes
+
+- 🐛 remove axios timeout ([1b2661c](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/1b2661c22edde727fa0328c4638fddbdf0319b13))
+
+## [1.3.0-rc.5](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.4...v1.3.0-rc.5) (2024-02-19)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.3.0-rc.4](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.3...v1.3.0-rc.4) (2024-02-12)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.3.0-rc.3](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.2...v1.3.0-rc.3) (2024-02-12)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.3.0-rc.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.1...v1.3.0-rc.2) (2024-02-08)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.3.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.3.0-rc.0...v1.3.0-rc.1) (2024-02-08)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.3.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.4...v1.3.0-rc.0) (2024-02-08)
+
+### Features
+
+- ✨ use stream key for ss video stream auth ([67532c4](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/67532c4f85f346c5796f8517595e4ed0fc613bdb))
+
+## [1.2.1-rc.4](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.3...v1.2.1-rc.4) (2024-02-06)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.2.1-rc.3](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.2...v1.2.1-rc.3) (2024-02-06)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.2.1-rc.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.1...v1.2.1-rc.2) (2024-02-06)
+
+### Bug Fixes
+
+- 🐛 sc-sdk versioning ([4846aed](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/4846aed2cbc70e04755915ef438926e55e46c883))
+
+## [1.2.1-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.1-rc.0...v1.2.1-rc.1) (2024-02-06)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.2.1-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.0...v1.2.1-rc.0) (2024-02-06)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.2.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.0-rc.1...v1.2.0) (2024-02-05)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.2.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.2.0-rc.0...v1.2.0-rc.1) (2024-02-05)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
+## [1.2.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0...v1.2.0-rc.0) (2024-02-05)
+
+**Note:** Version bump only for package @cere/media-sdk-client
+
 ## [1.1.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.1.0-rc.6...v1.1.0) (2024-01-30)
 
 **Note:** Version bump only for package @cere/media-sdk-client

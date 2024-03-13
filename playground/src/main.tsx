@@ -3,9 +3,12 @@ import { ThirdwebProvider, en, localWallet, metamaskWallet, walletConnect } from
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import { theme } from './components/theme/theme.ts';
+import { theme } from "./components/theme";
+
 import './index.css';
-import { cereWallet } from './cere-wallet/CereWalletConfig.ts';
+import './components/css/plyr.css';
+import './components/css/styles.css';
+import { cereWallet } from "./cere-wallet";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -14,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ThirdwebProvider
         activeChain="mumbai"
         autoSwitch
+        autoConnect
         locale={en()}
         supportedWallets={[metamaskWallet(), walletConnect(), localWallet(), cereWallet()]}
       >

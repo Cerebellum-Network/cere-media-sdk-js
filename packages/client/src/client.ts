@@ -14,12 +14,15 @@ import {
   GetContentRequest,
   GetContentResponse,
   GetNftsResponse,
+  LoggerLike,
   Logger,
   MediaClientConfig,
   MediaClientOptions,
   NftAsset,
   NftMetadata,
   mediaClientConfig,
+  GetStreamKeyRequest,
+  GetStreamKeyResponse,
 } from '.';
 
 export const defaultMediaClientOptions: MediaClientOptions = {
@@ -33,7 +36,7 @@ export class MediaSdkClient {
 
   public config: MediaClientConfig;
 
-  private logger: Logger;
+  private logger: LoggerLike;
 
   private freeportApi!: FreeportApiService;
 
@@ -142,6 +145,23 @@ export class MediaSdkClient {
    */
   public async getContent({ collectionAddress, nftId, asset }: GetContentRequest): Promise<GetContentResponse> {
     return this.freeportApi.getContent({ collectionAddress, nftId, asset });
+  }
+
+  /**
+   * Get a stream key to run server side decryption on an encrypted asset
+   * @param request.collectionAddress The address of the collection to check
+   * @param request.nftId The ID of the NFT to check
+   * @param request.bucketId The ID of the bucket to check
+   * @param request.cid The CID of the content to check
+   * @returns The encrypted stream key for the given asset
+   */
+  public async getStreamKey({
+    collectionAddress,
+    nftId,
+    bucketId,
+    cid,
+  }: GetStreamKeyRequest): Promise<GetStreamKeyResponse> {
+    return this.freeportApi.getStreamKey({ collectionAddress, nftId, bucketId, cid });
   }
 
   private static async initFreeportApi(client: MediaSdkClient, signer: Signer, options: MediaClientOptions) {

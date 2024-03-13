@@ -15,6 +15,8 @@ import {
   GetContentRequest,
   GetContentResponse,
   GetNftsResponse,
+  GetStreamKeyRequest,
+  GetStreamKeyResponse,
   getAuthMessageResponseSchema,
   getByAddressRequestSchema,
   getCanAccessRequestSchema,
@@ -24,9 +26,10 @@ import {
   getContentDekResponse,
   getContentRequest,
   getNftsResponseSchema,
+  getStreamKeyRequest,
 } from '../types';
 
-import { Logger, handleDebug, handleError } from './logger.service';
+import { LoggerLike, Logger, handleDebug, handleError } from './logger.service';
 
 import {
   WalletCredentials,
@@ -43,7 +46,7 @@ export const defaultFreeportApiOptions: FreeportApiClientOptions = {
 };
 
 export class FreeportApiService {
-  private logger: Logger;
+  private logger: LoggerLike;
 
   public instance!: AxiosInstance;
 
@@ -56,10 +59,7 @@ export class FreeportApiService {
 
   static async create(options: FreeportApiClientOptions = defaultFreeportApiOptions): Promise<FreeportApiService> {
     const client = new FreeportApiService(options);
-    client.instance = axios.create({
-      baseURL: options.freeportApiUrl,
-      timeout: 10000,
-    });
+    client.instance = axios.create({ baseURL: options.freeportApiUrl });
     client.authHeaders = undefined;
     if (!options.skipInitialHealthCheck) {
       await client.healthCheck();
@@ -237,6 +237,23 @@ export class FreeportApiService {
       .get(`/api/content/${collectionAddress}/${nftId}/${asset}`, { responseType: 'blob' })
       .then((res) => res.data)
       .then(handleDebug(this.logger, `Get Content for ${collectionAddress}/${nftId}/${asset}`))
+      .catch(handleError(this.logger));
+  }
+
+  /**
+   * Get the stream key for an encrypted server side video stream
+   * @param request.collectionAddress The address of the collection to check
+   * @param request.nftId The ID of the NFT to check
+   * @param request.bucketId The ID of the bucket to check
+   * @param request.cid The CID of the content to check
+   * @returns The encrypted stream key for the given asset
+   */
+  public async getStreamKey(request: GetStreamKeyRequest): Promise<GetStreamKeyResponse> {
+    const { collectionAddress, nftId, bucketId, cid } = getStreamKeyRequest.parse(request);
+    return this.instance
+      .get(`/api/video/streaming/${collectionAddress}/${nftId}/${bucketId}/${cid}/stream-key`)
+      .then((res) => res.data)
+      .then(handleDebug(this.logger, `Get Stream Key for ${collectionAddress}/${nftId}/${bucketId}/${cid}`))
       .catch(handleError(this.logger));
   }
 }

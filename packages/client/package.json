@@ -1,7 +1,7 @@
 {
   "name": "@cere/media-sdk-client",
   "description": "Media SDK client",
-  "version": "1.1.0",
+  "version": "1.4.0-rc.5",
   "type": "module",
   "repository": {
     "type": "git",
@@ -27,12 +27,12 @@
     "clean": "rimraf dist package"
   },
   "dependencies": {
-    "@cere/freeport-sc-sdk": "0.20.0",
     "axios": "^1.6.5",
     "ethers": "^5.7.2",
-    "pino": "^8.17.2",
-    "pino-pretty": "^10.3.1",
     "zod": "^3.22.4"
+  },
+  "peerDependencies": {
+    "@cere/freeport-sc-sdk": "0.20.2-legacy"
   },
   "publishConfig": {
     "access": "public"

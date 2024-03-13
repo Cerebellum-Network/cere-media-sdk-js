@@ -1,7 +1,7 @@
 {
   "name": "@cere/media-sdk-react",
   "description": "Media SDK React Hooks & Components",
-  "version": "1.1.0",
+  "version": "1.4.0-rc.5",
   "type": "module",
   "repository": {
     "type": "git",
@@ -15,7 +15,8 @@
     "types": "./dist/types/index.d.ts",
     "require": "./dist/index.cjs",
     "browser": "./dist/browser.js",
-    "default": "./dist/index.js"
+    "default": "./dist/index.js",
+    "css": "./dist/index.css"
   },
   "author": "Cere Network <contact@cere.io (https://www.cere.io/)",
   "license": "Apache-2.0",
@@ -27,18 +28,21 @@
     "clean": "rimraf dist package"
   },
   "dependencies": {
-    "@cere/media-sdk-client": "1.1.0",
+    "@cere/media-sdk-client": "1.4.0-rc.5",
     "blakejs": "^1.2.1",
+    "clsx": "^2.1.0",
     "ethers": "^5.7.2",
     "hls.js": "^1.4.13",
     "js-file-download": "^0.4.12",
     "plyr": "^3.6.12",
+    "react-h5-audio-player": "^3.9.1",
     "swr": "^2.2.4",
     "tweetnacl": "^1.0.3"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@cere/freeport-sc-sdk": "0.20.2-legacy",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "publishConfig": {
     "access": "public"

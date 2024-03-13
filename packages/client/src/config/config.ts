@@ -2,20 +2,20 @@ import { Deployment, MediaClientConfig, Tenant } from '../types';
 
 export const mediaClientConfig: Record<Deployment, Record<Tenant, MediaClientConfig>> = {
   local: {
-    davinci: { freeportApiUrl: 'http://localhost:3012' },
-    cerefans: { freeportApiUrl: 'http://localhost:3012' },
+    davinci: { freeportApiUrl: 'http://localhost:3012/' },
+    cerefans: { freeportApiUrl: 'http://localhost:3012/' },
   },
   development: {
-    davinci: { freeportApiUrl: 'https://dev-freeport-api.network-dev.aws.cere.io' },
+    davinci: { freeportApiUrl: 'https://dev-freeport-api.network-dev.aws.cere.io/' },
     cerefans: { freeportApiUrl: 'https://dev-freeport-api-cerefans.network-dev.aws.cere.io/' },
   },
   staging: {
-    davinci: { freeportApiUrl: '' },
-    cerefans: { freeportApiUrl: '' },
+    davinci: { freeportApiUrl: 'https://stage-freeport-api.network-stage.aws.cere.io/' },
+    cerefans: { freeportApiUrl: 'https://stage-freeport-api-cerefans.network-stage.aws.cere.io/' },
   },
   production: {
-    davinci: { freeportApiUrl: '' },
-    cerefans: { freeportApiUrl: '' },
+    davinci: { freeportApiUrl: 'https://prod-freeport-api.network.aws.cere.io/' },
+    cerefans: { freeportApiUrl: 'https://prod-freeport-api-cerefans.network.aws.cere.io/' },
   },
 };
 

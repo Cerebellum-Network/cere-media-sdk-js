@@ -1,7 +1,7 @@
 {
   "name": "playground",
   "private": true,
-  "version": "1.4.0-rc.5",
+  "version": "1.4.0-rc.6",
   "type": "module",
   "scripts": {
     "start": "vite --open",
@@ -11,14 +11,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@cere/media-sdk-client": "1.4.0-rc.5",
-    "@cere/media-sdk-react": "1.4.0-rc.5",
+    "@cere/embed-wallet": "^0.12.2",
+    "@cere/media-sdk-client": "1.4.0-rc.6",
+    "@cere/media-sdk-react": "1.4.0-rc.6",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/lab": "^5.0.0-alpha.160",
     "@mui/material": "^5.15.4",
     "@thirdweb-dev/react": "^4.3.1",
     "@thirdweb-dev/sdk": "^4.0.26",
+    "@thirdweb-dev/wallets": "^2.4.3",
     "ethers": "^5.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

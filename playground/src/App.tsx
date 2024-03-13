@@ -2,8 +2,10 @@ import cereLogo from '/cere.png';
 import './App.css';
 import { ConnectWallet, useSigner } from '@thirdweb-dev/react';
 import { Playground } from './components';
+import { useCereWalletConnect } from './cere-wallet';
 
 const App = () => {
+  useCereWalletConnect();
   const signer = useSigner();
 
   if (signer) {

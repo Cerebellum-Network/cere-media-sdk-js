@@ -22,10 +22,7 @@
     "package": "lerna run package",
     "release": "lerna version --conventional-graduate",
     "release:no-push": "npm run release -- --no-push --no-git-tag-version",
-    "release:rc": "lerna version --conventional-prerelease --no-git-tag-version && npm run add-versions",
-    "add-versions": "npm run add-legacy && npm run add-normal",
-    "add-legacy": "npm install @cere/freeport-sc-sdk@$npm_package_config_legacyVersion --no-save",
-    "add-normal": "npm install @cere/freeport-sc-sdk@$npm_package_config_normalVersion --no-save",
+    "release:rc": "lerna version --conventional-prerelease",
     "release:rc:no-push": "npm run release:rc -- --no-push --no-git-tag-version",
     "release:publish": "lerna publish from-package",
     "check-types": "tsc --noEmit",
@@ -48,10 +45,6 @@
   "peerDependencies": {
     "eslint": "^8.54.0",
     "prettier": "^3.1.0"
-  },
-  "config": {
-    "legacyVersion": "0.20.2-legacy",
-    "normalVersion": "0.20.2"
   },
   "workspaces": {
     "packages": [

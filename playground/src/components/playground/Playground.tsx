@@ -2,8 +2,7 @@ import { MediaSdkClientProvider } from '@cere/media-sdk-react';
 import { Box, Button } from '@mui/material';
 import { ConnectWallet, useSigner } from '@thirdweb-dev/react';
 import { PlaygroundNavigation } from './PlaygroundNavigation';
-import { SelectTenant } from '../select-tenant/SelectTenant';
-import { useSelectTenant } from '../select-tenant/UseSelectTenant';
+import { SelectTenant, useSelectTenant } from '../select-tenant';
 import { useState } from 'react';
 
 export const Playground = () => {

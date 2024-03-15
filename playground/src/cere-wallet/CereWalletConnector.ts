@@ -1,17 +1,28 @@
 import { Connector } from '@thirdweb-dev/wallets';
-import { EmbedWallet } from '@cere/embed-wallet';
+import { EmbedWallet, WalletInitOptions, WalletStatus } from '@cere/embed-wallet';
 import { Signer, providers } from 'ethers';
+
+export type TorusWalletOptions = WalletInitOptions & {
+  biconomyApiKey?: string;
+  completeUrl?: string;
+};
 
 export class CereWalletConnector extends Connector {
   private cereWallet?: EmbedWallet;
 
-  private idToken: string = '';
-
-  constructor(idToken?: string) {
+  constructor(private options: TorusWalletOptions) {
     super();
-    if (idToken) {
-      this.idToken = idToken;
-    }
+    this.cereWallet?.subscribe('status-update', (status: WalletStatus, prevStatus: WalletStatus) => {
+      if (prevStatus === 'connected' && status === 'ready') {
+        window.location.reload();
+      }
+    });
+  }
+
+  get status() {
+    if (!this.cereWallet) return;
+
+    return this.cereWallet.status;
   }
 
   async connect(): Promise<string> {
@@ -34,18 +45,21 @@ export class CereWalletConnector extends Connector {
           logoUrl: '/cere.png',
         },
       },
+      connectOptions: {
+        permissions: {
+          personal_sign: {}, // Automatically sign messages with the user's approve
+        },
+      },
     });
 
     if (this.cereWallet.status === 'connected') {
       console.log('Cere Wallet already connected');
-      return this.getAddress();
+      const publicKey = await this.getAddress();
+      localStorage.setItem('current-user-public-key', publicKey);
+      return publicKey;
     }
 
-    await this.cereWallet.connect({
-      idToken: this.idToken,
-      mode: 'redirect',
-      redirectUrl: window.location.href,
-    });
+    await this.cereWallet.connect();
     console.log('Cere Wallet connected');
     return this.getAddress();
   }

@@ -1,7 +1,7 @@
 {
   "name": "@cere/media-sdk-client",
   "description": "Media SDK client",
-  "version": "1.4.0-rc.11",
+  "version": "1.4.0-rc.12",
   "type": "module",
   "repository": {
     "type": "git",
@@ -32,7 +32,7 @@
     "zod": "^3.22.4"
   },
   "peerDependencies": {
-    "@cere/freeport-sc-sdk": "0.20.2"
+    "@cere/freeport-sc-sdk": "0.20.2-legacy"
   },
   "publishConfig": {
     "access": "public"

@@ -13,7 +13,7 @@ export const useCereWalletConnect = () => {
 
   useEffect(() => {
     if (!publicKey) return;
-    connect(cereWallet());
+    connect(cereWallet('dev'));
   }, [publicKey, connect]);
 
   return { publicKey };

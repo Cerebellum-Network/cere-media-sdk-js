@@ -9,6 +9,7 @@ import { OwnedNftsTab } from './OwnedNftsTab';
 import { MintedNftsTab } from './MintedNftsTab';
 import { VideoExample } from 'playground/src/components/video-example/VideoExample';
 import { AudioExample } from '../audio-example';
+import { ErrorReproduce } from './ErrorReproduce.tsx';
 
 export const PlaygroundNavigation = () => {
   const [value, setValue] = useState('1');
@@ -27,6 +28,7 @@ export const PlaygroundNavigation = () => {
             <Tab label="Minted Nfts" value="3" />
             <Tab label="Video Example" value="4" />
             <Tab label="Audio Example" value="5" />
+            <Tab label="Error reproduce" value="6" />
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -43,6 +45,9 @@ export const PlaygroundNavigation = () => {
         </TabPanel>
         <TabPanel value="5">
           <AudioExample />
+        </TabPanel>
+        <TabPanel value="6">
+          <ErrorReproduce />
         </TabPanel>
       </TabContext>
     </Box>

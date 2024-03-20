@@ -26,6 +26,7 @@ export const IosVideoPlayer = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const iosVideoRef = useRef<HTMLVideoElement | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const isVideoSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);

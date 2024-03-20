@@ -54,7 +54,22 @@ export const VideoPlayer = ({
       autoplay: videoOverrides.autoPlay,
     };
 
-    if (hlsEnabled && isVideoSupported) {
+    if (!isVideoSupported) {
+      return;
+    }
+
+    if (isIosHlsSupported) {
+      const video = iosVideoRef.current;
+      if (!video) return;
+      videoWrapper.appendChild(video);
+      video.src = src;
+      Object.assign(video, videoOverrides);
+      video.addEventListener('canplay', function () {
+        setIsLoading(false);
+      });
+    }
+
+    if (hlsEnabled) {
       const updateQuality = (newQuality: number) => {
         if (newQuality === 0) {
           hls.currentLevel = -1;
@@ -87,15 +102,6 @@ export const VideoPlayer = ({
 
       hls.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
       hls.loadSource(src);
-    } else if (hlsEnabled && isIosHlsSupported) {
-      const video = iosVideoRef.current;
-      if (!video) return;
-      videoWrapper.appendChild(video);
-      video.src = src;
-      Object.assign(video, videoOverrides);
-      video.addEventListener('canplay', function () {
-        setIsLoading(false);
-      });
     } else {
       const video = document.createElement('video');
       video.className = 'cere-video';

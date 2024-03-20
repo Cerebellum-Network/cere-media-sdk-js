@@ -9,6 +9,7 @@ import { OwnedNftsTab } from './OwnedNftsTab';
 import { MintedNftsTab } from './MintedNftsTab';
 import { VideoExample } from 'playground/src/components/video-example/VideoExample';
 import { AudioExample } from '../audio-example';
+import { ErrorReproduce } from './ErrorReproduce.tsx';
 
 export const PlaygroundNavigation = () => {
   const [value, setValue] = useState('1');
@@ -22,26 +23,30 @@ export const PlaygroundNavigation = () => {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Collections" value="1" />
-            <Tab label="Owned Nfts" value="2" />
-            <Tab label="Minted Nfts" value="3" />
-            <Tab label="Video Example" value="4" />
-            <Tab label="Audio Example" value="5" />
+            <Tab label="Error reproduce" value="1" />
+            <Tab label="Collections" value="2" />
+            <Tab label="Owned Nfts" value="3" />
+            <Tab label="Minted Nfts" value="4" />
+            <Tab label="Video Example" value="5" />
+            <Tab label="Audio Example" value="6" />
           </TabList>
         </Box>
         <TabPanel value="1">
-          <CollectionsTab />
+          <ErrorReproduce />
         </TabPanel>
         <TabPanel value="2">
-          <OwnedNftsTab />
+          <CollectionsTab />
         </TabPanel>
         <TabPanel value="3">
-          <MintedNftsTab />
+          <OwnedNftsTab />
         </TabPanel>
         <TabPanel value="4">
-          <VideoExample />
+          <MintedNftsTab />
         </TabPanel>
         <TabPanel value="5">
+          <VideoExample />
+        </TabPanel>
+        <TabPanel value="6">
           <AudioExample />
         </TabPanel>
       </TabContext>

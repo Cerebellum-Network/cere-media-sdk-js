@@ -22,19 +22,13 @@ export const VideoPlayer = ({
   loader = Hls.DefaultConfig.loader,
   className,
   loadingComponent,
-  type = 'video/mp4',
   videoOverrides = { crossOrigin: 'anonymous' },
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
-  const iosVideoRef = useRef<HTMLVideoElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const isVideoSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);
-  const isIosHlsSupported = useMemo(
-    () => document.createElement('video').canPlayType('application/vnd.apple.mpegurl') !== '',
-    [iosVideoRef],
-  );
 
   useEffect(() => {
     if (playerRef.current) return;
@@ -54,7 +48,11 @@ export const VideoPlayer = ({
       autoplay: videoOverrides.autoPlay,
     };
 
-    if (hlsEnabled && isVideoSupported) {
+    if (!isVideoSupported) {
+      return;
+    }
+
+    if (hlsEnabled) {
       const updateQuality = (newQuality: number) => {
         if (newQuality === 0) {
           hls.currentLevel = -1;
@@ -87,15 +85,6 @@ export const VideoPlayer = ({
 
       hls.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
       hls.loadSource(src);
-    } else if (hlsEnabled && isIosHlsSupported) {
-      const video = iosVideoRef.current;
-      if (!video) return;
-      videoWrapper.appendChild(video);
-      video.src = src;
-      Object.assign(video, videoOverrides);
-      video.addEventListener('canplay', function () {
-        setIsLoading(false);
-      });
     } else {
       const video = document.createElement('video');
       video.className = 'cere-video';
@@ -119,7 +108,7 @@ export const VideoPlayer = ({
     };
   }, [isVideoSupported, loader, src, wrapperRef]);
 
-  if (!isVideoSupported && !isIosHlsSupported) {
+  if (!isVideoSupported) {
     return (
       <div className="cere-video-wrapper flex items-center">
         <p className="w-full text-center">Your browser does not support playback of this type.</p>
@@ -127,7 +116,7 @@ export const VideoPlayer = ({
     );
   }
 
-  if (isVideoSupported && !isIosHlsSupported) {
+  if (isVideoSupported) {
     return (
       <div>
         <div className={clsx('cere-video-wrapper', className)} ref={wrapperRef} />
@@ -140,12 +129,4 @@ export const VideoPlayer = ({
       </div>
     );
   }
-
-  return (
-    <>
-      <video controls {...videoOverrides}>
-        <source src={src} type={hlsEnabled ? 'application/vnd.apple.mpegurl' : type} />
-      </video>
-    </>
-  );
 };

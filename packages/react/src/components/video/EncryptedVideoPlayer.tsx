@@ -3,6 +3,7 @@ import React, { VideoHTMLAttributes, useMemo } from 'react';
 import { useMediaClient, useServerSideUrl } from '../../hooks';
 
 import { HlsEncryptionLoader } from './HlsEncryptionLoader';
+import { IosVideoPlayer } from './IosVideoPlayer';
 import { VideoPlayer } from './VideoPlayer';
 
 export interface EncryptedVideoPlayerProps {
@@ -25,6 +26,10 @@ export const EncryptedVideoPlayer = ({
   ...props
 }: EncryptedVideoPlayerProps) => {
   const { client } = useMediaClient();
+  const isIosHlsSupported = useMemo(
+    () => document.createElement('video').canPlayType('application/vnd.apple.mpegurl') !== '',
+    [],
+  );
   const { url } = useServerSideUrl({ src, collectionAddress, nftId });
 
   const loader = useMemo(() => {
@@ -43,6 +48,9 @@ export const EncryptedVideoPlayer = ({
   }
 
   if (serverSide && url) {
+    if (isIosHlsSupported) {
+      return <IosVideoPlayer hlsEnabled src={url} {...props} loader={loader} />;
+    }
     return <VideoPlayer src={url} {...props} />;
   }
 

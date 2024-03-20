@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0-rc.13](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.12...v1.4.0-rc.13) (2024-03-20)
+
+**Note:** Version bump only for package @cere/media-sdk-eslint-config
+
 ## [1.4.0-rc.12](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.7...v1.4.0-rc.12) (2024-03-20)
 
 **Note:** Version bump only for package @cere/media-sdk-eslint-config

@@ -1,6 +1,3 @@
-import './plyr.css';
-import './styles.css';
-
 import clsx from 'clsx';
 import Hls, { HlsConfig } from 'hls.js';
 import Plyr from 'plyr';
@@ -16,7 +13,7 @@ interface VideoPlayerProps {
   videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
 }
 
-export const VideoPlayer = ({
+export const CustomVideoPlayer = ({
   src,
   hlsEnabled = true,
   loader = Hls.DefaultConfig.loader,
@@ -33,8 +30,12 @@ export const VideoPlayer = ({
   const isVideoSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);
   const isIosHlsSupported = useMemo(
     () => document.createElement('video').canPlayType('application/vnd.apple.mpegurl') !== '',
-    [iosVideoRef],
+    [],
   );
+
+  console.log('isVideoSupported', isVideoSupported);
+  console.log('isIosHlsSupported', isIosHlsSupported);
+  console.log('hlsEnabled', hlsEnabled);
 
   useEffect(() => {
     if (playerRef.current) return;
@@ -54,22 +55,7 @@ export const VideoPlayer = ({
       autoplay: videoOverrides.autoPlay,
     };
 
-    if (!isVideoSupported) {
-      return;
-    }
-
-    if (isIosHlsSupported) {
-      const video = iosVideoRef.current;
-      if (!video) return;
-      videoWrapper.appendChild(video);
-      video.src = src;
-      Object.assign(video, videoOverrides);
-      video.addEventListener('canplay', function () {
-        setIsLoading(false);
-      });
-    }
-
-    if (hlsEnabled) {
+    if (hlsEnabled && isVideoSupported && !isIosHlsSupported) {
       const updateQuality = (newQuality: number) => {
         if (newQuality === 0) {
           hls.currentLevel = -1;
@@ -102,6 +88,16 @@ export const VideoPlayer = ({
 
       hls.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
       hls.loadSource(src);
+    }
+    if (hlsEnabled && isIosHlsSupported) {
+      const video = iosVideoRef.current;
+      if (!video) return;
+      videoWrapper.appendChild(video);
+      video.src = src;
+      Object.assign(video, videoOverrides);
+      video.addEventListener('canplay', function () {
+        setIsLoading(false);
+      });
     } else {
       const video = document.createElement('video');
       video.className = 'cere-video';
@@ -116,62 +112,6 @@ export const VideoPlayer = ({
       video.addEventListener('suspend', () => setIsLoading(false));
     }
 
-    // if (hlsEnabled && isVideoSupported) {
-    //   const updateQuality = (newQuality: number) => {
-    //     if (newQuality === 0) {
-    //       hls.currentLevel = -1;
-    //     } else {
-    //       hls.levels.forEach((level, levelIndex) => {
-    //         if (level.height === newQuality) {
-    //           hls.currentLevel = levelIndex;
-    //         }
-    //       });
-    //     }
-    //   };
-    //
-    //   hls.on(Hls.Events.MANIFEST_PARSED, () => {
-    //     const availableQualities = hls.levels.map((l) => l.height);
-    //     plyrOptions.quality = {
-    //       default: -1, // auto
-    //       options: availableQualities,
-    //       forced: true,
-    //       onChange: (quality: number) => updateQuality(quality),
-    //     };
-    //     const video = document.createElement('video');
-    //     video.className = 'cere-video';
-    //     Object.assign(video, videoOverrides);
-    //     playerRef.current = video;
-    //     videoWrapper.appendChild(video);
-    //     hls.attachMedia(video);
-    //     const player = new Plyr(video, plyrOptions);
-    //     player.on('canplaythrough', () => setIsLoading(false));
-    //   });
-    //
-    //   hls.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
-    //   hls.loadSource(src);
-    // } else if (hlsEnabled && isIosHlsSupported) {
-    //   const video = iosVideoRef.current;
-    //   if (!video) return;
-    //   videoWrapper.appendChild(video);
-    //   video.src = src;
-    //   Object.assign(video, videoOverrides);
-    //   video.addEventListener('canplay', function () {
-    //     setIsLoading(false);
-    //   });
-    // } else {
-    //   const video = document.createElement('video');
-    //   video.className = 'cere-video';
-    //   playerRef.current = video;
-    //   videoWrapper.appendChild(video);
-    //   video.src = src;
-    //   Object.assign(video, videoOverrides);
-    //   const player = new Plyr(video, plyrOptions);
-    //   player.on('canplaythrough', () => setIsLoading(false));
-    //   video.addEventListener('error', () => setIsLoading(false));
-    //   video.addEventListener('stalled', () => setIsLoading(false));
-    //   video.addEventListener('suspend', () => setIsLoading(false));
-    // }
-
     return () => {
       hls.destroy();
       if (playerRef.current) {
@@ -179,7 +119,7 @@ export const VideoPlayer = ({
       }
       playerRef.current = null;
     };
-  }, [isVideoSupported, loader, src, wrapperRef]);
+  }, [hlsEnabled, isIosHlsSupported, isVideoSupported, loader, src, videoOverrides, wrapperRef]);
 
   if (!isVideoSupported && !isIosHlsSupported) {
     return (

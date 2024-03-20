@@ -1,6 +1,7 @@
 import { CereWallet } from './CereWallet';
+import { WalletEnvironment } from '@cere/embed-wallet';
 
-export const cereWallet = (idToken?: string) => {
+export const cereWallet = (env: WalletEnvironment) => {
   return {
     id: 'cere-wallet',
     meta: {
@@ -8,7 +9,7 @@ export const cereWallet = (idToken?: string) => {
       iconURL: '/cere.png',
     },
     create: () => {
-      return new CereWallet('cere-wallet', idToken);
+      return new CereWallet('cere-wallet', env);
     },
   };
 };

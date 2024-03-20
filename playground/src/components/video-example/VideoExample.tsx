@@ -6,10 +6,10 @@ export const VideoExample = () => {
   return <PublicDdcVideo />;
 };
 
-const collectionAddress = '0x0b785F2a098851646aa128aE4c1e2CE5B4Ee96bB';
-const nftId = 2;
+const collectionAddress = '0x328ce3f7d4f146aecd89b3bd0b6831e939192ebd';
+const nftId = 1;
 const assetIndex = 0;
-const src = 'https://cdn.testnet.cere.network/45/baebb4igwtqr7suw5qma2miqcminqtja5augjchg5wrhtet76k6yu7fjrji'; // davinci dev asset URL
+const src = 'https://cdn.testnet.cere.network/43/baebb4ihmch2ntqofidyasnbux7i6ls6gaihqy2il5xeqgq5ebrdglxurr4'; // davinci dev asset URL
 const cmsVideo = 'https://assets-cms-freeport.network.aws.cere.io/pexels_videos_2022395_1080p_d2a3c6053b.mp4';
 const publicDdcVideo =
   'https://cdn.testnet.cere.network/157/baebb4igap7odoisdnrrq4oqndu3e7uvtottjgbax7qi2ml6uuovikownba';

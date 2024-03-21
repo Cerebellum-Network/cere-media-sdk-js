@@ -1,7 +1,7 @@
 {
   "name": "@cere/media-sdk-react",
   "description": "Media SDK React Hooks & Components",
-  "version": "1.4.0-rc.15",
+  "version": "1.4.0-rc.16",
   "type": "module",
   "repository": {
     "type": "git",

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0-rc.19](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.16...v1.4.0-rc.19) (2024-03-22)
+
+### Reverts
+
+- Revert "Prepared for legacy release" ([d332232](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/d33223273ef7be3316bc3b9eb18b66b9095c8c73))
+
+## [1.4.0-rc.17](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.15...v1.4.0-rc.17) (2024-03-21)
+
+## [1.4.0-rc.15](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.14...v1.4.0-rc.15) (2024-03-20)
+
 ## [1.4.0-rc.17](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.16...v1.4.0-rc.17) (2024-03-22)
 
 ### Reverts

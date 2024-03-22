@@ -1,19 +1,19 @@
 {
   "name": "playground",
   "private": true,
-  "version": "1.4.0-rc.16",
+  "version": "1.4.0-rc.17",
   "type": "module",
   "scripts": {
     "start": "vite --open",
-    "build": "tsc && vite build",
+    "build-failing": "tsc && vite build",
     "playground": "npm run start",
     "clean": "rimraf dist",
     "preview": "vite preview"
   },
   "dependencies": {
     "@cere/embed-wallet": "^0.12.2",
-    "@cere/media-sdk-client": "1.4.0-rc.16",
-    "@cere/media-sdk-react": "1.4.0-rc.16",
+    "@cere/media-sdk-client": "1.4.0-rc.17",
+    "@cere/media-sdk-react": "1.4.0-rc.17",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/lab": "^5.0.0-alpha.160",

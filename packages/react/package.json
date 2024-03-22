@@ -40,7 +40,7 @@
     "tweetnacl": "^1.0.3"
   },
   "peerDependencies": {
-    "@cere/freeport-sc-sdk": "0.20.2",
+    "@cere/freeport-sc-sdk": "0.20.2-legacy",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

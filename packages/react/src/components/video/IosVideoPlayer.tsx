@@ -1,8 +1,10 @@
 import './plyr.css';
 import './styles.css';
 
+import clsx from 'clsx';
 import Hls, { HlsConfig } from 'hls.js';
-import { VideoHTMLAttributes, useEffect, useMemo, useRef } from 'react';
+import Plyr from 'plyr';
+import React, { useRef, useState, useEffect, useMemo } from 'react';
 
 interface VideoPlayerProps {
   src: string;
@@ -11,7 +13,7 @@ interface VideoPlayerProps {
   className?: string;
   loadingComponent?: React.ReactNode;
   type?: string;
-  videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
+  videoOverrides?: React.VideoHTMLAttributes<HTMLVideoElement>;
 }
 
 export const IosVideoPlayer = ({
@@ -20,10 +22,13 @@ export const IosVideoPlayer = ({
   loader = Hls.DefaultConfig.loader,
   type = 'video/mp4',
   videoOverrides = { crossOrigin: 'anonymous' },
+  className,
+  loadingComponent,
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
-  const iosVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const isVideoSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);
 
@@ -41,16 +46,52 @@ export const IosVideoPlayer = ({
     };
 
     const hls = new Hls(hlsOptions);
+    const plyrOptions: Plyr.Options = {
+      autoplay: videoOverrides.autoPlay,
+    };
 
-    if (!isVideoSupported) {
-      return;
+    if (isVideoSupported) {
+      const updateQuality = (newQuality: number) => {
+        if (newQuality === 0) {
+          hls.currentLevel = -1;
+        } else {
+          hls.levels.forEach((level, levelIndex) => {
+            if (level.height === newQuality) {
+              hls.currentLevel = levelIndex;
+            }
+          });
+        }
+      };
+
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        const availableQualities = hls.levels.map((l) => l.height);
+        plyrOptions.quality = {
+          default: -1, // auto
+          options: availableQualities,
+          forced: true,
+          onChange: (quality: number) => updateQuality(quality),
+        };
+        const video = document.createElement('video');
+        video.className = 'cere-video';
+        Object.assign(video, videoOverrides);
+        playerRef.current = video;
+        videoWrapper.appendChild(video);
+        hls.attachMedia(video);
+        const player = new Plyr(video, plyrOptions);
+        player.on('canplaythrough', () => setIsLoading(false));
+      });
+
+      hls.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
+      hls.loadSource(src);
+    } else {
+      const video = document.createElement('video');
+      video.className = 'cere-video';
+      Object.assign(video, videoOverrides);
+      video.src = src;
+      video.controls = true;
+      videoWrapper.appendChild(video);
+      video.addEventListener('loadeddata', () => setIsLoading(false));
     }
-
-    const video = iosVideoRef.current;
-    if (!video) return;
-    videoWrapper.appendChild(video);
-    video.src = src;
-    Object.assign(video, videoOverrides);
 
     return () => {
       hls.destroy();
@@ -59,13 +100,25 @@ export const IosVideoPlayer = ({
       }
       playerRef.current = null;
     };
-  }, [isVideoSupported, loader, src, wrapperRef]);
+  }, [isVideoSupported, loader, src, videoOverrides]);
+
+  if (isVideoSupported) {
+    return (
+      <div>
+        <div className={clsx('cere-video-wrapper', className)} ref={wrapperRef} />
+
+        {isLoading && (
+          <div className="loading-container">
+            {loadingComponent ? loadingComponent : <div className="loading-container">Loading video...</div>}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
-    <>
-      <video controls {...videoOverrides}>
-        <source src={src} type={hlsEnabled ? 'application/vnd.apple.mpegurl' : type} />
-      </video>
-    </>
+    <video controls {...videoOverrides}>
+      <source src={src} type={hlsEnabled ? 'application/vnd.apple.mpegurl' : type} />
+    </video>
   );
 };

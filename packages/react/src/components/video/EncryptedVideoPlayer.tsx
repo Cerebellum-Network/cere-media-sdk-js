@@ -26,10 +26,6 @@ export const EncryptedVideoPlayer = ({
   ...props
 }: EncryptedVideoPlayerProps) => {
   const { client } = useMediaClient();
-  const isIosHlsSupported = useMemo(
-    () => document.createElement('video').canPlayType('application/vnd.apple.mpegurl') !== '',
-    [],
-  );
   const { url } = useServerSideUrl({ src, collectionAddress, nftId });
 
   const loader = useMemo(() => {
@@ -48,10 +44,7 @@ export const EncryptedVideoPlayer = ({
   }
 
   if (serverSide && url) {
-    if (isIosHlsSupported) {
-      return <IosVideoPlayer hlsEnabled src={url} {...props} loader={loader} />;
-    }
-    return <VideoPlayer src={url} {...props} />;
+    return <IosVideoPlayer hlsEnabled src={url} {...props} loader={loader} />;
   }
 
   return <VideoPlayer src={src} loader={loader} {...props} />;

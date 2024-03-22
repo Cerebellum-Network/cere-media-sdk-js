@@ -3,12 +3,12 @@ import { ThirdwebProvider, en, localWallet, metamaskWallet, walletConnect } from
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
-import { theme } from "./components/theme";
+import { theme } from './components/theme';
 
 import './index.css';
 import './components/css/plyr.css';
 import './components/css/styles.css';
-import { cereWallet } from "./cere-wallet";
+import { cereWallet } from './cere-wallet';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

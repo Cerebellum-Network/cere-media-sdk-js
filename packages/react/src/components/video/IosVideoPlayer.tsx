@@ -83,14 +83,6 @@ export const IosVideoPlayer = ({
 
       hls.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
       hls.loadSource(src);
-    } else {
-      const video = document.createElement('video');
-      video.className = 'cere-video';
-      Object.assign(video, videoOverrides);
-      video.src = src;
-      video.controls = true;
-      videoWrapper.appendChild(video);
-      video.addEventListener('loadeddata', () => setIsLoading(false));
     }
 
     return () => {

@@ -71,17 +71,9 @@ const NFTAsset = ({ nft, index }: { nft: NFT; index: number }) => {
       );
     }
 
-    return isIOSWithHlsSupport ? (
+    return (
       <EncryptedVideoPlayer
         serverSide={isIOSWithHlsSupport}
-        src={asset.asset}
-        collectionAddress={nft.collection.address}
-        nftId={nft.nftId}
-        assetIndex={index}
-      />
-    ) : (
-      <EncryptedVideoPlayer
-        serverSide={true}
         src={asset.asset}
         collectionAddress={nft.collection.address}
         nftId={nft.nftId}

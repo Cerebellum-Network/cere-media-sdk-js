@@ -12,7 +12,7 @@ import { AudioExample } from '../audio-example';
 import { ReproduceIssue } from './ReproduceIssue.tsx';
 
 export const PlaygroundNavigation = () => {
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState('6');
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);

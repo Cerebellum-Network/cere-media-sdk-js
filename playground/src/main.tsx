@@ -1,5 +1,6 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ThirdwebProvider, en, localWallet, metamaskWallet, walletConnect } from '@thirdweb-dev/react';
+import { PolygonAmoyTestnet } from '@thirdweb-dev/chains';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
@@ -15,7 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ThirdwebProvider
-        activeChain="mumbai"
+        activeChain={PolygonAmoyTestnet}
         autoSwitch
         autoConnect
         locale={en()}

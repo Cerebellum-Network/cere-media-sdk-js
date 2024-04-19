@@ -20,8 +20,8 @@ export const mediaClientConfig: Record<Deployment, Record<Tenant, MediaClientCon
 };
 
 export const networkConfig: Record<Deployment, string> = {
-  local: 'https://polygon-mumbai.blockpi.network/v1/rpc/public',
-  development: 'https://polygon-mumbai.blockpi.network/v1/rpc/public',
-  staging: 'https://polygon-mumbai.blockpi.network/v1/rpc/public',
+  local: 'https://polygon-amoy.blockpi.network/v1/rpc/public',
+  development: 'https://polygon-amoy.blockpi.network/v1/rpc/public',
+  staging: 'https://polygon-amoy.blockpi.network/v1/rpc/public',
   production: 'https://polygon-mainnet.blockpi.network/v1/rpc/public',
 };

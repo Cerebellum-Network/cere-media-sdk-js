@@ -15,7 +15,7 @@ export const useCereWalletConnect = () => {
 
   useEffect(() => {
     if (!sessionId) return;
-    connect(cereWallet(sessionId));
+    void connect(cereWallet(sessionId));
   }, [sessionId, connect]);
 
   return { sessionId };

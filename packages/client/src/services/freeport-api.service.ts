@@ -41,7 +41,7 @@ import {
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
   logger: false,
-  freeportApiUrl: mediaClientConfig.development.cerefans.freeportApiUrl,
+  freeportApiUrl: mediaClientConfig.development.davinci.freeportApiUrl,
   skipInitialHealthCheck: false,
 };
 

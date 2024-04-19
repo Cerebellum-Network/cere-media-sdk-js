@@ -8,7 +8,7 @@ export const useEncryptedContent = (nft: NFT, metadata: NftMetadata, assetIndex:
 
   const asset = metadata?.assets[assetIndex];
   const contentType = asset?.contentType;
-  const identifier = `asset-${assetIndex}`;
+  const identifier = `asset-${asset.asset.split('/').pop()}`;
 
   const isVideo = asset?.contentType && ['video/mp4', 'video/webm', 'video/ogg'].includes(contentType);
 

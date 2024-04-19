@@ -22,14 +22,14 @@ export interface ContentViewProps {
 export const ContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => {
   const { client, isLoading: isLoadingClient } = useMediaClient();
   const { content, isLoading, isVideo, contentType, asset } = useEncryptedContent(nft, metadata, assetIndex);
-
+  const assetCid = asset.asset.split('/').pop();
   const loader = useMemo(
     () =>
       isVideo && !!client
         ? HlsEncryptionLoader.create({
             collectionAddress: nft.collection.address,
             nftId: nft.nftId,
-            assetId: `asset-${assetIndex}`,
+            assetId: `asset-${assetCid}`,
             client,
           })
         : undefined,

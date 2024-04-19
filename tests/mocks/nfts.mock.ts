@@ -12,9 +12,9 @@ export const mockCollection: Collection = {
 };
 
 export const mockNft: NFT = {
-  id: 243,
-  nftId: 1,
-  supply: 100,
+  id: 61,
+  nftId: 3,
+  supply: 3,
   collection: mockCollection,
 };
 

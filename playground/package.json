@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite --open",
-    "build-failing": "tsc && vite build",
+    "build": "tsc && vite build",
     "playground": "npm run start",
     "clean": "rimraf dist",
     "preview": "vite preview"

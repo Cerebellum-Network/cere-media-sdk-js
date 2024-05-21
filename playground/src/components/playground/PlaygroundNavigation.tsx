@@ -9,9 +9,10 @@ import { OwnedNftsTab } from './OwnedNftsTab';
 import { MintedNftsTab } from './MintedNftsTab';
 import { VideoExample } from 'playground/src/components/video-example/VideoExample';
 import { AudioExample } from '../audio-example';
+import { SolanaHackaton } from './SolanaHackaton.tsx';
 
 export const PlaygroundNavigation = () => {
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState('0');
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -22,6 +23,7 @@ export const PlaygroundNavigation = () => {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab label="Solana Hackaton" value="0" />
             <Tab label="Collections" value="1" />
             <Tab label="Owned Nfts" value="2" />
             <Tab label="Minted Nfts" value="3" />
@@ -29,6 +31,9 @@ export const PlaygroundNavigation = () => {
             <Tab label="Audio Example" value="5" />
           </TabList>
         </Box>
+        <TabPanel value="0">
+          <SolanaHackaton />
+        </TabPanel>
         <TabPanel value="1">
           <CollectionsTab />
         </TabPanel>

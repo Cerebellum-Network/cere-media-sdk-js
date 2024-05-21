@@ -80,9 +80,10 @@ export class FreeportApiService {
    */
   public async authenticate(signer: Signer): Promise<void> {
     const credentialCache = getCachedCredentials();
+    // @ts-ignore
+    const accounts = await signer.provider?.provider?.request({ method: 'solana_accounts' });
 
-    const address = await signer.getAddress();
-    const message = await this.getAuthMessage({ address });
+    const message = await this.getAuthMessage({ address: accounts[0] });
 
     if (credentialCache) {
       if (getAddress(credentialCache['x-public-key']) !== getAddress(address)) {
@@ -104,12 +105,16 @@ export class FreeportApiService {
     }
 
     this.logger.debug('Awaiting signature');
-    const signature = await signer.signMessage(message);
+    // @ts-ignore
+    const signature = await signer.provider?.provider?.request({
+      method: 'solana_signMessage',
+      params: [null, message],
+    });
 
     const credentials: WalletCredentials = {
       'x-message': message,
       'x-signature': signature,
-      'x-public-key': address,
+      'x-public-key': accounts[0],
     };
     this.logger.debug('Authentication message signed', { credentials });
 

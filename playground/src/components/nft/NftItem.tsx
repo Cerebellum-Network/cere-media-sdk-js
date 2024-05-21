@@ -55,12 +55,31 @@ export const NftItem = ({ nft }: { nft: NFT }) => {
         <Typography fontWeight="bold">Assets</Typography>
         <Box display="flex" flexDirection="column" gap="5px" width="100%" textAlign="left">
           {metadata?.assets.map((asset, index) => {
-            return <AssetItem nft={nft} metadata={metadata} asset={asset} index={index} />;
+            return <AssetItem key={asset.preview} nft={nft} metadata={metadata} asset={asset} index={index} />;
           })}
         </Box>
       </Box>
     </Box>
   );
+};
+
+const useCustomDownloadContent = ({
+  asset,
+  collectionAddress,
+  nftId,
+  isPreview = false,
+}: {
+  asset: NftAsset;
+  nftId: number;
+  collectionAddress: string;
+  isPreview?: boolean;
+}) => {
+  const { download, isLoading } = useDownloadContent(
+    { nftId: Number(nftId), collection: { address: collectionAddress } } as NFT,
+    `${isPreview ? 'preview' : 'asset'}-${asset.asset.split('/').pop()}`,
+  );
+
+  return { download, isLoading };
 };
 
 const AssetItem = ({
@@ -74,8 +93,17 @@ const AssetItem = ({
   asset: NftAsset;
   index: number;
 }) => {
-  const { download: downloadPreview, isLoading: isDownloadingPreview } = useDownloadContent(nft, `preview-${index}`);
-  const { download: downloadAsset, isLoading: isDownloadingAsset } = useDownloadContent(nft, `asset-${index}`);
+  const { download: downloadPreview, isLoading: isDownloadingPreview } = useCustomDownloadContent({
+    nftId: nft.nftId,
+    collectionAddress: nft.collection.address,
+    asset,
+    isPreview: true,
+  });
+  const { download: downloadAsset, isLoading: isDownloadingAsset } = useCustomDownloadContent({
+    nftId: nft.nftId,
+    collectionAddress: nft.collection.address,
+    asset,
+  });
 
   return (
     <Box

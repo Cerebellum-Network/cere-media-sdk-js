@@ -5,19 +5,20 @@
   "type": "module",
   "scripts": {
     "start": "vite --open",
-    "build-failing": "tsc && vite build",
+    "build": "tsc && vite build",
     "playground": "npm run start",
     "clean": "rimraf dist",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@cere/embed-wallet": "^0.12.2",
+    "@cere/embed-wallet": "0.17.0",
     "@cere/media-sdk-client": "1.4.1",
     "@cere/media-sdk-react": "1.4.1",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/lab": "^5.0.0-alpha.160",
     "@mui/material": "^5.15.4",
+    "@thirdweb-dev/chains": "^0.1.96",
     "@thirdweb-dev/react": "^4.3.1",
     "@thirdweb-dev/sdk": "^4.0.26",
     "@thirdweb-dev/wallets": "^2.4.3",

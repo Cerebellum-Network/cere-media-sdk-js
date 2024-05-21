@@ -24,8 +24,8 @@ export class CereWalletConnector extends Connector {
       env: 'dev',
       popupMode: 'modal',
       network: {
-        host: 'https://polygon-mumbai.infura.io/v3/cba6e957aca549d9bf19c938a3d2548a',
-        chainId: 80001,
+        host: 'https://polygon-amoy.infura.io/v3/cba6e957aca549d9bf19c938a3d2548a',
+        chainId: 80002,
       },
       context: {
         app: {

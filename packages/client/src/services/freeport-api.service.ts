@@ -86,7 +86,7 @@ export class FreeportApiService {
     const message = await this.getAuthMessage({ address: accounts[0] });
 
     if (credentialCache) {
-      if (getAddress(credentialCache['x-public-key']) !== getAddress(address)) {
+      if (getAddress(credentialCache['x-public-key']) !== getAddress(accounts[0])) {
         // Accounts have changed since the last time credentials were generated
         clearCachedCredentials();
         this.logger.debug('Cached credentials do not match signer address');

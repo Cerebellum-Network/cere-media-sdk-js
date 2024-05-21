@@ -1,6 +1,6 @@
 {
   "name": "@cere/media-sdk-eslint-config",
-  "version": "1.4.0",
+  "version": "1.4.2-rc.5",
   "main": "index.js",
   "private": true,
   "author": "Cere Network <contact@cere.io (https://www.cere.io/)",

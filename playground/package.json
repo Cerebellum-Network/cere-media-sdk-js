@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@cere/embed-wallet": "0.17.0",
+    "@cere/embed-wallet": "0.18.2",
     "@cere/media-sdk-client": "1.4.1",
     "@cere/media-sdk-react": "1.4.1",
     "@emotion/react": "^11.11.3",

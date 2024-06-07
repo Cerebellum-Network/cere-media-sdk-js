@@ -11,7 +11,7 @@ import { VideoExample } from 'playground/src/components/video-example/VideoExamp
 import { AudioExample } from '../audio-example';
 
 export const PlaygroundNavigation = () => {
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState('0');
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -22,6 +22,7 @@ export const PlaygroundNavigation = () => {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab label="New tab" value="0" />
             <Tab label="Collections" value="1" />
             <Tab label="Owned Nfts" value="2" />
             <Tab label="Minted Nfts" value="3" />
@@ -29,6 +30,9 @@ export const PlaygroundNavigation = () => {
             <Tab label="Audio Example" value="5" />
           </TabList>
         </Box>
+        <TabPanel value="0">
+          <CollectionsTab />
+        </TabPanel>
         <TabPanel value="1">
           <CollectionsTab />
         </TabPanel>

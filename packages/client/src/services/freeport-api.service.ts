@@ -1,6 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { Signer } from 'ethers';
-import { getAddress } from 'ethers/lib/utils';
+import { Signer, utils } from 'ethers';
 
 import { mediaClientConfig } from '../config';
 import {
@@ -38,6 +37,8 @@ import {
   hoursToMilliseconds,
   setCachedCredentials,
 } from '.';
+
+const { getAddress } = utils;
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
   logger: false,
@@ -135,14 +136,12 @@ export class FreeportApiService {
    */
   public async getAuthMessage(request: GetByAddressRequest): Promise<string> {
     const { address } = getByAddressRequestSchema.parse(request);
-    const response = await this.instance
+    return this.instance
       .get(`/api/wallet-auth/auth-message?walletPublicKey=${address}`)
       .then((res) => res.data)
       .then(getAuthMessageResponseSchema.parse)
       .then(handleDebug(this.logger, `Get Auth Message for ${address}`))
       .catch(handleError(this.logger));
-
-    return response;
   }
 
   /**

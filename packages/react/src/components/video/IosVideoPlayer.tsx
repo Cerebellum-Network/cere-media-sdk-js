@@ -13,7 +13,7 @@ interface VideoPlayerProps {
   className?: string;
   loadingComponent?: React.ReactNode;
   type?: string;
-  videoOverrides?: React.VideoHTMLAttributes<HTMLVideoElement>;
+  videoOverrides?: any;
 }
 
 export const IosVideoPlayer = ({

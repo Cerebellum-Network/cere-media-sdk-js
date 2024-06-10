@@ -38,6 +38,8 @@ import {
   setCachedCredentials,
 } from '.';
 
+const { getAddress } = utils;
+
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
   logger: false,
   freeportApiUrl: mediaClientConfig.development.davinci.freeportApiUrl,
@@ -79,14 +81,12 @@ export class FreeportApiService {
    */
   public async authenticate(signer: Signer): Promise<void> {
     const credentialCache = getCachedCredentials();
-    // @ts-ignore
-    const accounts = await signer.provider?.provider?.request({ method: 'solana_accounts' });
 
     const address = await signer.getAddress();
-    const message = await this.getAuthMessage({ address: accounts[0] });
+    const message = await this.getAuthMessage({ address });
 
     if (credentialCache) {
-      if (utils.getAddress(credentialCache['x-public-key']) !== utils.getAddress(address)) {
+      if (getAddress(credentialCache['x-public-key']) !== getAddress(address)) {
         // Accounts have changed since the last time credentials were generated
         clearCachedCredentials();
         this.logger.debug('Cached credentials do not match signer address');
@@ -105,16 +105,12 @@ export class FreeportApiService {
     }
 
     this.logger.debug('Awaiting signature');
-    // @ts-ignore
-    const signature = await signer.provider?.provider?.request({
-      method: 'solana_signMessage',
-      params: [null, message],
-    });
+    const signature = await signer.signMessage(message);
 
     const credentials: WalletCredentials = {
       'x-message': message,
       'x-signature': signature,
-      'x-public-key': accounts[0],
+      'x-public-key': address,
     };
     this.logger.debug('Authentication message signed', { credentials });
 
@@ -140,14 +136,12 @@ export class FreeportApiService {
    */
   public async getAuthMessage(request: GetByAddressRequest): Promise<string> {
     const { address } = getByAddressRequestSchema.parse(request);
-    const response = await this.instance
+    return this.instance
       .get(`/api/wallet-auth/auth-message?walletPublicKey=${address}`)
       .then((res) => res.data)
       .then(getAuthMessageResponseSchema.parse)
       .then(handleDebug(this.logger, `Get Auth Message for ${address}`))
       .catch(handleError(this.logger));
-
-    return response;
   }
 
   /**

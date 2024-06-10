@@ -83,6 +83,7 @@ export class FreeportApiService {
     // @ts-ignore
     const accounts = await signer.provider?.provider?.request({ method: 'solana_accounts' });
 
+    const address = await signer.getAddress();
     const message = await this.getAuthMessage({ address: accounts[0] });
 
     if (credentialCache) {

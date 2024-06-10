@@ -58,6 +58,10 @@ jobs:
       - name: Check types
         run: npm run check-types:ci
 
+      - name: Run integration tests
+        if: ${{ !inputs.skipTests }}
+        run: npm run test:ci
+
       - name: Prepare pacakges for publish
         run: npm run package
 

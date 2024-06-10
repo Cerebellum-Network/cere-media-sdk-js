@@ -30,7 +30,7 @@ export const NftPreview = ({
   chainNamespace: Web3authChainNamespace;
 }) => {
   return (
-    <Box sx={{ maxWidth: '400px', marginLeft: '20px' }}>
+    <Box sx={{ maxWidth: '400px', height: 'fit-content', marginLeft: '20px' }}>
       <Image src={asset.preview} />
       <Typography>{title}</Typography>
       <Typography variant="caption">{description}</Typography>

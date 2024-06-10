@@ -40,6 +40,12 @@ export class CereWallet {
         chainId: 80002,
       },
       env: 'dev',
+      // connectOptions: {
+      //   permissions: {
+      //     personal_sign: {},
+      //     solana_signMessage: {},
+      //   },
+      // },
     });
   }
 

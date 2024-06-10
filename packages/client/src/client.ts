@@ -81,8 +81,6 @@ export class MediaSdkClient {
    * @returns The DEK for the given NFT's content
    */
   async getContentDek({ collectionAddress, nftId, asset }: GetContentDekRequest): Promise<GetContentDekResponse> {
-    await this.freeportApi.authenticate(this.signer);
-
     return this.freeportApi.getContentDek({ collectionAddress, nftId, asset });
   }
 
@@ -102,8 +100,6 @@ export class MediaSdkClient {
     chainNamespace,
     chainId,
   }: GetContentRequest): Promise<GetContentResponse> {
-    await this.freeportApi.authenticate(this.signer);
-
     return this.freeportApi.getContent({ collectionAddress, nftId, asset, chainNamespace, chainId });
   }
 
@@ -121,8 +117,6 @@ export class MediaSdkClient {
     bucketId,
     cid,
   }: GetStreamKeyRequest): Promise<GetStreamKeyResponse> {
-    await this.freeportApi.authenticate(this.signer);
-
     return this.freeportApi.getStreamKey({ collectionAddress, nftId, bucketId, cid });
   }
 

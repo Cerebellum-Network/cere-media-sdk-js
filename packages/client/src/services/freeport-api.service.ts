@@ -1,6 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { Signer } from 'ethers';
-import { getAddress } from 'ethers/lib/utils';
+import { Signer, utils } from 'ethers';
 
 import { mediaClientConfig } from '../config';
 import {
@@ -87,7 +86,7 @@ export class FreeportApiService {
     const message = await this.getAuthMessage({ address: accounts[0] });
 
     if (credentialCache) {
-      if (getAddress(credentialCache['x-public-key']) !== getAddress(address)) {
+      if (utils.getAddress(credentialCache['x-public-key']) !== utils.getAddress(address)) {
         // Accounts have changed since the last time credentials were generated
         clearCachedCredentials();
         this.logger.debug('Cached credentials do not match signer address');

@@ -9,6 +9,7 @@ import { theme } from './components/theme';
 import './index.css';
 import './components/css/plyr.css';
 import './components/css/styles.css';
+import { WalletProvider } from './cere-wallet/wallet-context.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -21,7 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         locale={en()}
         supportedWallets={[metamaskWallet(), walletConnect(), localWallet()]}
       >
-        <App />
+        <WalletProvider>
+          <App />
+        </WalletProvider>
       </ThirdwebProvider>
     </ThemeProvider>
   </React.StrictMode>,

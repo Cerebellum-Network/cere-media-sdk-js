@@ -1,5 +1,6 @@
-import { providers } from "ethers";
-import { SignerInterface, SignerOptions, WalletEvent, WalletStatus } from "@cere/embed-wallet";
+import { providers, Signer } from 'ethers';
+import { WalletEvent, WalletStatus } from '@cere/embed-wallet';
+import { Web3authChainNamespace } from '@cere/media-sdk-client';
 
 export interface IWalletConnector {
   preload?(): Promise<unknown>;
@@ -8,6 +9,6 @@ export interface IWalletConnector {
   disconnect?(): Promise<void>;
   openWallet?(): Promise<void>;
   isNewUser?(): Promise<boolean | undefined>;
-  getWalletSigner?(addressOrOptions?: SignerOptions | string): SignerInterface | undefined;
+  getWalletSigner?(chainNamespace: Web3authChainNamespace): Signer | undefined;
   subscribe(event: WalletEvent, handler: (status: WalletStatus, prevStatus: WalletStatus) => void): void;
 }

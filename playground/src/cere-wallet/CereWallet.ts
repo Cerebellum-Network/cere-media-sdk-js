@@ -1,5 +1,16 @@
-import { EmbedWallet, WalletEvent, WalletStatus } from "@cere/embed-wallet";
-import { Signer, providers, ethers } from "ethers";
+import { EmbedWallet, WalletAccountType, WalletEvent, WalletStatus } from '@cere/embed-wallet';
+import { providers, ethers, Signer } from 'ethers';
+import { Web3authChainNamespace } from '@cere/media-sdk-client';
+
+const chainNamespaceToAccountType: Record<Web3authChainNamespace, WalletAccountType> = {
+  [Web3authChainNamespace.EIP155]: 'ethereum',
+  [Web3authChainNamespace.SOLANA]: 'solana',
+  [Web3authChainNamespace.CERE]: 'ed25519',
+};
+
+const getWalletAccountType = (chainNamespace: Web3authChainNamespace): WalletAccountType => {
+  return chainNamespaceToAccountType[chainNamespace];
+};
 
 export class CereWallet {
   private wallet = new EmbedWallet();
@@ -10,7 +21,7 @@ export class CereWallet {
     return this.wallet.status;
   }
 
-  async init(){
+  async init() {
     console.log('torus status', this.status);
     if (this.status !== 'not-ready') {
       return;
@@ -23,7 +34,6 @@ export class CereWallet {
           url: window.origin,
           logoUrl: '/cere.png',
         },
-
       },
       network: {
         host: 'https://polygon-amoy.infura.io/v3/cba6e957aca549d9bf19c938a3d2548a',
@@ -31,7 +41,6 @@ export class CereWallet {
       },
       env: 'dev',
     });
-
   }
 
   async connect() {
@@ -39,7 +48,7 @@ export class CereWallet {
       return this.getAddress();
     }
 
-    await  this.wallet?.isReady;
+    await this.wallet?.isReady;
 
     await this.wallet?.connect();
 
@@ -77,10 +86,9 @@ export class CereWallet {
     return true;
   }
 
-  isReady(): Promise<unknown> {
-    return this.wallet.isReady.then(() => null);
+  isReady() {
+    return this.wallet.isReady;
   }
-
 
   getStatus(): WalletStatus {
     console.log(this.wallet);
@@ -89,5 +97,10 @@ export class CereWallet {
 
   subscribe(event: WalletEvent, handler: (status: WalletStatus, prevStatus: WalletStatus) => void) {
     return this.wallet.subscribe(event, handler);
+  }
+
+  getWalletSigner(chainNamespace: Web3authChainNamespace): Signer {
+    const type = getWalletAccountType(chainNamespace);
+    return this.wallet.getSigner({ type }) as unknown as Signer;
   }
 }

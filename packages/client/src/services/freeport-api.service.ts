@@ -1,48 +1,39 @@
 import axios, { AxiosInstance } from 'axios';
 import { Signer } from 'ethers';
-import { getAddress } from 'ethers/lib/utils';
 
 import { mediaClientConfig } from '../config';
 import {
   AuthHeaders,
   FreeportApiClientOptions,
-  GetByAddressRequest,
-  GetCanAccessRequest,
-  GetCanAccessResponse,
-  GetCollectionsResponse,
-  GetContentDekRequest,
-  GetContentDekResponse,
-  GetContentRequest,
-  GetContentResponse,
-  GetNftsResponse,
-  GetStreamKeyRequest,
-  GetStreamKeyResponse,
   getAuthMessageResponseSchema,
+  GetByAddressRequest,
   getByAddressRequestSchema,
+  GetCanAccessRequest,
   getCanAccessRequestSchema,
+  GetCanAccessResponse,
   getCanAccessResponseSchema,
-  getCollectionsResponseSchema,
+  GetContentDekRequest,
   getContentDekRequest,
+  GetContentDekResponse,
   getContentDekResponse,
+  GetContentRequest,
   getContentRequest,
-  getNftsResponseSchema,
+  GetContentResponse,
+  GetStreamKeyRequest,
   getStreamKeyRequest,
+  GetStreamKeyResponse,
 } from '../types';
+import { Web3authChainNamespace } from '../types/chain-namespace';
 
-import { LoggerLike, Logger, handleDebug, handleError } from './logger.service';
-
-import {
-  WalletCredentials,
-  clearCachedCredentials,
-  getCachedCredentials,
-  hoursToMilliseconds,
-  setCachedCredentials,
-} from '.';
+import { handleDebug, handleError, Logger, LoggerLike } from './logger.service';
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
+  chainId: '',
+  chainNamespace: Web3authChainNamespace.EIP155,
   logger: false,
   freeportApiUrl: mediaClientConfig.development.davinci.freeportApiUrl,
   skipInitialHealthCheck: false,
+  signer: undefined,
 };
 
 export class FreeportApiService {
@@ -52,15 +43,25 @@ export class FreeportApiService {
 
   private authHeaders?: AuthHeaders;
 
+  private signer?: Signer;
+
+  private chainId: string;
+
+  private chainNamespace: Web3authChainNamespace;
+
   constructor(options: FreeportApiClientOptions) {
+    this.chainId = options.chainId;
+    this.chainNamespace = options.chainNamespace;
     this.logger = Logger('FreeportApi', options.logger);
     this.logger.debug('FreeportApi initialized');
+    this.signer = options.signer;
   }
 
   static async create(options: FreeportApiClientOptions = defaultFreeportApiOptions): Promise<FreeportApiService> {
     const client = new FreeportApiService(options);
     client.instance = axios.create({ baseURL: options.freeportApiUrl });
     client.authHeaders = undefined;
+    client.signer = options.signer;
     if (!options.skipInitialHealthCheck) {
       await client.healthCheck();
     }
@@ -79,34 +80,17 @@ export class FreeportApiService {
    * @param signer The signer to use to sign the auth message
    */
   public async authenticate(signer: Signer): Promise<void> {
-    const credentialCache = getCachedCredentials();
-
-    const address = await signer.getAddress();
+    const address = await signer?.getAddress();
     const message = await this.getAuthMessage({ address });
-
-    if (credentialCache) {
-      if (getAddress(credentialCache['x-public-key']) !== getAddress(address)) {
-        // Accounts have changed since the last time credentials were generated
-        clearCachedCredentials();
-        this.logger.debug('Cached credentials do not match signer address');
-      } else {
-        // 1 hour expiry on credentials has passed
-        const newTime = message.split(' ').pop();
-        const cachedTime = credentialCache['x-message'].split(' ').pop();
-        if (Number(newTime) - Number(cachedTime) < hoursToMilliseconds(1)) {
-          this.logger.debug('Using cached credentials');
-          this.authHeaders = credentialCache;
-          Object.assign(this.instance.defaults.headers, this.authHeaders);
-          return;
-        }
-        this.logger.debug('Cached credentials have expired');
-      }
-    }
 
     this.logger.debug('Awaiting signature');
     const signature = await signer.signMessage(message);
 
-    const credentials: WalletCredentials = {
+    const credentials: {
+      ['x-message']: string;
+      ['x-signature']: string;
+      ['x-public-key']: string;
+    } = {
       'x-message': message,
       'x-signature': signature,
       'x-public-key': address,
@@ -114,7 +98,6 @@ export class FreeportApiService {
     this.logger.debug('Authentication message signed', { credentials });
 
     this.authHeaders = credentials;
-    setCachedCredentials(credentials);
     Object.assign(this.instance.defaults.headers, this.authHeaders);
 
     this.logger.debug('FreeportApi authenticated');
@@ -143,51 +126,6 @@ export class FreeportApiService {
       .catch(handleError(this.logger));
 
     return response;
-  }
-
-  /**
-   * Get all of the collections for a given address
-   * @param request.address The address to get collections for
-   * @returns The collections deployed by the given address
-   */
-  public async getCollections(request: GetByAddressRequest): Promise<GetCollectionsResponse> {
-    const { address } = getByAddressRequestSchema.parse(request);
-    return this.instance
-      .get(`/api/wallet/${address}/collections`)
-      .then((res) => res.data)
-      .then(getCollectionsResponseSchema.parse)
-      .then(handleDebug(this.logger, `Get Collections for ${address}`))
-      .catch(handleError(this.logger));
-  }
-
-  /**
-   * Get all of the NFTs owned by a given address
-   * @param request.address The address to get NFTs for
-   * @returns The NFTs owned by the given address
-   */
-  public async getOwnedNfts(request: GetByAddressRequest): Promise<GetNftsResponse> {
-    const { address } = getByAddressRequestSchema.parse(request);
-    return this.instance
-      .get(`/api/wallet/${address}/owned`)
-      .then((res) => res.data)
-      .then(getNftsResponseSchema.parse)
-      .then(handleDebug(this.logger, `Get Owned NFTs for ${address}`))
-      .catch(handleError(this.logger));
-  }
-
-  /**
-   * Get all of the NFTs minted by a given address
-   * @param request.address The address to get NFTs for
-   * @returns The NFTs minted by the given address
-   */
-  public async getMintedNfts(request: GetByAddressRequest): Promise<GetNftsResponse> {
-    const { address } = getByAddressRequestSchema.parse(request);
-    return this.instance
-      .get(`/api/wallet/${address}/minted`)
-      .then((res) => res.data)
-      .then(getNftsResponseSchema.parse)
-      .then(handleDebug(this.logger, `Get Minted NFTs for ${address}`))
-      .catch(handleError(this.logger));
   }
 
   /**
@@ -232,9 +170,11 @@ export class FreeportApiService {
    * @returns The decrypted content for the given NFT
    */
   public async getContent(request: GetContentRequest): Promise<GetContentResponse> {
-    const { collectionAddress, nftId, asset } = getContentRequest.parse(request);
+    const { collectionAddress, nftId, asset, chainId, chainNamespace } = getContentRequest.parse(request);
     return this.instance
-      .get(`/api/content/${collectionAddress}/${nftId}/${asset}`, { responseType: 'blob' })
+      .get(`/api/content/${collectionAddress}/${nftId}/${asset}?chainId=${chainId}&chainNamespace=${chainNamespace}`, {
+        responseType: 'blob',
+      })
       .then((res) => res.data)
       .then(handleDebug(this.logger, `Get Content for ${collectionAddress}/${nftId}/${asset}`))
       .catch(handleError(this.logger));

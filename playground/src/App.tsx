@@ -1,41 +1,12 @@
 import cereLogo from '/cere.png';
 import './App.css';
 import { Playground } from './components';
-import { CereWallet } from './cere-wallet';
 import { Button } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { CereWalletConnector } from './cere-wallet/CereWalletConnector.ts';
-import { WalletStatus } from '@cere/embed-wallet';
+import { useWallet } from './cere-wallet/wallet-context.tsx';
 const App = () => {
-  const [walletStatus, setWalletStatus] = useState<WalletStatus>();
-  const cereWallet = new CereWallet();
-  const connector = new CereWalletConnector(cereWallet);
+  const { walletStatus, cereWallet, isReady, handleOnDisconnect } = useWallet();
 
-  useEffect(() => {
-    void connector.preload();
-  }, [connector]);
-
-  useEffect(() => {
-    const getWalletStatus = async () => {
-      try {
-        connector.subscribe('status-update', (status: WalletStatus, prevStatus: WalletStatus) => {
-          if (prevStatus === 'connected' && status === 'ready') {
-            window.location.reload();
-          }
-          setWalletStatus(status);
-        });
-      } catch (error) {
-        console.error('Failed to preload wallet:', error);
-      }
-    };
-    void getWalletStatus();
-  }, [connector]);
-
-  const handleOnDisconnect = () => {
-    connector.disconnectWallet().then(() => null);
-  };
-
-  if (walletStatus === 'connected') {
+  if (walletStatus === 'connected' && isReady) {
     return <Playground disconnect={handleOnDisconnect} />;
   }
 

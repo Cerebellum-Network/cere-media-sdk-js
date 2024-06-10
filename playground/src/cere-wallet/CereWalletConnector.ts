@@ -1,10 +1,11 @@
-import { CereWallet } from "./CereWallet.ts";
-import { Web3Provider } from "@ethersproject/providers";
-import { IWalletConnector } from "./types.ts";
-import { Signer } from "ethers";
-import { WalletEvent, WalletStatus } from "@cere/embed-wallet";
+import { CereWallet } from './CereWallet.ts';
+import { Web3Provider } from '@ethersproject/providers';
+import { IWalletConnector } from './types.ts';
+import { Signer } from 'ethers';
+import { WalletEvent, WalletStatus } from '@cere/embed-wallet';
+import { Web3authChainNamespace } from '@cere/media-sdk-client';
 
-export class CereWalletConnector implements IWalletConnector{
+export class CereWalletConnector implements IWalletConnector {
   constructor(private readonly torusWallet: CereWallet) {}
   async preload(): Promise<unknown> {
     await this.torusWallet.init();
@@ -33,6 +34,14 @@ export class CereWalletConnector implements IWalletConnector{
   }
 
   subscribe(event: WalletEvent, handler: (status: WalletStatus, prevStatus: WalletStatus) => void) {
-    return this.torusWallet.subscribe(event, handler)
+    return this.torusWallet.subscribe(event, handler);
+  }
+
+  getWalletSigner(chainNamespace: Web3authChainNamespace): Signer {
+    return this.torusWallet.getWalletSigner(chainNamespace);
+  }
+
+  isReady() {
+    return this.torusWallet.isReady();
   }
 }

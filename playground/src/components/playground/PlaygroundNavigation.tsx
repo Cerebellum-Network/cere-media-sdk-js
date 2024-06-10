@@ -4,11 +4,9 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useState } from 'react';
-import { CollectionsTab } from './CollectionsTab';
-import { OwnedNftsTab } from './OwnedNftsTab';
-import { MintedNftsTab } from './MintedNftsTab';
 import { VideoExample } from 'playground/src/components/video-example/VideoExample';
 import { AudioExample } from '../audio-example';
+import { NewTab } from './NewTab.tsx';
 
 export const PlaygroundNavigation = () => {
   const [value, setValue] = useState('0');
@@ -22,25 +20,13 @@ export const PlaygroundNavigation = () => {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="New tab" value="0" />
-            <Tab label="Collections" value="1" />
-            <Tab label="Owned Nfts" value="2" />
-            <Tab label="Minted Nfts" value="3" />
+            <Tab label="Nfts" value="0" />
             <Tab label="Video Example" value="4" />
             <Tab label="Audio Example" value="5" />
           </TabList>
         </Box>
         <TabPanel value="0">
-          <CollectionsTab />
-        </TabPanel>
-        <TabPanel value="1">
-          <CollectionsTab />
-        </TabPanel>
-        <TabPanel value="2">
-          <OwnedNftsTab />
-        </TabPanel>
-        <TabPanel value="3">
-          <MintedNftsTab />
+          <NewTab />
         </TabPanel>
         <TabPanel value="4">
           <VideoExample />

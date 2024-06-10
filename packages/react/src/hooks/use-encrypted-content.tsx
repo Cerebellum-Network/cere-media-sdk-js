@@ -1,12 +1,17 @@
-import { NFT, NftMetadata } from '@cere/media-sdk-client';
+import { Web3authChainNamespace } from '@cere/media-sdk-client';
 import useSWR from 'swr';
 
 import { useMediaClient } from '.';
 
-export const useEncryptedContent = (nft: NFT, metadata: NftMetadata, assetIndex: number) => {
+export const useEncryptedContent = (
+  nftId: number,
+  collectionAddress: string,
+  asset: { name: string; description: string; preview: string; asset: string; contentType: string },
+  chainId: string,
+  chainNamespace: Web3authChainNamespace,
+) => {
   const { client, isLoading: isLoadingClient } = useMediaClient();
 
-  const asset = metadata?.assets[assetIndex];
   const contentType = asset?.contentType;
   const identifier = `asset-${asset.asset.split('/').pop()}`;
 
@@ -14,15 +19,17 @@ export const useEncryptedContent = (nft: NFT, metadata: NftMetadata, assetIndex:
 
   const getContent = async () => {
     const decryptedContent = await client?.getContent({
-      collectionAddress: nft.collection.address,
-      nftId: nft.nftId,
+      collectionAddress,
+      nftId,
       asset: identifier,
+      chainId,
+      chainNamespace,
     });
     if (!decryptedContent) return undefined;
     return URL.createObjectURL(decryptedContent);
   };
 
-  const { data: content, isLoading: isLoadingContent } = useSWR(['encryptedContent', nft, metadata, assetIndex], () =>
+  const { data: content, isLoading: isLoadingContent } = useSWR(['encryptedContent', nftId, collectionAddress], () =>
     // If the content is video, it is not fetched here. This requires using the VideoPlayer with HlsEncryptionLoader
     client && !isVideo ? getContent() : undefined,
   );
@@ -31,7 +38,6 @@ export const useEncryptedContent = (nft: NFT, metadata: NftMetadata, assetIndex:
     isVideo,
     content,
     contentType,
-    asset,
     isLoading: isLoadingClient || isLoadingContent,
   };
 };

@@ -1,14 +1,10 @@
-import { MediaSdkClientProvider } from '@cere/media-sdk-react';
 import { Box, Button } from '@mui/material';
-import { useSigner } from '@thirdweb-dev/react';
 import { PlaygroundNavigation } from './PlaygroundNavigation';
-import { SelectTenant } from '../select-tenant/SelectTenant';
-import { useSelectTenant } from '../select-tenant/UseSelectTenant';
+import { SelectTenant, useSelectTenant } from '../select-tenant';
 import { useState } from 'react';
 
 export const Playground = ({ disconnect }: { disconnect: () => void }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const signer = useSigner();
   const options = useSelectTenant();
 
   const onOpen = () => setIsOpen(true);
@@ -75,11 +71,9 @@ export const Playground = ({ disconnect }: { disconnect: () => void }) => {
           </Button>
         </Box>
       )}
-      <MediaSdkClientProvider signer={signer} options={options}>
-        <Box sx={{ minWidth: '800px', minH: '80vh' }}>
-          <PlaygroundNavigation />
-        </Box>
-      </MediaSdkClientProvider>
+      <Box sx={{ minWidth: '800px', minH: '80vh' }}>
+        <PlaygroundNavigation />
+      </Box>
     </>
   );
 };

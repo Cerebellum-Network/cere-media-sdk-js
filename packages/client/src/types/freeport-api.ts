@@ -17,6 +17,9 @@ export interface FreeportApiClientOptions {
 export type AuthHeaderKeys = 'x-message' | 'x-signature' | 'x-public-key';
 export type AuthHeaders = Record<AuthHeaderKeys, string>;
 
+export type ChainHeaderKeys = 'chain-namespace' | 'chain-id';
+export type ChainHeaders = Record<ChainHeaderKeys, string>;
+
 export const getAuthMessageResponseSchema = z.string();
 export type GetAuthMessageResponse = z.infer<typeof getAuthMessageResponseSchema>;
 

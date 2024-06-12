@@ -4,6 +4,7 @@ import { Signer } from 'ethers';
 import { mediaClientConfig } from '../config';
 import {
   AuthHeaders,
+  ChainHeaders,
   ChainNamespace,
   FreeportApiClientOptions,
   getAuthMessageResponseSchema,
@@ -43,6 +44,8 @@ export class FreeportApiService {
 
   private authHeaders?: AuthHeaders;
 
+  private chainHeaders?: ChainHeaders;
+
   private signer?: Signer;
 
   private chainId: string;
@@ -62,10 +65,20 @@ export class FreeportApiService {
     client.instance = axios.create({ baseURL: options.freeportApiUrl });
     client.authHeaders = undefined;
     client.signer = options.signer;
+    client.prepareChainHeaders();
     if (!options.skipInitialHealthCheck) {
       await client.healthCheck();
     }
     return client;
+  }
+
+  prepareChainHeaders() {
+    this.chainHeaders = {
+      'chain-namespace': this.chainNamespace,
+      'chain-id': this.chainId,
+    };
+    Object.assign(this.instance.defaults.headers, this.chainHeaders);
+    this.logger.debug('Chain headers added');
   }
 
   public async healthCheck(): Promise<void> {
@@ -170,11 +183,9 @@ export class FreeportApiService {
    * @returns The decrypted content for the given NFT
    */
   public async getContent(request: GetContentRequest): Promise<GetContentResponse> {
-    const { collectionAddress, nftId, asset, chainId, chainNamespace } = getContentRequest.parse(request);
+    const { collectionAddress, nftId, asset } = getContentRequest.parse(request);
     return this.instance
-      .get(`/api/content/${collectionAddress}/${nftId}/${asset}?chainId=${chainId}&chainNamespace=${chainNamespace}`, {
-        responseType: 'blob',
-      })
+      .get(`/api/content/${collectionAddress}/${nftId}/${asset}`, { responseType: 'blob' })
       .then((res) => res.data)
       .then(handleDebug(this.logger, `Get Content for ${collectionAddress}/${nftId}/${asset}`))
       .catch(handleError(this.logger));

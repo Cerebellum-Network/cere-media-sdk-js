@@ -1,6 +1,6 @@
 import { Signer } from 'ethers';
 
-import { Web3authChainNamespace } from './types/chain-namespace';
+import { ChainNamespace } from './types';
 
 import {
   Deployment,
@@ -52,7 +52,7 @@ export class MediaSdkClient {
    */
   static async create(
     chainId: string,
-    chainNamespace: Web3authChainNamespace,
+    chainNamespace: ChainNamespace,
     signer: Signer,
     options: MediaClientOptions = defaultMediaClientOptions,
   ): Promise<MediaSdkClient> {
@@ -120,16 +120,11 @@ export class MediaSdkClient {
     return this.freeportApi.getStreamKey({ collectionAddress, nftId, bucketId, cid });
   }
 
-  private async authenticatedRequest<T>(request: () => Promise<T>, signer: Signer): Promise<T> {
-    await this.freeportApi.authenticate(signer);
-    return request();
-  }
-
   private static async initFreeportApi(
     signer: Signer,
     client: MediaSdkClient,
     chainId: string,
-    chainNamespace: Web3authChainNamespace,
+    chainNamespace: ChainNamespace,
     options: MediaClientOptions,
   ) {
     client.freeportApi = await FreeportApiService.create({

@@ -1,7 +1,7 @@
 import { FreeportNftAsset } from './types.ts';
 import { Box, styled, Typography } from '@mui/material';
 import { ClickableContentView } from './ClickableContent.tsx';
-import { Web3authChainNamespace } from '@cere/media-sdk-client';
+import { ChainNamespace } from '@cere/media-sdk-client';
 
 const Image = styled('img')(() => ({
   width: '100%',
@@ -13,6 +13,7 @@ const Image = styled('img')(() => ({
 }));
 
 export const NftPreview = ({
+  assetIndex,
   asset,
   title,
   description,
@@ -21,13 +22,14 @@ export const NftPreview = ({
   chainId,
   chainNamespace,
 }: {
+  assetIndex: number;
   title: string;
   description: string;
   asset: FreeportNftAsset;
   nftId: number;
   collectionAddress: string;
   chainId: string;
-  chainNamespace: Web3authChainNamespace;
+  chainNamespace: ChainNamespace;
 }) => {
   return (
     <Box sx={{ maxWidth: '400px', height: 'fit-content', marginLeft: '20px' }}>
@@ -35,6 +37,7 @@ export const NftPreview = ({
       <Typography>{title}</Typography>
       <Typography variant="caption">{description}</Typography>
       <ClickableContentView
+        assetIndex={assetIndex}
         nftId={nftId}
         collectionAddress={collectionAddress}
         chainNamespace={chainNamespace}

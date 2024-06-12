@@ -4,6 +4,7 @@ import { Signer } from 'ethers';
 import { mediaClientConfig } from '../config';
 import {
   AuthHeaders,
+  ChainNamespace,
   FreeportApiClientOptions,
   getAuthMessageResponseSchema,
   GetByAddressRequest,
@@ -23,13 +24,12 @@ import {
   getStreamKeyRequest,
   GetStreamKeyResponse,
 } from '../types';
-import { Web3authChainNamespace } from '../types/chain-namespace';
 
 import { handleDebug, handleError, Logger, LoggerLike } from './logger.service';
 
 export const defaultFreeportApiOptions: FreeportApiClientOptions = {
   chainId: '',
-  chainNamespace: Web3authChainNamespace.EIP155,
+  chainNamespace: ChainNamespace.EIP155,
   logger: false,
   freeportApiUrl: mediaClientConfig.development.davinci.freeportApiUrl,
   skipInitialHealthCheck: false,
@@ -47,7 +47,7 @@ export class FreeportApiService {
 
   private chainId: string;
 
-  private chainNamespace: Web3authChainNamespace;
+  private chainNamespace: ChainNamespace;
 
   constructor(options: FreeportApiClientOptions) {
     this.chainId = options.chainId;

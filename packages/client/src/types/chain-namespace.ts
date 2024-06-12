@@ -1,4 +1,4 @@
-export enum Web3authChainNamespace {
+export enum ChainNamespace {
   EIP155 = 'eip155', // EVM compatible chains
   SOLANA = 'solana',
   CERE = 'cere',

@@ -1,4 +1,4 @@
-import { MediaClientOptions, defaultMediaClientOptions, Web3authChainNamespace } from '@cere/media-sdk-client';
+import { MediaClientOptions, defaultMediaClientOptions, ChainNamespace } from '@cere/media-sdk-client';
 import { Signer } from 'ethers';
 import React, { useMemo } from 'react';
 import { SWRConfig } from 'swr';
@@ -17,7 +17,7 @@ const defaultSwrConfig = {
 
 export interface MediaSdkClientProviderProps {
   chainId: string;
-  chainNamespace: Web3authChainNamespace;
+  chainNamespace: ChainNamespace;
   signer: Signer;
   options?: MediaClientOptions;
   swrConfig?: Record<string, unknown>;
@@ -26,7 +26,7 @@ export interface MediaSdkClientProviderProps {
 
 export const MediaSdkClientProvider = ({
   chainId,
-  chainNamespace = Web3authChainNamespace.EIP155,
+  chainNamespace = ChainNamespace.EIP155,
   children,
   signer,
   options = defaultMediaClientOptions,

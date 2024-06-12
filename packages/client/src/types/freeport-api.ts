@@ -1,7 +1,7 @@
 import { Signer } from 'ethers';
 import { z } from 'zod';
 
-import { Web3authChainNamespace } from './chain-namespace';
+import { ChainNamespace } from './chain-namespace';
 import { collectionSchema } from './collection';
 import { nftSchema } from './nft';
 
@@ -10,7 +10,7 @@ export interface FreeportApiClientOptions {
   logger?: boolean;
   skipInitialHealthCheck?: boolean;
   chainId: string;
-  chainNamespace: Web3authChainNamespace;
+  chainNamespace: ChainNamespace;
   signer?: Signer;
 }
 
@@ -56,7 +56,7 @@ export const getContentRequest = z.object({
   nftId: z.number(),
   asset: z.string(),
   chainId: z.string(),
-  chainNamespace: z.nativeEnum(Web3authChainNamespace),
+  chainNamespace: z.nativeEnum(ChainNamespace),
 });
 export type GetContentRequest = z.infer<typeof getContentRequest>;
 

@@ -1,4 +1,5 @@
-import { MediaClientOptions, MediaSdkClient, Web3authChainNamespace } from '@cere/media-sdk-client';
+import { MediaClientOptions, MediaSdkClient } from '@cere/media-sdk-client';
+import { ChainNamespace } from '@cere/media-sdk-client/src';
 import { Signer } from 'ethers';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
@@ -10,7 +11,7 @@ import { UseMediaClientReturn } from '../types';
  */
 export const useStaticMediaClient = (
   chainId: string,
-  chainNamespace: Web3authChainNamespace,
+  chainNamespace: ChainNamespace,
   signer: Signer,
   options?: MediaClientOptions,
 ): UseMediaClientReturn => {
@@ -30,7 +31,7 @@ export const useStaticMediaClient = (
       }
     };
 
-    getAddress();
+    void getAddress();
   }, [signer]);
 
   const { data, error, isLoading } = useSWR(['media-client', address, options], createClient, {

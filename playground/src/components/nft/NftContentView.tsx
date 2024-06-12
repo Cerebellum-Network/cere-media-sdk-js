@@ -1,22 +1,22 @@
-import { HlsEncryptionLoader, useEncryptedContent, useMediaClient, VideoPlayer } from '@cere/media-sdk-react';
+import { EncryptedVideoPlayer, useEncryptedContent } from '@cere/media-sdk-react';
 import { FreeportNftAsset } from './types.ts';
-import { Web3authChainNamespace } from '@cere/media-sdk-client';
-import { useMemo } from 'react';
+import { ChainNamespace } from '@cere/media-sdk-client';
 
 export const NftContentView = ({
+  assetIndex,
   asset,
   nftId,
   collectionAddress,
   chainId,
   chainNamespace,
 }: {
+  assetIndex: number;
   asset: FreeportNftAsset;
   nftId: number;
   collectionAddress: string;
   chainId: string;
-  chainNamespace: Web3authChainNamespace;
+  chainNamespace: ChainNamespace;
 }) => {
-  const { client, isLoading: isLoadingClient } = useMediaClient();
   const { content, isLoading, isVideo, contentType } = useEncryptedContent(
     nftId,
     collectionAddress,
@@ -25,21 +25,7 @@ export const NftContentView = ({
     chainNamespace,
   );
 
-  const assetCid = asset.asset.split('/').pop();
-  const loader = useMemo(
-    () =>
-      isVideo && !!client
-        ? HlsEncryptionLoader.create({
-            collectionAddress,
-            nftId,
-            assetId: `asset-${assetCid}`,
-            client,
-          })
-        : undefined,
-    [isVideo, client, collectionAddress, nftId, assetCid],
-  );
-
-  if (isLoading || isLoadingClient) {
+  if (isLoading) {
     return <div style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>Loading...</div>;
   }
 
@@ -56,7 +42,14 @@ export const NftContentView = ({
   }
 
   if (isVideo) {
-    return <VideoPlayer src={asset.asset} loader={loader} />;
+    return (
+      <EncryptedVideoPlayer
+        src={asset.asset}
+        collectionAddress={collectionAddress}
+        nftId={nftId}
+        assetIndex={assetIndex}
+      />
+    );
   }
 
   console.error(`Unhandled media type ${contentType}`);

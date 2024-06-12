@@ -1,1 +1,1 @@
-export * from './CereWallet.ts';
+export * from './wallet-context.tsx';

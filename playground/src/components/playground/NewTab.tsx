@@ -2,33 +2,37 @@ import { mockNfts } from './nfts.mock.ts';
 import { NftPreview } from '../nft/NftPreview.tsx';
 import { FreeportNftAsset } from '../nft/types.ts';
 import { Box } from '@mui/material';
-import { Web3authChainNamespace } from '@cere/media-sdk-client';
+import { ChainNamespace } from '@cere/media-sdk-client';
 import { MediaSdkClientProvider } from '@cere/media-sdk-react';
-import { useWallet } from '../../cere-wallet/wallet-context.tsx';
+import { useWallet } from '../../cere-wallet';
+import { getWalletAccountType } from '../../cere-wallet/helper.ts';
+import { Signer } from 'ethers';
 
 export const NewTab = () => {
-  const { connector } = useWallet();
+  const wallet = useWallet();
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-      {mockNfts.map(({ title, description, address, collectionAddress, assets, chainNamespace, chainId }) => {
+      {mockNfts.map(({ title, description, address, collectionAddress, assets, chainNamespace, chainId }, idx) => {
         return assets.map((asset) => {
-          const signer = connector.getWalletSigner(chainNamespace as Web3authChainNamespace);
+          const signer = wallet.getSigner({ type: getWalletAccountType(chainNamespace as ChainNamespace) });
+          console.log('SIGNER', signer);
           return (
             <MediaSdkClientProvider
               key={`${collectionAddress}::${address}`}
               chainId={chainId}
-              chainNamespace={chainNamespace as Web3authChainNamespace}
-              signer={signer}
+              chainNamespace={chainNamespace as ChainNamespace}
+              signer={signer as unknown as Signer}
             >
               <NftPreview
                 key={`${collectionAddress}::${address}`}
+                assetIndex={idx}
                 title={title}
                 description={description}
                 asset={asset as FreeportNftAsset}
                 nftId={Number(address)}
                 collectionAddress={collectionAddress}
                 chainId={chainId}
-                chainNamespace={chainNamespace as Web3authChainNamespace}
+                chainNamespace={chainNamespace as ChainNamespace}
               />
             </MediaSdkClientProvider>
           );

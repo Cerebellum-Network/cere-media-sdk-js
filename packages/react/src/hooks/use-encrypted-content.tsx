@@ -1,4 +1,4 @@
-import { Web3authChainNamespace } from '@cere/media-sdk-client';
+import { ChainNamespace } from '@cere/media-sdk-client';
 import useSWR from 'swr';
 
 import { useMediaClient } from '.';
@@ -8,7 +8,7 @@ export const useEncryptedContent = (
   collectionAddress: string,
   asset: { name: string; description: string; preview: string; asset: string; contentType: string },
   chainId: string,
-  chainNamespace: Web3authChainNamespace,
+  chainNamespace: ChainNamespace,
 ) => {
   const { client, isLoading: isLoadingClient } = useMediaClient();
 

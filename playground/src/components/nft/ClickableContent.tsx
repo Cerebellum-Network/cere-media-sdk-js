@@ -1,20 +1,22 @@
-import { Web3authChainNamespace } from '@cere/media-sdk-client';
+import { ChainNamespace } from '@cere/media-sdk-client';
 import React from 'react';
 import { Box, Button, IconButton, Modal } from '@mui/material';
 import { NftContentView } from './NftContentView.tsx';
 import { FreeportNftAsset } from './types.ts';
 
 export const ClickableContentView = ({
+  assetIndex,
   nftId,
   collectionAddress,
   chainId,
   chainNamespace,
   asset,
 }: {
+  assetIndex: number;
   nftId: number;
   collectionAddress: string;
   chainId: string;
-  chainNamespace: Web3authChainNamespace;
+  chainNamespace: ChainNamespace;
   asset: FreeportNftAsset;
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -38,6 +40,7 @@ export const ClickableContentView = ({
             X
           </IconButton>
           <NftContentView
+            assetIndex={assetIndex}
             asset={asset}
             nftId={nftId}
             collectionAddress={collectionAddress}

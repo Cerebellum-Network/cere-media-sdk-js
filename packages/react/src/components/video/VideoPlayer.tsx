@@ -129,4 +129,6 @@ export const VideoPlayer = ({
       </div>
     );
   }
+
+  return null;
 };

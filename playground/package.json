@@ -1,7 +1,7 @@
 {
   "name": "playground",
   "private": true,
-  "version": "1.4.1",
+  "version": "1.4.2-rc.0",
   "type": "module",
   "scripts": {
     "start": "vite --open",
@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@cere/embed-wallet": "0.18.2",
-    "@cere/media-sdk-client": "1.4.1",
-    "@cere/media-sdk-react": "1.4.1",
+    "@cere/media-sdk-client": "1.4.2-rc.8",
+    "@cere/media-sdk-react": "1.4.2-rc.8",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/lab": "^5.0.0-alpha.160",
@@ -23,15 +23,15 @@
     "@thirdweb-dev/sdk": "^4.0.26",
     "@thirdweb-dev/wallets": "^2.4.3",
     "ethers": "^5.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "react-router-dom": "^6.22.0",
     "swr": "^2.2.4",
     "vite-tsconfig-paths": "^4.2.2"
   },
   "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-react": "^4.2.1",

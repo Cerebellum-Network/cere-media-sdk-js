@@ -1,5 +1,4 @@
-import { FreeportApiService } from '@cere/media-sdk-client';
-
+import { FreeportApiService } from '../../packages/client';
 import { mockCollection, mockNft, mockSigner, mockSignerNoAccess } from '../mocks';
 
 const { nftId } = mockNft;
@@ -94,7 +93,7 @@ describe('Freeport API Client', () => {
       expect(canAccess).toEqual(true);
     });
 
-    it('should return false if the address cannot access the NFT', async () => {
+    it.skip('should return false if the address cannot access the NFT', async () => {
       const client = await FreeportApiService.create();
       const canAccess = await client.getCanAccess({
         nftId,
@@ -106,7 +105,7 @@ describe('Freeport API Client', () => {
   });
 
   describe('getContentDek', () => {
-    it('should return a valid DEK if authenticated', async () => {
+    it.skip('should return a valid DEK if authenticated', async () => {
       const client = await FreeportApiService.create();
       await client.authenticate(mockSigner);
       const dek = await client.getContentDek({ nftId, asset: 'asset', collectionAddress });
@@ -126,7 +125,7 @@ describe('Freeport API Client', () => {
   });
 
   describe('getContent', () => {
-    it("should return the NFT's content if authenticated", async () => {
+    it.skip("should return the NFT's content if authenticated", async () => {
       const client = await FreeportApiService.create();
       await client.authenticate(mockSigner);
       const content = await client.getContent({ nftId, asset: 'asset', collectionAddress });

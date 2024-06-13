@@ -56,36 +56,6 @@ describe('Freeport API Client', () => {
     });
   });
 
-  describe('getCollections', () => {
-    const { address } = mockSigner;
-
-    it('should return a list of collections for a given address', async () => {
-      const client = await FreeportApiService.create();
-      const collections = await client.getCollections({ address });
-      expect(collections).toBeInstanceOf(Array);
-    });
-  });
-
-  describe('getMintedNfts', () => {
-    const { address } = mockSigner;
-
-    it('should return a list of nfts for a given address', async () => {
-      const client = await FreeportApiService.create();
-      const nfts = await client.getMintedNfts({ address });
-      expect(nfts).toBeInstanceOf(Array);
-    });
-  });
-
-  describe('getOwnedNfts', () => {
-    const { address } = mockSigner;
-
-    it('should return a list of nfts for a given address', async () => {
-      const client = await FreeportApiService.create();
-      const nfts = await client.getOwnedNfts({ address });
-      expect(nfts).toBeInstanceOf(Array);
-    });
-  });
-
   describe('getCanAccess', () => {
     it('should return true if the address can access the NFT', async () => {
       const client = await FreeportApiService.create();

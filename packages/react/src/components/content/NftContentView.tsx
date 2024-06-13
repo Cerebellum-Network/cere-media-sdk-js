@@ -1,6 +1,7 @@
-import { ChainNamespace, FreeportNftAsset } from '@cere/media-sdk-client';
+import { FreeportNftAsset, NFT } from '@cere/media-sdk-client';
 
 import { useEncryptedContent } from '../../hooks';
+import { useNftMetadata } from '../../hooks/use-nfts';
 import { EncryptedVideoPlayer } from '../video';
 
 export const NftContentView = ({
@@ -8,23 +9,19 @@ export const NftContentView = ({
   asset,
   nftId,
   collectionAddress,
-  chainId,
-  chainNamespace,
 }: {
   assetIndex: number;
   asset: FreeportNftAsset;
   nftId: number;
   collectionAddress: string;
-  chainId: string;
-  chainNamespace: ChainNamespace;
 }) => {
-  const { content, isLoading, isVideo, contentType } = useEncryptedContent(
+  const nft = {
+    collection: { address: collectionAddress },
     nftId,
-    collectionAddress,
-    asset,
-    chainId,
-    chainNamespace,
-  );
+  } as NFT;
+  const { metadata } = useNftMetadata(collectionAddress, nftId);
+
+  const { content, isLoading, isVideo, contentType } = useEncryptedContent(nft, metadata!, assetIndex);
 
   if (isLoading) {
     return <div style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>Loading...</div>;

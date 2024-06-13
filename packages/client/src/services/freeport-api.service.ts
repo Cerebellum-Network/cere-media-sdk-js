@@ -24,6 +24,7 @@ import {
   GetStreamKeyRequest,
   getStreamKeyRequest,
   GetStreamKeyResponse,
+  NftMetadata,
 } from '../types';
 
 import { handleDebug, handleError, Logger, LoggerLike } from './logger.service';
@@ -207,5 +208,15 @@ export class FreeportApiService {
       .then((res) => res.data)
       .then(handleDebug(this.logger, `Get Stream Key for ${collectionAddress}/${nftId}/${bucketId}/${cid}`))
       .catch(handleError(this.logger));
+  }
+
+  /**
+   * Get the formatted NFT metadata for a token including the assets that are associated with it
+   * @param contractAddress - address of the Freeport Collection smart contract
+   * @param nftId - id of the nft on the Freeport Collection smart contract
+   * @returns nftMetadata - formatted NFT metadata
+   */
+  public getNftMetadata(contractAddress: string, nftId: number): Promise<NftMetadata> {
+    return this.instance.get(`/api/content/metadata/${contractAddress}/${nftId}`);
   }
 }

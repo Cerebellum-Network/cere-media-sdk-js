@@ -20,7 +20,5 @@ const EncryptedDdcAudio = () => (
     assetIndex={assetIndex}
     loadingComponent={<CircularProgress />}
     playerOverrides={{ autoPlay: true }}
-    chainId="8002"
-    chainNamespace={ChainNamespace.EIP155}
   />
 );

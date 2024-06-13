@@ -1,17 +1,12 @@
-import { ChainNamespace } from '@cere/media-sdk-client';
+import { NFT, NftMetadata } from '@cere/media-sdk-client';
 import useSWR from 'swr';
 
 import { useMediaClient } from '.';
 
-export const useEncryptedContent = (
-  nftId: number,
-  collectionAddress: string,
-  asset: { name: string; description: string; preview: string; asset: string; contentType: string },
-  chainId: string,
-  chainNamespace: ChainNamespace,
-) => {
+export const useEncryptedContent = (nft: NFT, metadata: NftMetadata, assetIndex: number) => {
   const { client, isLoading: isLoadingClient } = useMediaClient();
 
+  const asset = metadata?.assets[assetIndex];
   const contentType = asset?.contentType;
   const identifier = `asset-${asset.asset.split('/').pop()}`;
 
@@ -19,15 +14,15 @@ export const useEncryptedContent = (
 
   const getContent = async () => {
     const decryptedContent = await client?.getContent({
-      collectionAddress,
-      nftId,
+      collectionAddress: nft.collection.address,
+      nftId: nft.nftId,
       asset: identifier,
     });
     if (!decryptedContent) return undefined;
     return URL.createObjectURL(decryptedContent);
   };
 
-  const { data: content, isLoading: isLoadingContent } = useSWR(['encryptedContent', nftId, collectionAddress], () =>
+  const { data: content, isLoading: isLoadingContent } = useSWR(['encryptedContent', nft, metadata, assetIndex], () =>
     // If the content is video, it is not fetched here. This requires using the VideoPlayer with HlsEncryptionLoader
     client && !isVideo ? getContent() : undefined,
   );

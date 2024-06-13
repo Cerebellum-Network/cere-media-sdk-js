@@ -1,22 +1,17 @@
-import { ChainNamespace } from '@cere/media-sdk-client';
 import React from 'react';
 import { Box, Button, IconButton, Modal } from '@mui/material';
-import { FreeportNftAsset } from './types.ts';
 import { NftContentView } from '@cere/media-sdk-react';
+import { FreeportNftAsset } from '@cere/media-sdk-client';
 
 export const ClickableContentView = ({
   assetIndex,
   nftId,
   collectionAddress,
-  chainId,
-  chainNamespace,
   asset,
 }: {
   assetIndex: number;
   nftId: number;
   collectionAddress: string;
-  chainId: string;
-  chainNamespace: ChainNamespace;
   asset: FreeportNftAsset;
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -39,14 +34,7 @@ export const ClickableContentView = ({
           >
             X
           </IconButton>
-          <NftContentView
-            assetIndex={assetIndex}
-            asset={asset}
-            nftId={nftId}
-            collectionAddress={collectionAddress}
-            chainId={chainId}
-            chainNamespace={chainNamespace}
-          />
+          <NftContentView assetIndex={assetIndex} asset={asset} nftId={nftId} collectionAddress={collectionAddress} />
         </Box>
       </Box>
     </Modal>

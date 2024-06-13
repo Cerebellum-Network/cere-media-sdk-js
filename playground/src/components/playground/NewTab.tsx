@@ -1,6 +1,6 @@
 import { mockNfts } from './nfts.mock.ts';
-import { NftPreview } from '../nft/NftPreview.tsx';
-import { FreeportNftAsset } from '../nft/types.ts';
+import { NftPreview } from '../nft';
+import { FreeportNftAsset } from '@cere/media-sdk-client';
 import { Box } from '@mui/material';
 import { ChainNamespace } from '@cere/media-sdk-client';
 import { MediaSdkClientProvider } from '@cere/media-sdk-react';
@@ -30,8 +30,6 @@ export const NewTab = () => {
                 asset={asset as FreeportNftAsset}
                 nftId={Number(address)}
                 collectionAddress={collectionAddress}
-                chainId={chainId}
-                chainNamespace={chainNamespace as ChainNamespace}
               />
             </MediaSdkClientProvider>
           );

@@ -1,6 +1,7 @@
 import { Signer } from 'ethers';
 
-import { ChainNamespace } from './types';
+import { ChainNamespace, NftMetadata } from './types';
+import { GetNftMetadataRequest } from './types/freeport-collection';
 
 import {
   Deployment,
@@ -108,6 +109,16 @@ export class MediaSdkClient {
     cid,
   }: GetStreamKeyRequest): Promise<GetStreamKeyResponse> {
     return this.freeportApi.getStreamKey({ collectionAddress, nftId, bucketId, cid });
+  }
+
+  /**
+   * Get the formatted NFT metadata for a token including the assets that are associated with it
+   * @param contractAddress - address of the Freeport Collection smart contract
+   * @param nftId - id of the nft on the Freeport Collection smart contract
+   * @returns nftMetadata - formatted NFT metadata
+   */
+  async getNftMetadata({ contractAddress, nftId }: GetNftMetadataRequest): Promise<NftMetadata> {
+    return this.freeportApi.getNftMetadata(contractAddress, nftId);
   }
 
   private static async initFreeportApi(

@@ -22,8 +22,6 @@ export const useEncryptedContent = (
       collectionAddress,
       nftId,
       asset: identifier,
-      chainId,
-      chainNamespace,
     });
     if (!decryptedContent) return undefined;
     return URL.createObjectURL(decryptedContent);

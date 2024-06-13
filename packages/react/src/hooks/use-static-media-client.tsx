@@ -1,5 +1,4 @@
-import { MediaClientOptions, MediaSdkClient } from '@cere/media-sdk-client';
-import { ChainNamespace } from '@cere/media-sdk-client/src';
+import { MediaClientOptions, MediaSdkClient, ChainNamespace } from '@cere/media-sdk-client';
 import { Signer } from 'ethers';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';

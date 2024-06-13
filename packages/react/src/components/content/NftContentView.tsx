@@ -1,6 +1,7 @@
-import { EncryptedVideoPlayer, useEncryptedContent } from '@cere/media-sdk-react';
-import { FreeportNftAsset } from './types.ts';
-import { ChainNamespace } from '@cere/media-sdk-client';
+import { ChainNamespace, FreeportNftAsset } from '@cere/media-sdk-client';
+
+import { useEncryptedContent } from '../../hooks';
+import { EncryptedVideoPlayer } from '../video';
 
 export const NftContentView = ({
   assetIndex,

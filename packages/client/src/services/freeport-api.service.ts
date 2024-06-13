@@ -64,6 +64,7 @@ export class FreeportApiService {
     const client = new FreeportApiService(options);
     client.instance = axios.create({ baseURL: options.freeportApiUrl });
     client.authHeaders = undefined;
+    client.chainHeaders = undefined;
     client.signer = options.signer;
     client.prepareChainHeaders();
     if (!options.skipInitialHealthCheck) {

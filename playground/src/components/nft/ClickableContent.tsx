@@ -1,8 +1,8 @@
 import { ChainNamespace } from '@cere/media-sdk-client';
 import React from 'react';
 import { Box, Button, IconButton, Modal } from '@mui/material';
-import { NftContentView } from './NftContentView.tsx';
 import { FreeportNftAsset } from './types.ts';
+import { NftContentView } from '@cere/media-sdk-react';
 
 export const ClickableContentView = ({
   assetIndex,

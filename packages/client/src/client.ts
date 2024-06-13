@@ -20,7 +20,7 @@ import {
 } from '.';
 
 export const defaultMediaClientOptions: MediaClientOptions = {
-  deployment: 'local',
+  deployment: 'development',
   tenant: 'davinci',
   logger: false,
 };
@@ -33,8 +33,6 @@ export class MediaSdkClient {
   private logger: LoggerLike;
 
   private freeportApi!: FreeportApiService;
-
-  private signer!: Signer;
 
   protected constructor({ deployment, tenant, logger }: MediaClientOptions = defaultMediaClientOptions) {
     this.deployment = deployment;
@@ -89,18 +87,10 @@ export class MediaSdkClient {
    * @param collectionAddress The address of the collection to check
    * @param nftId - id of the nft on the Freeport Collection smart contract
    * @param asset The identifier for the asset to get the DEK for
-   * @param chainId To specify network chain id
-   * @param chainNamespace To specify network
    * @returns The decrypted content for the given NFT
    */
-  public async getContent({
-    collectionAddress,
-    nftId,
-    asset,
-    chainNamespace,
-    chainId,
-  }: GetContentRequest): Promise<GetContentResponse> {
-    return this.freeportApi.getContent({ collectionAddress, nftId, asset, chainNamespace, chainId });
+  public async getContent({ collectionAddress, nftId, asset }: GetContentRequest): Promise<GetContentResponse> {
+    return this.freeportApi.getContent({ collectionAddress, nftId, asset });
   }
 
   /**

@@ -15,7 +15,6 @@ export const NewTab = () => {
       {mockNfts.map(({ title, description, address, collectionAddress, assets, chainNamespace, chainId }, idx) => {
         return assets.map((asset) => {
           const signer = wallet.getSigner({ type: getWalletAccountType(chainNamespace as ChainNamespace) });
-          console.log('SIGNER', signer);
           return (
             <MediaSdkClientProvider
               key={`${collectionAddress}::${address}`}

@@ -58,8 +58,6 @@ export const getContentRequest = z.object({
   collectionAddress: z.string(),
   nftId: z.number(),
   asset: z.string(),
-  chainId: z.string(),
-  chainNamespace: z.nativeEnum(ChainNamespace),
 });
 export type GetContentRequest = z.infer<typeof getContentRequest>;
 

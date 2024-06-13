@@ -1,15 +1,14 @@
 import 'react-h5-audio-player/lib/styles.css';
 import './styles.css';
 
-import { NFT } from '@cere/media-sdk-client';
+import { ChainNamespace } from '@cere/media-sdk-client';
 import { ReactNode } from 'react';
-import AudioPlayer from 'react-h5-audio-player';
-
-import { useEncryptedContent } from '../../hooks';
 
 import { EncryptedAudioPlayerOptions } from './types';
 
 export interface EncryptedAudioPlayerProps {
+  chainId: string;
+  chainNamespace: ChainNamespace;
   collectionAddress: string;
   nftId: number;
   assetIndex: number;
@@ -19,12 +18,15 @@ export interface EncryptedAudioPlayerProps {
   playerOverrides?: EncryptedAudioPlayerOptions;
 }
 
+// @TODO Needs to be done
 export const EncryptedAudioPlayer = ({
   collectionAddress,
   nftId,
   assetIndex,
   loadingComponent,
   playerOverrides,
+  chainId,
+  chainNamespace,
 }: EncryptedAudioPlayerProps) => {
   // const nft = { collection: { address: collectionAddress }, nftId } as NFT;
   // const { metadata } = useNftMetadata(collectionAddress, nftId);

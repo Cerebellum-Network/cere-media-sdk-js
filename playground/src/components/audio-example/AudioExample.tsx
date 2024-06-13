@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EncryptedAudioPlayer } from '@cere/media-sdk-react';
 import { CircularProgress } from '@mui/material';
+import { ChainNamespace } from '@cere/media-sdk-client';
 
 export const AudioExample = () => {
   return <EncryptedDdcAudio />;
@@ -19,5 +20,7 @@ const EncryptedDdcAudio = () => (
     assetIndex={assetIndex}
     loadingComponent={<CircularProgress />}
     playerOverrides={{ autoPlay: true }}
+    chainId="8002"
+    chainNamespace={ChainNamespace.EIP155}
   />
 );

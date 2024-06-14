@@ -1,7 +1,6 @@
 import { FreeportNftAsset, NFT } from '@cere/media-sdk-client';
 
-import { useEncryptedContent } from '../../hooks';
-import { useNftMetadata } from '../../hooks/use-nfts';
+import { useEncryptedContent, useNftMetadata } from '../../hooks';
 import { EncryptedVideoPlayer } from '../video';
 
 export const NftContentView = ({

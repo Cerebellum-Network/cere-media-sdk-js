@@ -21,7 +21,7 @@ import {
 } from '.';
 
 export const defaultMediaClientOptions: MediaClientOptions = {
-  deployment: 'local',
+  deployment: 'development',
   tenant: 'davinci',
   logger: false,
 };

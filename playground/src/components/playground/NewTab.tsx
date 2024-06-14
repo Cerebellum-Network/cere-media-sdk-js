@@ -12,8 +12,8 @@ export const NewTab = () => {
   const wallet = useWallet();
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-      {mockNfts.map(({ title, description, address, collectionAddress, assets, chainNamespace, chainId }, idx) => {
-        return assets.map((asset) => {
+      {mockNfts.map(({ title, description, address, collectionAddress, assets, chainNamespace, chainId }) => {
+        return assets.map((asset, idx) => {
           const signer = wallet.getSigner({ type: getWalletAccountType(chainNamespace as ChainNamespace) });
           return (
             <MediaSdkClientProvider

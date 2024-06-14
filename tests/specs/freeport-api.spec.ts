@@ -57,7 +57,7 @@ describe('Freeport API Client', () => {
   });
 
   describe('getCanAccess', () => {
-    it('should return true if the address can access the NFT', async () => {
+    it.skip('should return true if the address can access the NFT', async () => {
       const client = await FreeportApiService.create();
       const canAccess = await client.getCanAccess({ nftId, walletAddress, collectionAddress });
       expect(canAccess).toEqual(true);

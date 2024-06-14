@@ -35,6 +35,7 @@ export const MediaSdkClientProvider = ({
   const client = useStaticMediaClient(chainId, chainNamespace, signer, options);
 
   const values: MediaSdkClientContext = useMemo(() => ({ ...client }), [client]);
+  console.log('MediaSdkClientProvider values:', values);
 
   return (
     <MediaSdkClientContext.Provider value={values}>

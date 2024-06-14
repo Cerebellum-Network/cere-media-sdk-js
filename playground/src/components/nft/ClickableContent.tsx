@@ -1,28 +1,53 @@
 import React from 'react';
-import { Box, Button, IconButton, Modal } from '@mui/material';
-import { NftContentView } from '@cere/media-sdk-react';
-import { FreeportNftAsset } from '@cere/media-sdk-client';
+import { NFT } from '@cere/media-sdk-client';
+import { Box, Button, IconButton, Modal, Skeleton, Typography } from '@mui/material';
+import { NftContentView, useNftMetadata } from '@cere/media-sdk-react';
 
 export const ClickableContentView = ({
   assetIndex,
   nftId,
   collectionAddress,
-  asset,
 }: {
   assetIndex: number;
   nftId: number;
   collectionAddress: string;
-  asset: FreeportNftAsset;
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
+  const { metadata, isLoading, error } = useNftMetadata(collectionAddress, nftId);
 
   if (!isOpen) {
     return <Button onClick={onOpen}>View Content</Button>;
   }
 
+  if (isLoading) {
+    return <Skeleton variant="rectangular" width="100%" height="100px" />;
+  }
+
+  if (error) {
+    return (
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        p="10px"
+        gap="10px"
+        bgcolor="#ff4848aa"
+        borderRadius="10px"
+      >
+        <Typography fontWeight="bold">
+          Error loading metadata for NFT {nftId} ({collectionAddress})
+        </Typography>
+      </Box>
+    );
+  }
+
+  const nft = {
+    collection: { address: collectionAddress },
+    nftId,
+  } as NFT;
   return (
     <Modal open={isOpen} onClose={onClose} aria-labelledby="modal-nft-content">
       <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" width="100%" height="100%">
@@ -34,7 +59,7 @@ export const ClickableContentView = ({
           >
             X
           </IconButton>
-          <NftContentView assetIndex={assetIndex} asset={asset} nftId={nftId} collectionAddress={collectionAddress} />
+          <NftContentView nft={nft} metadata={metadata!} assetIndex={assetIndex} />
         </Box>
       </Box>
     </Modal>

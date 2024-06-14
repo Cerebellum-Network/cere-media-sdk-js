@@ -31,7 +31,7 @@ export const NftPreview = ({
       <Image src={asset.preview} />
       <Typography>{title}</Typography>
       <Typography variant="caption">{description}</Typography>
-      <ClickableContentView assetIndex={assetIndex} nftId={nftId} collectionAddress={collectionAddress} asset={asset} />
+      <ClickableContentView assetIndex={assetIndex} nftId={nftId} collectionAddress={collectionAddress} />
     </Box>
   );
 };

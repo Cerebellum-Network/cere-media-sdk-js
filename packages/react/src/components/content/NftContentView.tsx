@@ -1,28 +1,42 @@
-import { FreeportNftAsset, NFT } from '@cere/media-sdk-client';
+import { NFT, NftMetadata } from '@cere/media-sdk-client';
+import { useMemo } from 'react';
 
-import { useEncryptedContent, useNftMetadata } from '../../hooks';
-import { EncryptedVideoPlayer } from '../video';
+import { HlsEncryptionLoader, VideoPlayer } from '..';
+import { useEncryptedContent, useMediaClient } from '../../hooks';
 
-export const NftContentView = ({
-  assetIndex,
-  asset,
-  nftId,
-  collectionAddress,
-}: {
+export interface ContentViewProps {
+  /**
+   * The NFT to display content for
+   */
+  nft: NFT;
+  /**
+   * The metadata of the NFT. This can be retrieved using the `useNftMetadata` hook
+   */
+  metadata: NftMetadata;
+  /**
+   * The index of the asset to view content for (starting at 0)
+   */
   assetIndex: number;
-  asset: FreeportNftAsset;
-  nftId: number;
-  collectionAddress: string;
-}) => {
-  const nft = {
-    collection: { address: collectionAddress },
-    nftId,
-  } as NFT;
-  const { metadata } = useNftMetadata(collectionAddress, nftId);
+}
 
-  const { content, isLoading, isVideo, contentType } = useEncryptedContent(nft, metadata!, assetIndex);
+export const NftContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => {
+  const { client, isLoading: isLoadingClient } = useMediaClient();
+  const { content, isLoading, isVideo, contentType, asset } = useEncryptedContent(nft, metadata, assetIndex);
+  const assetCid = asset.asset.split('/').pop();
+  const loader = useMemo(
+    () =>
+      isVideo && !!client
+        ? HlsEncryptionLoader.create({
+            collectionAddress: nft.collection.address,
+            nftId: nft.nftId,
+            assetId: `asset-${assetCid}`,
+            client,
+          })
+        : undefined,
+    [nft, assetIndex, isVideo],
+  );
 
-  if (isLoading) {
+  if (isLoading || isLoadingClient) {
     return <div style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>Loading...</div>;
   }
 
@@ -39,14 +53,7 @@ export const NftContentView = ({
   }
 
   if (isVideo) {
-    return (
-      <EncryptedVideoPlayer
-        src={asset.asset}
-        collectionAddress={collectionAddress}
-        nftId={nftId}
-        assetIndex={assetIndex}
-      />
-    );
+    return <VideoPlayer src={asset.asset} loader={loader} />;
   }
 
   console.error(`Unhandled media type ${contentType}`);

@@ -217,6 +217,12 @@ export class FreeportApiService {
    * @returns nftMetadata - formatted NFT metadata
    */
   public getNftMetadata(contractAddress: string, nftId: number): Promise<NftMetadata> {
-    return this.instance.get(`/api/content/metadata/${contractAddress}/${nftId}`);
+    return this.instance
+      .get(`/api/content/metadata/${contractAddress}/${nftId}`)
+      .then((res) => res.data)
+      .then(
+        handleDebug(this.logger, `Get the formatted NFT metadata for /content/metadata/${contractAddress}/${nftId}`),
+      )
+      .catch(handleError(this.logger));
   }
 }

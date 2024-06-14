@@ -21,7 +21,7 @@ import {
 } from '.';
 
 export const defaultMediaClientOptions: MediaClientOptions = {
-  deployment: 'development',
+  deployment: 'local',
   tenant: 'davinci',
   logger: false,
 };
@@ -117,7 +117,7 @@ export class MediaSdkClient {
    * @param nftId - id of the nft on the Freeport Collection smart contract
    * @returns nftMetadata - formatted NFT metadata
    */
-  async getNftMetadata({ contractAddress, nftId }: GetNftMetadataRequest): Promise<NftMetadata> {
+  public async getNftMetadata({ contractAddress, nftId }: GetNftMetadataRequest): Promise<NftMetadata> {
     return this.freeportApi.getNftMetadata(contractAddress, nftId);
   }
 

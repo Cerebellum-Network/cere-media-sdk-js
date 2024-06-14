@@ -28,11 +28,11 @@ const App = () => {
 
     wallet.init({
       connectOptions: {
-        // permissions: {
-        //   personal_sign: {},
-        //   ed25519_signRaw: {},
-        //   solana_signMessage: {},
-        // },
+        permissions: {
+          personal_sign: {},
+          ed25519_signRaw: {},
+          solana_signMessage: {},
+        },
       },
 
       context: {

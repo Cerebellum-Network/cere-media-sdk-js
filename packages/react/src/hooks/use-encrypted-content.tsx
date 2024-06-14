@@ -31,6 +31,7 @@ export const useEncryptedContent = (nft: NFT, metadata: NftMetadata, assetIndex:
     isVideo,
     content,
     contentType,
+    asset,
     isLoading: isLoadingClient || isLoadingContent,
   };
 };

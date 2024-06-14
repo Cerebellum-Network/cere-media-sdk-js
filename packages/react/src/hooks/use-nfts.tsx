@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-import { useMediaClient } from './use-media-client';
+import { useMediaClient } from '.';
 
 /**
  * Get the metadata for a Freeport NFT

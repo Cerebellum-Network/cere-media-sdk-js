@@ -232,7 +232,7 @@ export const mockNfts = [
       priceUsd: 10,
     },
     teaser: {},
-    chainId: 'devnet',
+    chainId: '0x3',
     chainNamespace: 'solana',
   },
 ];

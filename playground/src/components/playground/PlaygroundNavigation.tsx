@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { VideoExample } from 'playground/src/components/video-example/VideoExample';
 import { AudioExample } from '../audio-example';
 import { NewTab } from './NewTab.tsx';
+import { CheckNft } from './CheckNft.tsx';
 
 export const PlaygroundNavigation = () => {
   const [value, setValue] = useState('0');
@@ -20,12 +21,16 @@ export const PlaygroundNavigation = () => {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Nfts" value="0" />
+            <Tab label="Check Nft Streaming" value="0" />
+            <Tab label="Nfts" value="1" />
             <Tab label="Video Example" value="4" />
             <Tab label="Audio Example" value="5" />
           </TabList>
         </Box>
         <TabPanel value="0">
+          <CheckNft />
+        </TabPanel>
+        <TabPanel value="1">
           <NewTab />
         </TabPanel>
         <TabPanel value="4">

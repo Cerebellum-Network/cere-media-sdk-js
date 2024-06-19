@@ -1,11 +1,10 @@
 import { Box, Button } from '@mui/material';
 import { PlaygroundNavigation } from './PlaygroundNavigation';
-import { SelectTenant, useSelectTenant } from '../select-tenant';
+import { SelectTenant } from '../select-tenant';
 import { useState } from 'react';
 
 export const Playground = ({ disconnect }: { disconnect: () => void }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const options = useSelectTenant();
 
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
@@ -30,7 +29,7 @@ export const Playground = ({ disconnect }: { disconnect: () => void }) => {
           }}
         >
           <Button onClick={onClose}>Close</Button>
-          <SelectTenant {...options} />
+          <SelectTenant />
         </Box>
       ) : (
         <Box

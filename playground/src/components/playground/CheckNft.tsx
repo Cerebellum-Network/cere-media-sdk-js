@@ -1,4 +1,17 @@
-import { Box, Button, CircularProgress, Stack, Step, StepLabel, Stepper, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  Step,
+  StepLabel,
+  Stepper,
+  TextField,
+} from '@mui/material';
 import { useCallback, useMemo, useState } from 'react';
 import axios from 'axios';
 import { useSelectTenant } from '../select-tenant';
@@ -16,21 +29,48 @@ import { MediaSdkClientProvider } from '@cere/media-sdk-react';
 import { useWallet } from '../../cere-wallet';
 import { getWalletAccountType } from '../../cere-wallet/helper.ts';
 
-const fetchNftMetadata = async (url: string, tenant: Tenant, deployment: Deployment) => {
-  const response = await axios.create({ baseURL: mediaClientConfig[deployment][tenant].freeportApiUrl }).get(url);
+export const ChainIds: { [key in ChainNamespace]: { id: string; name: string }[] } = {
+  [ChainNamespace.EIP155]: [{ id: '80002', name: 'Polygon Devnet' }],
+  [ChainNamespace.SOLANA]: [
+    { id: '1', name: 'Solana Mainnet' },
+    { id: '2', name: 'Solana Testnet' },
+    { id: '3', name: 'Solana Devnet' },
+  ],
+};
+
+const fetchNftMetadata = async (
+  url: string,
+  tenant: Tenant,
+  deployment: Deployment,
+  chainNamespace: ChainNamespace,
+  chainId: string,
+) => {
+  const response = await axios
+    .create({
+      baseURL: mediaClientConfig[deployment][tenant].freeportApiUrl,
+      headers: {
+        'chain-namespace': chainNamespace,
+        'chain-id': chainId,
+      },
+    })
+    .get(url);
   return response.data;
 };
 
 export const CheckNft = () => {
   const opts = useSelectTenant();
-  console.log(opts);
   const [step, setStep] = useState(0);
+  const [selectedChainNamespace, setSelectedChainNamespace] = useState<ChainNamespace>(ChainNamespace.SOLANA);
+  const [selectedChainId, setSelectedChainId] = useState<string>('');
   const [contractAddress, setContractAddress] = useState<string>();
   const [tokenId, setTokenId] = useState<number>();
   const [metadata, setMetadata] = useState<NftMetadata>();
   const [isLoadingMetadata, setIsLoadingMetadata] = useState(false);
 
-  const isReadyForFetchMetadata = useMemo(() => !!contractAddress && !!tokenId, [contractAddress, tokenId]);
+  const isReadyForFetchMetadata = useMemo(
+    () => contractAddress !== undefined && contractAddress !== null && tokenId !== undefined && tokenId !== null,
+    [contractAddress, tokenId],
+  );
 
   const handleFetchMetadata = useCallback(async () => {
     setIsLoadingMetadata(true);
@@ -39,6 +79,8 @@ export const CheckNft = () => {
         `/api/content/metadata/${contractAddress}/${tokenId}`,
         opts.tenant,
         opts.deployment,
+        selectedChainNamespace,
+        selectedChainId,
       );
       setMetadata(data);
       setStep(2);
@@ -47,12 +89,55 @@ export const CheckNft = () => {
     } finally {
       setIsLoadingMetadata(false);
     }
-  }, [contractAddress, opts.deployment, opts.tenant, tokenId]);
+  }, [contractAddress, opts.deployment, opts.tenant, selectedChainId, selectedChainNamespace, tokenId]);
 
   const wallet = useWallet();
 
   return (
     <Stepper orientation="vertical" activeStep={step}>
+      <Step>
+        <Stack maxWidth="200px">
+          <StepLabel>Choose network</StepLabel>
+          <FormControl variant="outlined">
+            <InputLabel id="chain-select-label">Chain</InputLabel>
+            <Select
+              labelId="chain-select-label"
+              id="chain-select"
+              value={selectedChainNamespace}
+              onChange={(event) => {
+                setSelectedChainNamespace(event.target.value as ChainNamespace);
+                setSelectedChainId('');
+                setStep(0);
+              }}
+              label="Chain"
+            >
+              {Object.values(ChainNamespace).map((chain) => (
+                <MenuItem key={chain} value={chain}>
+                  {chain.toUpperCase()}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {selectedChainNamespace && (
+            <FormControl fullWidth variant="outlined" margin="normal">
+              <InputLabel id="chainid-select-label">Chain ID</InputLabel>
+              <Select
+                labelId="chainid-select-label"
+                id="chainid-select"
+                value={selectedChainId}
+                onChange={(event) => setSelectedChainId(event.target.value)}
+                label="Chain ID"
+              >
+                {ChainIds[selectedChainNamespace].map((chain) => (
+                  <MenuItem key={chain.id} value={chain.id}>
+                    {chain.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+        </Stack>
+      </Step>
       <Step completed={isReadyForFetchMetadata}>
         <StepLabel>Fill in the required fields of the form</StepLabel>
         <Stack spacing={2} alignItems="start">
@@ -93,16 +178,16 @@ export const CheckNft = () => {
           )}
         </Stack>
       </Step>
-      <Step>
+      <Step completed={!!metadata}>
         <StepLabel>View Nft Content</StepLabel>
         <Box>
           {metadata?.assets.map((asset, idx) => {
-            const signer = wallet.getSigner({ type: getWalletAccountType(ChainNamespace.EIP155) });
+            const signer = wallet.getSigner({ type: getWalletAccountType(selectedChainNamespace) });
             return (
               <MediaSdkClientProvider
                 key={`${contractAddress}::${tokenId}`}
-                chainId="80002"
-                chainNamespace={ChainNamespace.EIP155}
+                chainId={selectedChainId}
+                chainNamespace={selectedChainNamespace}
                 signer={signer as unknown as Signer}
               >
                 <NftPreview

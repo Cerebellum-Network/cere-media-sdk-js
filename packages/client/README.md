@@ -5,9 +5,6 @@
   - [Create an instance](#create-an-instance)
   - [API](#api)
     - [create()](#create)
-    - [getCollection()](#getcollection)
-    - [getMintedNfts()](#getmintednfts)
-    - [getOwnedNfts()](#getownednfts)
     - [getNftMetadata()](#getnftmetadata)
     - [getNftAssets()](#getnftassets)
     - [getCanAccess()](#getcanaccess)
@@ -37,6 +34,9 @@ The `MediaSdkClient` instance can be created using the static `create` method. I
 ***Arguments***
 
 - `signer` - an [ethers](https://www.npmjs.com/package/ethers) compatible signer instance
+- `chainNamespace` - the Network namespace
+- `chainId` - the Network chainId
+
 - `options` - a config object to define the environment and tenant to connect to 
     - `deployment` - the deployed environment to connect to
     - `tenant` - the tenant to connect to
@@ -81,48 +81,14 @@ Creates and initializes a new instance of MediaSdkClient.
 ***Arguments:***
 
 - signer (Signer): An ethers compatible signer instance for authentication.
+- chainNamespace: the Network namespace
+- chainId: the Network chainId
+
 - options (MediaClientOptions): Configuration options including deployment, tenant, and logger settings.
 
 ***Returns:*** 
 
 MediaSdkClient - A promise that resolves to a new instance of MediaSdkClient.
-
-### `getCollection()`
-
-Retrieves a list of collections associated with a specified Ethereum address.
-
-*Arguments:*
-
-- address (string): The Ethereum address to get collections for.
-
-***Returns:***
-
-GetCollectionsResponse - An array of Collection objects, each containing details like id, address, uri, name, and tenant.
-
-### `getMintedNfts()`
-
-
-Fetches a list of NFTs minted by a specified Ethereum address.
-
-***Arguments:***
-
-- address (string): The Ethereum address to get minted NFTs for.
- 
-***Returns:***
-
-GetNftsResponse - An array of NFT objects, each detailing the minted NFTs including id, nftId, supply, and collection information.
-
-### `getOwnedNfts()`
-
-Retrieves NFTs currently owned by a specified Ethereum address.
-
-***Arguments:***
-
-address (string): The Ethereum address to get owned NFTs for.
-
-***Returns:***
-
- GetNftsResponse - An array of NFT objects similar to the getMintedNfts response, detailing the NFTs owned.
 
 ### `getNftMetadata()`
 

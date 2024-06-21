@@ -2,6 +2,7 @@ import { Box, Button } from '@mui/material';
 import { PlaygroundNavigation } from './PlaygroundNavigation';
 import { SelectTenant } from '../select-tenant';
 import { useState } from 'react';
+import { CheckNft } from './CheckNft.tsx';
 
 export const Playground = ({ disconnect }: { disconnect: () => void }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,7 +72,7 @@ export const Playground = ({ disconnect }: { disconnect: () => void }) => {
         </Box>
       )}
       <Box sx={{ minWidth: '800px', minH: '80vh' }}>
-        <PlaygroundNavigation />
+        <CheckNft />
       </Box>
     </>
   );

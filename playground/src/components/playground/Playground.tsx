@@ -1,5 +1,4 @@
 import { Box, Button } from '@mui/material';
-import { PlaygroundNavigation } from './PlaygroundNavigation';
 import { SelectTenant } from '../select-tenant';
 import { useState } from 'react';
 import { CheckNft } from './CheckNft.tsx';

@@ -12,7 +12,7 @@ export default defineConfig(({ command }) => {
     react(),
     nodePolyfills({
       globals: {
-        Buffer: false,
+        Buffer: true,
       },
     }),
   ];

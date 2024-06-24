@@ -8,6 +8,9 @@ import './index.css';
 import './components/css/plyr.css';
 import './components/css/styles.css';
 import { WalletProvider } from './cere-wallet';
+import { Buffer } from 'buffer';
+
+window.Buffer = Buffer;
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

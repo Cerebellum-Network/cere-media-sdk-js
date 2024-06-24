@@ -60,7 +60,7 @@ const fetchNftMetadata = async (
 export const CheckNft = () => {
   const opts = useSelectTenant();
   const [step, setStep] = useState(0);
-  const [selectedChainNamespace, setSelectedChainNamespace] = useState<ChainNamespace>(ChainNamespace.SOLANA);
+  const [selectedChainNamespace, setSelectedChainNamespace] = useState<ChainNamespace>(ChainNamespace.EIP155);
   const [selectedChainId, setSelectedChainId] = useState<string>('');
   const [contractAddress, setContractAddress] = useState<string>();
   const [tokenId, setTokenId] = useState<number>();

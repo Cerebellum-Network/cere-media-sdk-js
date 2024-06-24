@@ -53,7 +53,7 @@ export const NftContentView = ({ nft, metadata, assetIndex }: ContentViewProps) 
   }
 
   if (isVideo) {
-    return <VideoPlayer src={asset.asset} loader={loader} />;
+    return <VideoPlayer src={asset.asset} loader={loader} hlsEnabled={true} />;
   }
 
   console.error(`Unhandled media type ${contentType}`);

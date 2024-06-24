@@ -133,14 +133,12 @@ export class FreeportApiService {
    */
   public async getAuthMessage(request: GetByAddressRequest): Promise<string> {
     const { address } = getByAddressRequestSchema.parse(request);
-    const response = await this.instance
+    return await this.instance
       .get(`/api/wallet-auth/auth-message?walletPublicKey=${address}`)
       .then((res) => res.data)
       .then(getAuthMessageResponseSchema.parse)
       .then(handleDebug(this.logger, `Get Auth Message for ${address}`))
       .catch(handleError(this.logger));
-
-    return response;
   }
 
   /**

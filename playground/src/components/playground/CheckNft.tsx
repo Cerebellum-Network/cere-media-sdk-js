@@ -30,7 +30,10 @@ import { useWallet } from '../../cere-wallet';
 import { getWalletAccountType } from '../../cere-wallet/helper.ts';
 
 export const ChainIds: { [key in ChainNamespace]: { id: string; name: string }[] } = {
-  [ChainNamespace.EIP155]: [{ id: '80002', name: 'Polygon Devnet' }],
+  [ChainNamespace.EIP155]: [
+    { id: '80002', name: 'Polygon Devnet' },
+    { id: '84532', name: 'Base Sepolia' },
+  ],
   [ChainNamespace.SOLANA]: [
     { id: '1', name: 'Solana Mainnet' },
     { id: '2', name: 'Solana Testnet' },

@@ -32,7 +32,7 @@
     "zod": "^3.22.4"
   },
   "peerDependencies": {
-    "@cere/freeport-sc-sdk": "0.23.0"
+    "@cere/freeport-sc-sdk": "0.26.0-legacy"
   },
   "publishConfig": {
     "access": "public"

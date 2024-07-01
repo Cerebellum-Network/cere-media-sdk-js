@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.0...v1.4.2) (2024-07-01)
+
+
+### Bug Fixes
+
+* Change React peer dependency version ([cc12169](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/cc121695b9bdc3ac92a6fd90e758fafcd807632f))
+
+
+
 ## [1.4.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0-rc.16...v1.4.0) (2024-04-16)
 
 **Note:** Version bump only for package @cere/media-sdk-eslint-config

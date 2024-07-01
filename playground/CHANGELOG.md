@@ -3,15 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.4.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.0...v1.4.2) (2024-07-01)
-
+## [1.4.3-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.0...v1.4.3-rc.0) (2024-07-01)
 
 ### Bug Fixes
 
-* Add version fixes ([43fc325](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/43fc325805325e577ae97cd446c5231fc3b0c447))
-* Fix react versions ([6b1f4d8](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/6b1f4d8b225161ed38e8c0f17fc1ab90e4a7a702))
+- Add version fixes ([43fc325](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/43fc325805325e577ae97cd446c5231fc3b0c447))
+- Fix react versions ([6b1f4d8](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/6b1f4d8b225161ed38e8c0f17fc1ab90e4a7a702))
 
+## [1.4.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.0...v1.4.2) (2024-07-01)
 
+### Bug Fixes
+
+- Add version fixes ([43fc325](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/43fc325805325e577ae97cd446c5231fc3b0c447))
+- Fix react versions ([6b1f4d8](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/6b1f4d8b225161ed38e8c0f17fc1ab90e4a7a702))
 
 ## [1.4.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0...v1.4.1) (2024-04-18)
 

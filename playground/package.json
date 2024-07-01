@@ -1,7 +1,7 @@
 {
   "name": "playground",
   "private": true,
-  "version": "1.4.2-rc.0",
+  "version": "1.4.2",
   "type": "module",
   "scripts": {
     "start": "vite --open",
@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@cere/embed-wallet": "0.18.2",
-    "@cere/media-sdk-client": "1.4.2-rc.9",
-    "@cere/media-sdk-react": "1.4.2-rc.9",
+    "@cere/media-sdk-client": "1.4.2",
+    "@cere/media-sdk-react": "1.4.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/lab": "^5.0.0-alpha.160",

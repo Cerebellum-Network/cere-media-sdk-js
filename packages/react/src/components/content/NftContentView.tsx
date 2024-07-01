@@ -19,7 +19,7 @@ export interface ContentViewProps {
   assetIndex: number;
 }
 
-export const ContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => {
+export const NftContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => {
   const { client, isLoading: isLoadingClient } = useMediaClient();
   const { content, isLoading, isVideo, contentType, asset } = useEncryptedContent(nft, metadata, assetIndex);
   const assetCid = asset.asset.split('/').pop();
@@ -53,7 +53,7 @@ export const ContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => 
   }
 
   if (isVideo) {
-    return <VideoPlayer src={asset.asset} loader={loader} />;
+    return <VideoPlayer src={asset.asset} loader={loader} hlsEnabled={true} />;
   }
 
   console.error(`Unhandled media type ${contentType}`);

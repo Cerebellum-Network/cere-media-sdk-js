@@ -5,7 +5,8 @@ import { NFT } from '@cere/media-sdk-client';
 import { ReactNode } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 
-import { useEncryptedContent, useNftMetadata } from '../../hooks';
+import { useEncryptedContent } from '../../hooks';
+import { useNftMetadata } from '../../hooks/use-nfts';
 
 import { EncryptedAudioPlayerOptions } from './types';
 

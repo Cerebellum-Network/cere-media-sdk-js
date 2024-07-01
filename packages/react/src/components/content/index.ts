@@ -1,1 +1,1 @@
-export * from './ContentView';
+export * from './NftContentView';

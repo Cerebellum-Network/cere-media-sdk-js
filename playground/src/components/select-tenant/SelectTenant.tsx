@@ -1,5 +1,6 @@
 import { Deployment, Tenant, tenants, deployments } from '@cere/media-sdk-client';
 import { Box, Divider, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { useSelectTenant } from './UseSelectTenant.tsx';
 
 export interface SelectTenantProps {
   tenant: Tenant;
@@ -10,14 +11,8 @@ export interface SelectTenantProps {
   setLogger: (logger: boolean) => void;
 }
 
-export const SelectTenant = ({
-  tenant,
-  setTenant,
-  deployment,
-  setDeployment,
-  logger,
-  setLogger,
-}: SelectTenantProps) => {
+export const SelectTenant = () => {
+  const { tenant, setTenant, deployment, setDeployment, logger, setLogger } = useSelectTenant();
   const onChangeLogger = (e: SelectChangeEvent<'enabled' | 'disabled'>) => {
     setLogger(e.target.value === 'enabled');
   };

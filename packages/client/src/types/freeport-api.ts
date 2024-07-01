@@ -1,5 +1,7 @@
+import { Signer } from 'ethers';
 import { z } from 'zod';
 
+import { ChainNamespace } from './chain-namespace';
 import { collectionSchema } from './collection';
 import { nftSchema } from './nft';
 
@@ -7,10 +9,16 @@ export interface FreeportApiClientOptions {
   freeportApiUrl: string;
   logger?: boolean;
   skipInitialHealthCheck?: boolean;
+  chainId: string;
+  chainNamespace: ChainNamespace;
+  signer?: Signer;
 }
 
 export type AuthHeaderKeys = 'x-message' | 'x-signature' | 'x-public-key';
 export type AuthHeaders = Record<AuthHeaderKeys, string>;
+
+export type ChainHeaderKeys = 'chain-namespace' | 'chain-id';
+export type ChainHeaders = Record<ChainHeaderKeys, string>;
 
 export const getAuthMessageResponseSchema = z.string();
 export type GetAuthMessageResponse = z.infer<typeof getAuthMessageResponseSchema>;

@@ -16,17 +16,17 @@ export interface ContentViewProps {
 }
 
 const useCustomDownloadContent = ({
-  content,
+  cid,
   collectionAddress,
   nftId,
 }: {
-  content?: string;
+  cid: string;
   nftId: number;
   collectionAddress: string;
 }) => {
   const { download } = useDownloadContent(
     { nftId: Number(nftId), collection: { address: collectionAddress } } as NFT,
-    `asset-${content?.split('/').pop()}`,
+    `asset-${cid}`,
   );
 
   return { download };
@@ -45,30 +45,11 @@ export const NftContentView: React.FC<ContentViewProps> = ({
   const { client, isLoading: isLoadingClient } = useMediaClient();
   const { content, isLoading, isVideo, contentType, asset } = useEncryptedContent(nft, metadata, assetIndex);
 
-  const { download } = useCustomDownloadContent({
-    nftId: Number(nft.nftId),
-    collectionAddress: nft.collection.address!,
-    content,
-  });
-
   const handleImageLoad = useCallback(() => {
     if (callback) {
       callback();
     }
   }, [callback]);
-
-  const handleOnDownload = useCallback(async () => {
-    setLoadingAsset(true);
-    try {
-      if (download) {
-        await download();
-        setLoadingAsset(false);
-      }
-    } catch (e) {
-      console.log('An error occurred while loading an asset. Try again later');
-      setLoadingAsset(false);
-    }
-  }, [download]);
 
   const isStreamableAudio = !!contentType && contentType.includes('audio');
 
@@ -85,6 +66,25 @@ export const NftContentView: React.FC<ContentViewProps> = ({
         : undefined,
     [nft, assetIndex, isVideo],
   );
+
+  const { download } = useCustomDownloadContent({
+    nftId: Number(nft.nftId),
+    collectionAddress: nft.collection.address!,
+    cid: assetCid!,
+  });
+
+  const handleOnDownload = useCallback(async () => {
+    setLoadingAsset(true);
+    try {
+      if (download) {
+        await download();
+        setLoadingAsset(false);
+      }
+    } catch (e) {
+      console.log('An error occurred while loading an asset. Try again later');
+      setLoadingAsset(false);
+    }
+  }, [download]);
 
   const renderContent = useMemo(() => {
     if (!isVideo && !isStreamableAudio) {
@@ -142,7 +142,7 @@ export const NftContentView: React.FC<ContentViewProps> = ({
     <div className="flex self-stretch">
       <div className={`w-full ${classNames?.content}`}>{renderContent}</div>
       {DownloadIcon && (
-        <button className={classNames?.downloadContent} onClick={handleOnDownload} disabled={isLoadingAsset}>
+        <button className={classNames?.downloadContent || ''} onClick={handleOnDownload} disabled={isLoadingAsset}>
           {isLoadingAsset ? loadingComponent : <DownloadIcon />}
         </button>
       )}

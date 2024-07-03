@@ -1,30 +1,17 @@
 import { NFT, NftMetadata } from '@cere/media-sdk-client';
-import { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { EncryptedAudioPlayer, HlsEncryptionLoader, VideoPlayer } from '..';
 import { useDownloadContent, useEncryptedContent, useMediaClient } from '../../hooks';
 import './styles.css';
 
 export interface ContentViewProps {
-  /**
-   * The NFT to display content for
-   */
   nft: NFT;
-  /**
-   * The metadata of the NFT. This can be retrieved using the `useNftMetadata` hook
-   */
   metadata: NftMetadata;
-  /**
-   * The index of the asset to view content for (starting at 0)
-   */
   assetIndex: number;
-
   loadingComponent?: React.ReactNode;
-
   classNames?: Partial<Record<'container' | 'content' | 'imageBlock' | 'image', string>>;
-
   callback?: () => void;
-
   DownloadIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
@@ -37,17 +24,15 @@ const useCustomDownloadContent = ({
   nftId: number;
   collectionAddress: string;
 }) => {
-  if (!content) return;
-
   const { download } = useDownloadContent(
     { nftId: Number(nftId), collection: { address: collectionAddress } } as NFT,
-    `asset-${content.split('/').pop()}`,
+    `asset-${content?.split('/').pop()}`,
   );
 
   return { download };
 };
 
-export const NftContentView = ({
+export const NftContentView: React.FC<ContentViewProps> = ({
   nft,
   metadata,
   assetIndex,
@@ -55,18 +40,16 @@ export const NftContentView = ({
   classNames,
   callback,
   DownloadIcon,
-}: ContentViewProps) => {
+}) => {
   const [isLoadingAsset, setLoadingAsset] = useState(false);
-
   const { client, isLoading: isLoadingClient } = useMediaClient();
   const { content, isLoading, isVideo, contentType, asset } = useEncryptedContent(nft, metadata, assetIndex);
 
-  const { download } =
-    useCustomDownloadContent({
-      nftId: Number(nft.nftId),
-      collectionAddress: nft.collection.address!,
-      content,
-    }) || {};
+  const { download } = useCustomDownloadContent({
+    nftId: Number(nft.nftId),
+    collectionAddress: nft.collection.address!,
+    content,
+  });
 
   const handleImageLoad = useCallback(() => {
     if (callback) {
@@ -102,16 +85,6 @@ export const NftContentView = ({
         : undefined,
     [nft, assetIndex, isVideo],
   );
-
-  if (isLoading || isLoadingClient) {
-    return (
-      <>
-        {loadingComponent || (
-          <div style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>Loading...</div>
-        )}
-      </>
-    );
-  }
 
   const renderContent = useMemo(() => {
     if (!isVideo && !isStreamableAudio) {
@@ -159,7 +132,11 @@ export const NftContentView = ({
         />
       );
     }
-  }, []);
+  }, [isVideo, isStreamableAudio, content, loadingComponent, classNames, asset, handleImageLoad]);
+
+  if (isLoading || isLoadingClient) {
+    return <>{loadingComponent || <div>Loading...</div>}</>;
+  }
 
   return (
     <div className="flex self-stretch">

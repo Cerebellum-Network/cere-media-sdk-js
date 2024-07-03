@@ -18,7 +18,6 @@ export const useEncryptedContent = (nft: NFT, metadata: NftMetadata, assetIndex:
       nftId: nft.nftId,
       asset: identifier,
     });
-    debugger;
     if (!decryptedContent) return undefined;
     return URL.createObjectURL(decryptedContent);
   };

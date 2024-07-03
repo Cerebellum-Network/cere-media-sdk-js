@@ -2,7 +2,6 @@ import React from 'react';
 import { NFT } from '@cere/media-sdk-client';
 import { Box, Button, CircularProgress, IconButton, Modal, Skeleton, Typography } from '@mui/material';
 import { NftContentView, useNftMetadata } from '@cere/media-sdk-react';
-
 export const ClickableContentView = ({
   assetIndex,
   nftId,
@@ -45,8 +44,8 @@ export const ClickableContentView = ({
   }
 
   const nft = {
-    collection: { address: '0x92adeefe9776af20c7a4c376d40f430cdd966130' },
-    nftId: 2,
+    collection: { address: collectionAddress },
+    nftId: nftId,
   } as NFT;
   return (
     <Modal open={isOpen} onClose={onClose} aria-labelledby="modal-nft-content">

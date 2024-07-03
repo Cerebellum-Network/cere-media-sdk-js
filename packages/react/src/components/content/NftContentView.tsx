@@ -10,7 +10,7 @@ export interface ContentViewProps {
   metadata: NftMetadata;
   assetIndex: number;
   loadingComponent?: React.ReactNode;
-  classNames?: Partial<Record<'container' | 'content' | 'imageBlock' | 'image', string>>;
+  classNames?: Partial<Record<'container' | 'content' | 'downloadContent' | 'imageBlock' | 'image', string>>;
   callback?: () => void;
   DownloadIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
 }
@@ -140,9 +140,9 @@ export const NftContentView: React.FC<ContentViewProps> = ({
 
   return (
     <div className="flex self-stretch">
-      <div className="w-full content">{renderContent}</div>
+      <div className={`w-full ${classNames?.content}`}>{renderContent}</div>
       {DownloadIcon && (
-        <button className="download-content" onClick={handleOnDownload} disabled={isLoadingAsset}>
+        <button className={classNames?.downloadContent} onClick={handleOnDownload} disabled={isLoadingAsset}>
           {isLoadingAsset ? loadingComponent : <DownloadIcon />}
         </button>
       )}

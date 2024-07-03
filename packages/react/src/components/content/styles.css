@@ -9,35 +9,3 @@
 .w-full {
   width: 100%;
 }
-
-.download-content {
-  background-color: #212121;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-  gap: 12px;
-  top: 50px;
-  right: 12px;
-  position: absolute;
-  width: 30px;
-  height: 30px;
-}
-
-.download-content:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.download-content:not(:disabled):hover {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-
-.download-content svg {
-  width: 24px;
-  height: 24px;
-}

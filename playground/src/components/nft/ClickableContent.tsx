@@ -2,6 +2,7 @@ import React from 'react';
 import { NFT } from '@cere/media-sdk-client';
 import { Box, Button, CircularProgress, IconButton, Modal, Skeleton, Typography } from '@mui/material';
 import { NftContentView, useNftMetadata } from '@cere/media-sdk-react';
+import { DownloadIconComponent } from './DownloadIcon.tsx';
 export const ClickableContentView = ({
   assetIndex,
   nftId,
@@ -63,6 +64,7 @@ export const ClickableContentView = ({
             metadata={metadata!}
             assetIndex={assetIndex}
             loadingComponent={<CircularProgress size="30px" />}
+            DownloadIcon={DownloadIconComponent}
           />
         </Box>
       </Box>

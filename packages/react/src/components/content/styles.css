@@ -1,0 +1,11 @@
+.flex {
+  display: flex;
+}
+
+.self-stretch {
+  align-self: stretch;
+}
+
+.w-full {
+  width: 100%;
+}

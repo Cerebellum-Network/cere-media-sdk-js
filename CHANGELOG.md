@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2-rc.10](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.0...v1.4.2-rc.10) (2024-08-16)
+
+### Bug Fixes
+
+- Add version fixes ([43fc325](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/43fc325805325e577ae97cd446c5231fc3b0c447))
+- Change React peer dependency version ([cc12169](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/cc121695b9bdc3ac92a6fd90e758fafcd807632f))
+- Fix ethers usage ([267f14a](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/267f14a1373ad8c19740675206d2cc3462e1a37d))
+- Fix react versions ([6b1f4d8](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/6b1f4d8b225161ed38e8c0f17fc1ab90e4a7a702))
+- remove typing error ([5240dad](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/5240dad09c76b5880a0589e9ec24531a4195d883))
+
+### Miscellaneous Chores
+
+- Remove Freeport SC SDK dependency ([b5d58fd](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/b5d58fd50ed99dd2cc278987ec6b372c19fbc9c5))
+
 ## [1.4.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0...v1.4.1) (2024-04-18)
 
 **Note:** Version bump only for package cere-media-sdk

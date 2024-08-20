@@ -22,6 +22,7 @@ export const VideoPlayer = ({
   loader = Hls.DefaultConfig.loader,
   className,
   loadingComponent,
+  type,
   videoOverrides = { crossOrigin: 'anonymous' },
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -87,10 +88,19 @@ export const VideoPlayer = ({
       hls.loadSource(src);
     } else {
       const video = document.createElement('video');
+      const source = document.createElement('source');
+
+      if (type) {
+        source.type = type;
+      }
+
+      source.src = src;
       video.className = 'cere-video';
+
+      video.appendChild(source);
       playerRef.current = video;
       videoWrapper.appendChild(video);
-      video.src = src;
+
       Object.assign(video, videoOverrides);
       const player = new Plyr(video, plyrOptions);
       player.on('canplaythrough', () => setIsLoading(false));

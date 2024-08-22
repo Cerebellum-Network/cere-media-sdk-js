@@ -21,9 +21,7 @@ export const PlaygroundNavigation = () => {
             <Tab label="Check Nft Streaming" value="0" />
           </TabList>
         </Box>
-        <TabPanel value="0">
-          <CheckNft />
-        </TabPanel>
+        <TabPanel value="0"></TabPanel>
       </TabContext>
     </Box>
   );

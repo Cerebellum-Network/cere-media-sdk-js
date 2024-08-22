@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import cereLogo from '/cere.png';
 import './App.css';
 import { Playground } from './components';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useWallet, useWalletStatus } from './cere-wallet';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { ethers } from 'ethers';
@@ -24,7 +24,7 @@ const App = () => {
 
   useEffect(() => {
     const initializeMetaMask = async () => {
-      const provider = await detectEthereumProvider();
+      const provider = (await detectEthereumProvider()) as MetaMaskEthereumProvider | null;
       if (provider) {
         setMetaMaskProvider(provider);
 
@@ -33,7 +33,7 @@ const App = () => {
         setSigner(signer);
 
         provider.on('accountsChanged', (accounts) => {
-          setMetaMaskAccount(accounts[0]);
+          setMetaMaskAccount((accounts as string[])[0] || null);
         });
 
         provider.on('chainChanged', () => {
@@ -51,8 +51,7 @@ const App = () => {
     if (metaMaskProvider) {
       try {
         const accounts = await metaMaskProvider.request({ method: 'eth_requestAccounts' });
-        debugger;
-        setMetaMaskAccount(accounts[0]);
+        setMetaMaskAccount((accounts as string[])?.[0]);
       } catch (error) {
         console.error('Error connecting to MetaMask:', error);
       }
@@ -129,24 +128,24 @@ const App = () => {
         <img src={cereLogo} className="logo" alt="Cere logo" />
         <h2>Cere Media SDK Playground</h2>
         <p>Connect Wallet to Get Started</p>
-        <Button
-          disabled={
-            isAnyWalletConnected || status === 'not-ready' || status === 'connecting' || status === 'initializing'
-          }
-          onClick={handleConnect}
-        >
-          Connect Cere Wallet
-        </Button>
-        {/*{metaMaskAccount ? (*/}
-        {/*  <>*/}
-        {/*    <p>Connected to MetaMask: {metaMaskAccount}</p>*/}
-        {/*    <Button onClick={disconnectMetaMask}>Disconnect MetaMask</Button>*/}
-        {/*  </>*/}
-        {/*) : (*/}
-        <Button disabled={isAnyWalletConnected || !metaMaskProvider} onClick={connectMetaMask}>
-          Connect MetaMask
-        </Button>
-        {/*)}*/}
+        <Box display="flex" flexDirection="column">
+          <Button
+            disabled={
+              isAnyWalletConnected || status === 'not-ready' || status === 'connecting' || status === 'initializing'
+            }
+            startIcon={<img width="20px" src="/cere.png" alt="cere" />}
+            onClick={handleConnect}
+          >
+            Connect Cere Wallet
+          </Button>
+          <Button
+            disabled={isAnyWalletConnected || !metaMaskProvider}
+            startIcon={<img width="20px" src="/metamask.png" alt="cere" />}
+            onClick={connectMetaMask}
+          >
+            Connect MetaMask
+          </Button>
+        </Box>
       </div>
     </>
   );

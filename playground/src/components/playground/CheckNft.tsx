@@ -24,7 +24,7 @@ import {
   Tenant,
 } from '@cere/media-sdk-client';
 import { NftPreview } from '../nft';
-import { Signer } from 'ethers';
+import { ethers, Signer } from 'ethers';
 import { MediaSdkClientProvider } from '@cere/media-sdk-react';
 import { useWallet } from '../../cere-wallet';
 import { getWalletAccountType } from '../../cere-wallet/helper.ts';
@@ -50,7 +50,7 @@ const fetchNftMetadata = async (
 ) => {
   const response = await axios
     .create({
-      baseURL: mediaClientConfig[deployment][tenant].freeportApiUrl,
+      baseURL: 'http://localhost:3012/',
       headers: {
         'chain-namespace': chainNamespace,
         'chain-id': chainId,
@@ -60,7 +60,7 @@ const fetchNftMetadata = async (
   return response.data;
 };
 
-export const CheckNft = () => {
+export const CheckNft = ({ metamaskSigner }: { metamaskSigner: ethers.Signer | null }) => {
   const opts = useSelectTenant();
   const [step, setStep] = useState(0);
   const [selectedChainNamespace, setSelectedChainNamespace] = useState<ChainNamespace>(ChainNamespace.EIP155);
@@ -191,7 +191,7 @@ export const CheckNft = () => {
                 key={`${contractAddress}::${tokenId}`}
                 chainId={selectedChainId}
                 chainNamespace={selectedChainNamespace}
-                signer={signer as unknown as Signer}
+                signer={metamaskSigner ? metamaskSigner : (signer as unknown as Signer)}
               >
                 <NftPreview
                   assetIndex={idx}

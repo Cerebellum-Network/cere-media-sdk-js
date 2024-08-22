@@ -61,7 +61,7 @@ const fetchNftMetadata = async (
 };
 
 export const CheckNft = ({ metamaskSigner }: { metamaskSigner: ethers.Signer | null }) => {
-  const opts = useSelectTenant();
+  const { tenant, deployment } = useSelectTenant();
   const [step, setStep] = useState(0);
   const [selectedChainNamespace, setSelectedChainNamespace] = useState<ChainNamespace>(ChainNamespace.EIP155);
   const [selectedChainId, setSelectedChainId] = useState<string>('');
@@ -80,8 +80,8 @@ export const CheckNft = ({ metamaskSigner }: { metamaskSigner: ethers.Signer | n
     try {
       const data = await fetchNftMetadata(
         `/api/content/metadata/${contractAddress}/${tokenId}`,
-        opts.tenant,
-        opts.deployment,
+        tenant,
+        deployment,
         selectedChainNamespace,
         selectedChainId,
       );
@@ -92,7 +92,7 @@ export const CheckNft = ({ metamaskSigner }: { metamaskSigner: ethers.Signer | n
     } finally {
       setIsLoadingMetadata(false);
     }
-  }, [contractAddress, opts.deployment, opts.tenant, selectedChainId, selectedChainNamespace, tokenId]);
+  }, [contractAddress, deployment, tenant, selectedChainId, selectedChainNamespace, tokenId]);
 
   const wallet = useWallet();
 

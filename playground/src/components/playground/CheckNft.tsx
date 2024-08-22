@@ -50,7 +50,7 @@ const fetchNftMetadata = async (
 ) => {
   const response = await axios
     .create({
-      baseURL: 'http://localhost:3012/',
+      baseURL: mediaClientConfig[deployment][tenant].freeportApiUrl,
       headers: {
         'chain-namespace': chainNamespace,
         'chain-id': chainId,

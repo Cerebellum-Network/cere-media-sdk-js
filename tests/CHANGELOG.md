@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2-rc.11](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.10...v1.4.2-rc.11) (2024-08-20)
+
+**Note:** Version bump only for package @cere/media-sdk-tests
+
+## [1.4.2-rc.10](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.0...v1.4.2-rc.10) (2024-08-16)
+
+### Miscellaneous Chores
+
+- Remove Freeport SC SDK dependency ([b5d58fd](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/b5d58fd50ed99dd2cc278987ec6b372c19fbc9c5))
+
 ## [1.4.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.0...v1.4.1) (2024-04-18)
 
 **Note:** Version bump only for package @cere/media-sdk-tests

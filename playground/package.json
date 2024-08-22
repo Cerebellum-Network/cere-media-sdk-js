@@ -19,8 +19,6 @@
     "@metamask/detect-provider": "^2.0.0",
     "@mui/lab": "^5.0.0-alpha.160",
     "@mui/material": "^5.15.4",
-    "@thirdweb-dev/react": "^4.9.4",
-    "@thirdweb-dev/wallets": "^2.5.39",
     "buffer": "^6.0.3",
     "ethers": "^5.7.2",
     "react": "^18.1.0",

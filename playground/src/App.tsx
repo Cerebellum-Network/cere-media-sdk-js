@@ -133,16 +133,11 @@ const App = () => {
             disabled={
               isAnyWalletConnected || status === 'not-ready' || status === 'connecting' || status === 'initializing'
             }
-            startIcon={<img width="20px" src="/cere.png" alt="cere" />}
             onClick={handleConnect}
           >
             Connect Cere Wallet
           </Button>
-          <Button
-            disabled={isAnyWalletConnected || !metaMaskProvider}
-            startIcon={<img width="20px" src="/metamask.png" alt="cere" />}
-            onClick={connectMetaMask}
-          >
+          <Button disabled={isAnyWalletConnected || !metaMaskProvider} onClick={connectMetaMask}>
             Connect MetaMask
           </Button>
         </Box>

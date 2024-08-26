@@ -18,6 +18,7 @@
     "default": "./dist/index.js",
     "css": "./dist/index.css"
   },
+  "sideEffects": false,
   "author": "Cere Network <contact@cere.io (https://www.cere.io/)",
   "license": "Apache-2.0",
   "scripts": {

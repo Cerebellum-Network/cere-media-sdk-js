@@ -2,8 +2,7 @@ import './plyr.css';
 import './styles.css';
 
 import clsx from 'clsx';
-import Hls, { HlsConfig } from 'hls.js';
-import Plyr from 'plyr';
+import { HlsConfig, Level } from 'hls.js';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 
 interface VideoPlayerProps {
@@ -19,7 +18,7 @@ interface VideoPlayerProps {
 export const VideoPlayer = ({
   src,
   hlsEnabled = true,
-  loader = Hls.DefaultConfig.loader,
+  loader,
   className,
   loadingComponent,
   type,
@@ -28,23 +27,30 @@ export const VideoPlayer = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [Hls, setHls] = useState<any>(null);
+  const [Plyr, setPlyr] = useState<any>(null);
 
-  const isVideoSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);
+  const isVideoSupported = useMemo(() => (hlsEnabled && Hls ? Hls.isSupported() : true), [hlsEnabled, Hls]);
 
   useEffect(() => {
-    if (playerRef.current) return;
+    const initializeDependencies = async () => {
+      if (hlsEnabled) {
+        const { default: HlsModule } = await import('hls.js');
+        setHls(HlsModule);
+      }
+      const { default: PlyrModule } = await import('plyr');
+      setPlyr(PlyrModule);
+    };
+
+    initializeDependencies();
+  }, [hlsEnabled]);
+
+  useEffect(() => {
+    if (!Hls || !Plyr || playerRef.current) return;
 
     const videoWrapper = wrapperRef.current;
     if (!videoWrapper) return;
 
-    const hlsOptions: Partial<HlsConfig> = {
-      fragLoadingTimeOut: 30_000,
-      manifestLoadingTimeOut: 10_000,
-      levelLoadingTimeOut: 15_000,
-      loader,
-    };
-
-    const hls = new Hls(hlsOptions);
     const plyrOptions: Plyr.Options = {
       autoplay: videoOverrides.autoPlay,
     };
@@ -53,21 +59,30 @@ export const VideoPlayer = ({
       return;
     }
 
-    if (hlsEnabled) {
+    if (Hls && hlsEnabled) {
+      const hlsOptions: Partial<any> = {
+        fragLoadingTimeOut: 30_000,
+        manifestLoadingTimeOut: 10_000,
+        levelLoadingTimeOut: 15_000,
+        loader,
+      };
+
+      const hlsInstance = new Hls(hlsOptions);
+
       const updateQuality = (newQuality: number) => {
         if (newQuality === 0) {
-          hls.currentLevel = -1;
+          hlsInstance.currentLevel = -1;
         } else {
-          hls.levels.forEach((level, levelIndex) => {
+          hlsInstance.levels.forEach((level: Level, levelIndex: number) => {
             if (level.height === newQuality) {
-              hls.currentLevel = levelIndex;
+              hlsInstance.currentLevel = levelIndex;
             }
           });
         }
       };
 
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        const availableQualities = hls.levels.map((l) => l.height);
+      hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+        const availableQualities = hlsInstance.levels.map((l: Level) => l.height);
         plyrOptions.quality = {
           default: -1, // auto
           options: availableQualities,
@@ -79,13 +94,21 @@ export const VideoPlayer = ({
         Object.assign(video, videoOverrides);
         playerRef.current = video;
         videoWrapper.appendChild(video);
-        hls.attachMedia(video);
+        hlsInstance.attachMedia(video);
         const player = new Plyr(video, plyrOptions);
         player.on('canplaythrough', () => setIsLoading(false));
       });
 
-      hls.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
-      hls.loadSource(src);
+      hlsInstance.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
+      hlsInstance.loadSource(src);
+
+      return () => {
+        hlsInstance.destroy();
+        if (playerRef.current) {
+          playerRef.current.remove();
+        }
+        playerRef.current = null;
+      };
     } else {
       const video = document.createElement('video');
       const source = document.createElement('source');
@@ -108,15 +131,7 @@ export const VideoPlayer = ({
       video.addEventListener('stalled', () => setIsLoading(false));
       video.addEventListener('suspend', () => setIsLoading(false));
     }
-
-    return () => {
-      hls.destroy();
-      if (playerRef.current) {
-        playerRef.current.remove();
-      }
-      playerRef.current = null;
-    };
-  }, [isVideoSupported, loader, src, wrapperRef]);
+  }, [isVideoSupported, loader, src, wrapperRef, Hls]);
 
   if (!isVideoSupported) {
     return (

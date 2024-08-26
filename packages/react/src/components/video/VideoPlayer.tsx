@@ -64,7 +64,7 @@ export const VideoPlayer = ({
         fragLoadingTimeOut: 30_000,
         manifestLoadingTimeOut: 10_000,
         levelLoadingTimeOut: 15_000,
-        loader,
+        loader: loader || Hls.DefaultConfig.loader,
       };
 
       const hlsInstance = new Hls(hlsOptions);

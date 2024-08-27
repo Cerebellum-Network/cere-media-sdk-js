@@ -1,7 +1,8 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 import { SelectTenant } from '../select-tenant';
 import { useState } from 'react';
 import { CheckNft } from './CheckNft.tsx';
+import { VideoPlayer } from '@cere/media-sdk-react';
 
 export const Playground = ({ disconnect }: { disconnect: () => void }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,6 +71,15 @@ export const Playground = ({ disconnect }: { disconnect: () => void }) => {
           </Button>
         </Box>
       )}
+      <VideoPlayer
+        hlsEnabled={false}
+        loadingComponent={<CircularProgress />}
+        src="https://cdn.dragon.cere.network/2/baebb4iazaryffbwed2pkt66qunrratiuz4o2d6u4c32jwbgrua7waltaje"
+        videoOverrides={{
+          poster: 'https://cdn.dragon.cere.network/2/baebb4icwzoqa6cpb6wnni5weanzjomzni7voaatpv4ir2u4jtuhuqkgzc4',
+        }}
+        type="video/mp4"
+      />
       <Box sx={{ minWidth: '800px', minH: '80vh' }}>
         <CheckNft />
       </Box>

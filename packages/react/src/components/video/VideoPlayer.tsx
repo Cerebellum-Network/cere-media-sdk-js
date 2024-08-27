@@ -3,7 +3,6 @@ import './styles.css';
 
 import clsx from 'clsx';
 import { Level } from 'hls.js';
-import Plyr from 'plyr';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 
 interface VideoPlayerProps {
@@ -29,22 +28,25 @@ export const VideoPlayer = ({
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hlsInstance, setHlsInstance] = useState<any>(null);
+  const [Plyr, setPlyr] = useState<any>(null);
 
   const isVideoSupported = useMemo(() => (hlsEnabled ? hlsInstance?.isSupported() : true), [hlsEnabled, hlsInstance]);
 
   useEffect(() => {
-    const loadHls = async () => {
+    const loadDependencies = async () => {
       if (hlsEnabled) {
         const { default: Hls } = await import('hls.js');
         setHlsInstance(Hls);
       }
+      const { default: PlyrModule } = await import('plyr');
+      setPlyr(() => PlyrModule);
     };
 
-    loadHls();
+    loadDependencies();
   }, [hlsEnabled]);
 
   useEffect(() => {
-    if (playerRef.current || !isVideoSupported) return;
+    if (playerRef.current || !isVideoSupported || !Plyr) return;
 
     const videoWrapper = wrapperRef.current;
     if (!videoWrapper) return;
@@ -135,7 +137,7 @@ export const VideoPlayer = ({
       }
       playerRef.current = null;
     };
-  }, [hlsInstance, hlsEnabled, isVideoSupported, loader, src, wrapperRef, videoOverrides]);
+  }, [hlsInstance, hlsEnabled, isVideoSupported, loader, src, wrapperRef, videoOverrides, Plyr]);
 
   if (!isVideoSupported) {
     return (

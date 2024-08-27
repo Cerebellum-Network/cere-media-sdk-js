@@ -51,6 +51,11 @@ export const VideoPlayer = ({
     const videoWrapper = wrapperRef.current;
     if (!videoWrapper) return;
 
+    if (!Plyr) {
+      console.error('Plyr is not available.');
+      return;
+    }
+
     const plyrOptions: Plyr.Options = {
       autoplay: videoOverrides.autoPlay,
     };
@@ -89,6 +94,7 @@ export const VideoPlayer = ({
           forced: true,
           onChange: (quality: number) => updateQuality(quality),
         };
+
         const video = document.createElement('video');
         video.className = 'cere-video';
         Object.assign(video, videoOverrides);
@@ -131,7 +137,7 @@ export const VideoPlayer = ({
       video.addEventListener('stalled', () => setIsLoading(false));
       video.addEventListener('suspend', () => setIsLoading(false));
     }
-  }, [isVideoSupported, loader, src, wrapperRef, Hls]);
+  }, [isVideoSupported, loader, src, wrapperRef, Hls, Plyr, videoOverrides, hlsEnabled]);
 
   if (!isVideoSupported) {
     return (
@@ -141,19 +147,15 @@ export const VideoPlayer = ({
     );
   }
 
-  if (isVideoSupported) {
-    return (
-      <div>
-        <div className={clsx('cere-video-wrapper', className)} ref={wrapperRef} />
+  return (
+    <div>
+      <div className={clsx('cere-video-wrapper', className)} ref={wrapperRef} />
 
-        {isLoading && (
-          <div className="loading-container">
-            {loadingComponent ? loadingComponent : <div className="loading-container">Loading video...</div>}
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  return null;
+      {isLoading && (
+        <div className="loading-container">
+          {loadingComponent ? loadingComponent : <div className="loading-container">Loading video...</div>}
+        </div>
+      )}
+    </div>
+  );
 };

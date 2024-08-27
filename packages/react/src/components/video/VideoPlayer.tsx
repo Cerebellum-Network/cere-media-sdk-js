@@ -2,13 +2,14 @@ import './plyr.css';
 import './styles.css';
 
 import clsx from 'clsx';
-import { HlsConfig, Level } from 'hls.js';
+import { Level } from 'hls.js';
+import Plyr from 'plyr';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 
 interface VideoPlayerProps {
   src: string;
   hlsEnabled?: boolean;
-  loader?: HlsConfig['loader'];
+  loader?: any; // Adjusted to accommodate dynamic import
   className?: string;
   loadingComponent?: React.ReactNode;
   type?: string;
@@ -27,95 +28,76 @@ export const VideoPlayer = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [Hls, setHls] = useState<any>(null);
-  const [Plyr, setPlyr] = useState<any>(null);
+  const [hlsInstance, setHlsInstance] = useState<any>(null);
 
-  const isVideoSupported = useMemo(() => (hlsEnabled && Hls ? Hls.isSupported() : true), [hlsEnabled, Hls]);
+  const isVideoSupported = useMemo(() => (hlsEnabled ? hlsInstance?.isSupported() : true), [hlsEnabled, hlsInstance]);
 
   useEffect(() => {
-    const initializeDependencies = async () => {
+    const loadHls = async () => {
       if (hlsEnabled) {
-        const { default: HlsModule } = await import('hls.js');
-        setHls(HlsModule);
+        const { default: Hls } = await import('hls.js');
+        setHlsInstance(Hls);
       }
-      const { default: PlyrModule } = await import('plyr');
-      setPlyr(PlyrModule);
     };
 
-    initializeDependencies();
+    loadHls();
   }, [hlsEnabled]);
 
   useEffect(() => {
-    if (!Hls || !Plyr || playerRef.current) return;
+    if (playerRef.current || !isVideoSupported) return;
 
     const videoWrapper = wrapperRef.current;
     if (!videoWrapper) return;
-
-    if (!Plyr) {
-      console.error('Plyr is not available.');
-      return;
-    }
 
     const plyrOptions: Plyr.Options = {
       autoplay: videoOverrides.autoPlay,
     };
 
-    if (!isVideoSupported) {
-      return;
-    }
-
-    if (Hls && hlsEnabled) {
+    const initializeHls = () => {
       const hlsOptions: Partial<any> = {
         fragLoadingTimeOut: 30_000,
         manifestLoadingTimeOut: 10_000,
         levelLoadingTimeOut: 15_000,
-        loader: loader || Hls.DefaultConfig.loader,
+        loader: loader || hlsInstance.DefaultConfig.loader,
       };
 
-      const hlsInstance = new Hls(hlsOptions);
+      const hls = new hlsInstance(hlsOptions);
 
       const updateQuality = (newQuality: number) => {
         if (newQuality === 0) {
-          hlsInstance.currentLevel = -1;
+          hls.currentLevel = -1;
         } else {
-          hlsInstance.levels.forEach((level: Level, levelIndex: number) => {
+          hls.levels.forEach((level: Level, levelIndex: number) => {
             if (level.height === newQuality) {
-              hlsInstance.currentLevel = levelIndex;
+              hls.currentLevel = levelIndex;
             }
           });
         }
       };
 
-      hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
-        const availableQualities = hlsInstance.levels.map((l: Level) => l.height);
+      hls.on(hlsInstance.Events.MANIFEST_PARSED, () => {
+        const availableQualities = hls.levels.map((l: Level) => l.height);
         plyrOptions.quality = {
           default: -1, // auto
           options: availableQualities,
           forced: true,
           onChange: (quality: number) => updateQuality(quality),
         };
-
         const video = document.createElement('video');
         video.className = 'cere-video';
         Object.assign(video, videoOverrides);
         playerRef.current = video;
         videoWrapper.appendChild(video);
-        hlsInstance.attachMedia(video);
+        hls.attachMedia(video);
         const player = new Plyr(video, plyrOptions);
         player.on('canplaythrough', () => setIsLoading(false));
       });
 
-      hlsInstance.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
-      hlsInstance.loadSource(src);
+      hls.on(hlsInstance.Events.FRAG_LOADED, () => setIsLoading(false));
+      hls.loadSource(src);
+    };
 
-      return () => {
-        hlsInstance.destroy();
-        if (playerRef.current) {
-          playerRef.current.remove();
-        }
-        playerRef.current = null;
-      };
-    } else {
+    const initializeVideo = () => {
       const video = document.createElement('video');
       const source = document.createElement('source');
 
@@ -136,8 +118,24 @@ export const VideoPlayer = ({
       video.addEventListener('error', () => setIsLoading(false));
       video.addEventListener('stalled', () => setIsLoading(false));
       video.addEventListener('suspend', () => setIsLoading(false));
+    };
+
+    if (hlsEnabled && hlsInstance) {
+      initializeHls();
+    } else {
+      initializeVideo();
     }
-  }, [isVideoSupported, loader, src, wrapperRef, Hls, Plyr, videoOverrides, hlsEnabled]);
+
+    return () => {
+      if (hlsInstance) {
+        hlsInstance.destroy();
+      }
+      if (playerRef.current) {
+        playerRef.current.remove();
+      }
+      playerRef.current = null;
+    };
+  }, [hlsInstance, hlsEnabled, isVideoSupported, loader, src, wrapperRef, videoOverrides]);
 
   if (!isVideoSupported) {
     return (
@@ -147,15 +145,19 @@ export const VideoPlayer = ({
     );
   }
 
-  return (
-    <div>
-      <div className={clsx('cere-video-wrapper', className)} ref={wrapperRef} />
+  if (isVideoSupported) {
+    return (
+      <div>
+        <div className={clsx('cere-video-wrapper', className)} ref={wrapperRef} />
 
-      {isLoading && (
-        <div className="loading-container">
-          {loadingComponent ? loadingComponent : <div className="loading-container">Loading video...</div>}
-        </div>
-      )}
-    </div>
-  );
+        {isLoading && (
+          <div className="loading-container">
+            {loadingComponent ? loadingComponent : <div className="loading-container">Loading video...</div>}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return null;
 };

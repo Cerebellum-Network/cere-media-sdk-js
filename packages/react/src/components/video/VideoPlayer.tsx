@@ -129,7 +129,7 @@ export const VideoPlayer = ({
     }
 
     return () => {
-      if (hlsInstance) {
+      if (hlsEnabled && hlsInstance && typeof hlsInstance.destroy === 'function') {
         hlsInstance.destroy();
       }
       if (playerRef.current) {

@@ -2,8 +2,17 @@ import { Box, Button } from '@mui/material';
 import { SelectTenant } from '../select-tenant';
 import { useState } from 'react';
 import { CheckNft } from './CheckNft.tsx';
+import { ethers } from 'ethers';
 
-export const Playground = ({ disconnect }: { disconnect: () => void }) => {
+export const Playground = ({
+  disconnect,
+  metaMaskAccount,
+  metamaskSigner,
+}: {
+  disconnect: () => void;
+  metaMaskAccount?: string;
+  metamaskSigner: ethers.Signer | null;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onOpen = () => setIsOpen(true);
@@ -55,6 +64,7 @@ export const Playground = ({ disconnect }: { disconnect: () => void }) => {
           >
             Config
           </Button>
+          {metaMaskAccount && <p>Connected to MetaMask: {metaMaskAccount}</p>}
           <Button
             sx={{
               borderRadius: '10px',
@@ -66,12 +76,12 @@ export const Playground = ({ disconnect }: { disconnect: () => void }) => {
             }}
             onClick={disconnect}
           >
-            Disconnect Cere Wallet
+            Disconnect Wallet
           </Button>
         </Box>
       )}
       <Box sx={{ minWidth: '800px', minH: '80vh' }}>
-        <CheckNft />
+        <CheckNft metamaskSigner={metamaskSigner} />
       </Box>
     </>
   );

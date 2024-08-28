@@ -24,7 +24,7 @@ import {
   Tenant,
 } from '@cere/media-sdk-client';
 import { NftPreview } from '../nft';
-import { Signer } from 'ethers';
+import { ethers, Signer } from 'ethers';
 import { MediaSdkClientProvider } from '@cere/media-sdk-react';
 import { useWallet } from '../../cere-wallet';
 import { getWalletAccountType } from '../../cere-wallet/helper.ts';
@@ -60,8 +60,8 @@ const fetchNftMetadata = async (
   return response.data;
 };
 
-export const CheckNft = () => {
-  const opts = useSelectTenant();
+export const CheckNft = ({ metamaskSigner }: { metamaskSigner: ethers.Signer | null }) => {
+  const { tenant, deployment } = useSelectTenant();
   const [step, setStep] = useState(0);
   const [selectedChainNamespace, setSelectedChainNamespace] = useState<ChainNamespace>(ChainNamespace.EIP155);
   const [selectedChainId, setSelectedChainId] = useState<string>('');
@@ -80,8 +80,8 @@ export const CheckNft = () => {
     try {
       const data = await fetchNftMetadata(
         `/api/content/metadata/${contractAddress}/${tokenId}`,
-        opts.tenant,
-        opts.deployment,
+        tenant,
+        deployment,
         selectedChainNamespace,
         selectedChainId,
       );
@@ -92,7 +92,7 @@ export const CheckNft = () => {
     } finally {
       setIsLoadingMetadata(false);
     }
-  }, [contractAddress, opts.deployment, opts.tenant, selectedChainId, selectedChainNamespace, tokenId]);
+  }, [contractAddress, deployment, tenant, selectedChainId, selectedChainNamespace, tokenId]);
 
   const wallet = useWallet();
 
@@ -191,7 +191,7 @@ export const CheckNft = () => {
                 key={`${contractAddress}::${tokenId}`}
                 chainId={selectedChainId}
                 chainNamespace={selectedChainNamespace}
-                signer={signer as unknown as Signer}
+                signer={metamaskSigner ? metamaskSigner : (signer as unknown as Signer)}
               >
                 <NftPreview
                   assetIndex={idx}

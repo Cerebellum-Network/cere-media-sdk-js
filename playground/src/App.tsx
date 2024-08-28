@@ -1,13 +1,66 @@
+import React, { useState, useEffect, useCallback } from 'react';
 import cereLogo from '/cere.png';
 import './App.css';
 import { Playground } from './components';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useWallet, useWalletStatus } from './cere-wallet';
-import { useCallback, useEffect } from 'react';
+import detectEthereumProvider from '@metamask/detect-provider';
+import { ethers } from 'ethers';
+
+type MetaMaskEthereumProvider = {
+  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+  on: (event: string, handler: (...args: unknown[]) => void) => void;
+  removeListener: (event: string, handler: (...args: unknown[]) => void) => void;
+  [key: string]: unknown;
+};
 
 const App = () => {
+  const [signer, setSigner] = useState<ethers.Signer | null>(null);
   const wallet = useWallet();
   const status = useWalletStatus();
+
+  const [metaMaskProvider, setMetaMaskProvider] = useState<MetaMaskEthereumProvider | null>(null);
+  const [metaMaskAccount, setMetaMaskAccount] = useState<string | null>(null);
+
+  useEffect(() => {
+    const initializeMetaMask = async () => {
+      const provider = (await detectEthereumProvider()) as MetaMaskEthereumProvider | null;
+      if (provider) {
+        setMetaMaskProvider(provider);
+
+        const ethersProvider = new ethers.providers.Web3Provider(provider);
+        const signer = ethersProvider.getSigner();
+        setSigner(signer);
+
+        provider.on('accountsChanged', (accounts) => {
+          setMetaMaskAccount((accounts as string[])[0] || null);
+        });
+
+        provider.on('chainChanged', () => {
+          window.location.reload();
+        });
+      } else {
+        console.error('MetaMask not found');
+      }
+    };
+
+    initializeMetaMask();
+  }, []);
+
+  const connectMetaMask = useCallback(async () => {
+    if (metaMaskProvider) {
+      try {
+        const accounts = await metaMaskProvider.request({ method: 'eth_requestAccounts' });
+        setMetaMaskAccount((accounts as string[])?.[0]);
+      } catch (error) {
+        console.error('Error connecting to MetaMask:', error);
+      }
+    }
+  }, [metaMaskProvider]);
+
+  const disconnectMetaMask = useCallback(() => {
+    setMetaMaskAccount(null);
+  }, []);
 
   useEffect(() => {
     wallet.isReady.then((readyWallet) => {
@@ -34,7 +87,6 @@ const App = () => {
           solana_signMessage: {},
         },
       },
-
       context: {
         app: {
           appId: 'cere-media-sdk-playground',
@@ -58,8 +110,16 @@ const App = () => {
     await wallet.connect();
   }, [wallet]);
 
-  if (status === 'connected') {
-    return <Playground disconnect={handleDisconnect} />;
+  const isAnyWalletConnected = status === 'connected' || metaMaskAccount !== null;
+
+  if (isAnyWalletConnected) {
+    return (
+      <Playground
+        metaMaskAccount={metaMaskAccount ?? undefined}
+        metamaskSigner={signer}
+        disconnect={status === 'connected' ? handleDisconnect : disconnectMetaMask}
+      />
+    );
   }
 
   return (
@@ -68,12 +128,19 @@ const App = () => {
         <img src={cereLogo} className="logo" alt="Cere logo" />
         <h2>Cere Media SDK Playground</h2>
         <p>Connect Wallet to Get Started</p>
-        <Button
-          disabled={status === 'not-ready' || status === 'connecting' || status === 'initializing'}
-          onClick={handleConnect}
-        >
-          Connect Cere Wallet
-        </Button>
+        <Box display="flex" flexDirection="column">
+          <Button
+            disabled={
+              isAnyWalletConnected || status === 'not-ready' || status === 'connecting' || status === 'initializing'
+            }
+            onClick={handleConnect}
+          >
+            Connect Cere Wallet
+          </Button>
+          <Button disabled={isAnyWalletConnected || !metaMaskProvider} onClick={connectMetaMask}>
+            Connect MetaMask
+          </Button>
+        </Box>
       </div>
     </>
   );

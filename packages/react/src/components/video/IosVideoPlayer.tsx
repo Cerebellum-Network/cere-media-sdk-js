@@ -2,7 +2,7 @@ import './plyr.css';
 import './styles.css';
 
 import clsx from 'clsx';
-import { Level } from 'hls.js';
+import type { Level } from 'hls.js';
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 
 interface VideoPlayerProps {

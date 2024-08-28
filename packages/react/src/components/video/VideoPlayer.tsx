@@ -36,7 +36,7 @@ export const VideoPlayer = ({
     const loadDependencies = async () => {
       if (hlsEnabled) {
         const { default: Hls } = await import('hls.js');
-        setHlsInstance(Hls);
+        setHlsInstance(() => Hls); // Ensure Hls is correctly set as a constructor function
       }
       const { default: PlyrModule } = await import('plyr');
       setPlyr(() => PlyrModule);
@@ -46,7 +46,7 @@ export const VideoPlayer = ({
   }, [hlsEnabled]);
 
   useEffect(() => {
-    if (playerRef.current || !isVideoSupported || !Plyr) return;
+    if (!isVideoSupported || !Plyr) return;
 
     const videoWrapper = wrapperRef.current;
     if (!videoWrapper) return;

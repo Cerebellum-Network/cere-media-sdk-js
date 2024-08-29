@@ -1,6 +1,7 @@
+import { NFT } from '@cere/media-sdk-client';
 import React, { VideoHTMLAttributes, useState, useEffect } from 'react';
 
-import { useMediaClient, useServerSideUrl } from '../../hooks';
+import { useEncryptedContent, useMediaClient, useNftMetadata, useServerSideUrl } from '../../hooks';
 
 import { createHlsEncryptionLoader } from './HlsEncryptionLoader';
 import { IosVideoPlayer } from './IosVideoPlayer';
@@ -10,7 +11,7 @@ export interface EncryptedVideoPlayerProps {
   src: string;
   collectionAddress: string;
   nftId: number;
-  assetIndex: number;
+  assetIndex?: number;
   serverSide?: boolean;
   className?: string;
   loadingComponent?: React.ReactNode;
@@ -21,12 +22,20 @@ export const EncryptedVideoPlayer = ({
   src,
   collectionAddress,
   nftId,
-  assetIndex,
+  assetIndex = 0,
   serverSide,
   ...props
 }: EncryptedVideoPlayerProps) => {
   const { client } = useMediaClient();
   const { url } = useServerSideUrl({ src, collectionAddress, nftId });
+  const { metadata } = useNftMetadata(collectionAddress, nftId);
+  const nft = {
+    collection: { address: collectionAddress },
+    nftId,
+  } as NFT;
+  const { asset } = useEncryptedContent(nft, metadata!, assetIndex);
+  const assetCid = asset.asset.split('/').pop();
+
   const [loader, setLoader] = useState<any>(null);
 
   useEffect(() => {
@@ -35,7 +44,7 @@ export const EncryptedVideoPlayer = ({
         const loaderInstance = await createHlsEncryptionLoader({
           collectionAddress,
           nftId,
-          assetId: `asset-${assetIndex}`,
+          assetId: `asset-${assetCid}`,
           client,
         });
         setLoader(() => loaderInstance); // Set the loader instance once it's ready

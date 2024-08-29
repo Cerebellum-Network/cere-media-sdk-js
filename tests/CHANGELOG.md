@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2-rc.16](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.15...v1.4.2-rc.16) (2024-08-29)
+
+**Note:** Version bump only for package @cere/media-sdk-tests
+
 ## [1.4.2-rc.15](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.14...v1.4.2-rc.15) (2024-08-29)
 
 **Note:** Version bump only for package @cere/media-sdk-tests

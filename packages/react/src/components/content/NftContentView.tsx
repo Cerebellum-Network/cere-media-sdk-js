@@ -1,7 +1,7 @@
 import { NFT, NftMetadata } from '@cere/media-sdk-client';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
-import { HlsEncryptionLoader, VideoPlayer } from '..';
+import { createHlsEncryptionLoader, VideoPlayer } from '..';
 import { useEncryptedContent, useMediaClient } from '../../hooks';
 
 export interface ContentViewProps {
@@ -22,19 +22,24 @@ export interface ContentViewProps {
 export const NftContentView = ({ nft, metadata, assetIndex }: ContentViewProps) => {
   const { client, isLoading: isLoadingClient } = useMediaClient();
   const { content, isLoading, isVideo, contentType, asset } = useEncryptedContent(nft, metadata, assetIndex);
+  const [loader, setLoader] = useState<any>(null);
   const assetCid = asset.asset.split('/').pop();
-  const loader = useMemo(
-    () =>
-      isVideo && !!client
-        ? HlsEncryptionLoader.create({
-            collectionAddress: nft.collection.address,
-            nftId: nft.nftId,
-            assetId: `asset-${assetCid}`,
-            client,
-          })
-        : undefined,
-    [nft, assetIndex, isVideo],
-  );
+
+  useEffect(() => {
+    const initializeLoader = async () => {
+      if (isVideo && !!client) {
+        const loaderInstance = await createHlsEncryptionLoader({
+          collectionAddress: nft.collection.address,
+          nftId: nft.nftId,
+          assetId: `asset-${assetCid}`,
+          client,
+        });
+        setLoader(() => loaderInstance); // Set the loader instance once it's ready
+      }
+    };
+
+    initializeLoader();
+  }, [nft, assetCid, isVideo, client]);
 
   if (isLoading || isLoadingClient) {
     return <div style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>Loading...</div>;

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2-rc.16](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.15...v1.4.2-rc.16) (2024-08-29)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.4.2-rc.15](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.14...v1.4.2-rc.15) (2024-08-29)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.4.2-rc.14](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.13...v1.4.2-rc.14) (2024-08-28)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.4.2-rc.13](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.12...v1.4.2-rc.13) (2024-08-27)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.4.2-rc.12](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.11...v1.4.2-rc.12) (2024-08-27)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
 ## [1.4.2-rc.11](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.10...v1.4.2-rc.11) (2024-08-20)
 
 ### Bug Fixes

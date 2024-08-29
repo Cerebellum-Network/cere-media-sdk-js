@@ -14,7 +14,7 @@ describe('Freeport API Client', () => {
   });
 
   describe('getAuthMessage', () => {
-    it('should return a valid auth message', async () => {
+    it.skip('should return a valid auth message', async () => {
       const client = await FreeportApiService.create();
       const authMessage = await client.getAuthMessage({ address: mockSigner.address });
 

@@ -1,8 +1,8 @@
-import React, { VideoHTMLAttributes, useMemo } from 'react';
+import React, { VideoHTMLAttributes, useState, useEffect } from 'react';
 
 import { useMediaClient, useServerSideUrl } from '../../hooks';
 
-import { HlsEncryptionLoader } from './HlsEncryptionLoader';
+import { createHlsEncryptionLoader } from './HlsEncryptionLoader';
 import { IosVideoPlayer } from './IosVideoPlayer';
 import { VideoPlayer } from './VideoPlayer';
 
@@ -27,17 +27,23 @@ export const EncryptedVideoPlayer = ({
 }: EncryptedVideoPlayerProps) => {
   const { client } = useMediaClient();
   const { url } = useServerSideUrl({ src, collectionAddress, nftId });
+  const [loader, setLoader] = useState<any>(null);
 
-  const loader = useMemo(() => {
-    return client
-      ? HlsEncryptionLoader.create({
+  useEffect(() => {
+    const initializeLoader = async () => {
+      if (client) {
+        const loaderInstance = await createHlsEncryptionLoader({
           collectionAddress,
           nftId,
           assetId: `asset-${assetIndex}`,
           client,
-        })
-      : undefined;
-  }, [collectionAddress, nftId, assetIndex, client]);
+        });
+        setLoader(() => loaderInstance); // Set the loader instance once it's ready
+      }
+    };
+
+    initializeLoader();
+  }, [client]);
 
   if (!client) {
     return <></>;

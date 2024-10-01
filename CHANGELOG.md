@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.5.0...v1.5.1) (2024-10-01)
+
+### Bug Fixes
+
+- Full-screen callback is not fired properly ([15849bf](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/15849bfff9f5018fb476bc86ce362d72e2f118a1))
+
 ## [1.5.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.16...v1.5.0) (2024-10-01)
 
 ### Features

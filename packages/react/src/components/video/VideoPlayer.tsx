@@ -121,8 +121,8 @@ export const VideoPlayer = ({
       Object.assign(video, videoOverrides);
       const player = new Plyr(video, plyrOptions);
       player.on('canplaythrough', () => setIsLoading(false));
-      player.on('enterfullscreen', onFullScreenChange?.(true));
-      player.on('exitfullscreen', onFullScreenChange?.(false));
+      player.on('enterfullscreen', () => onFullScreenChange?.(true));
+      player.on('exitfullscreen', () => onFullScreenChange?.(false));
 
       video.addEventListener('error', () => setIsLoading(false));
       video.addEventListener('stalled', () => setIsLoading(false));

@@ -13,6 +13,7 @@ interface VideoPlayerProps {
   loadingComponent?: React.ReactNode;
   type?: string;
   videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
+  onFullScreenChange?: (isFullScreen: boolean) => void;
 }
 
 export const VideoPlayer = ({
@@ -22,6 +23,7 @@ export const VideoPlayer = ({
   className,
   loadingComponent,
   type,
+  onFullScreenChange,
   videoOverrides = { crossOrigin: 'anonymous' },
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -93,6 +95,8 @@ export const VideoPlayer = ({
         hls.attachMedia(video);
         const player = new Plyr(video, plyrOptions);
         player.on('canplaythrough', () => setIsLoading(false));
+        player.on('enterfullscreen', onFullScreenChange?.(true));
+        player.on('exitfullscreen', onFullScreenChange?.(false));
       });
 
       hls.on(hlsInstance.Events.FRAG_LOADED, () => setIsLoading(false));
@@ -117,6 +121,9 @@ export const VideoPlayer = ({
       Object.assign(video, videoOverrides);
       const player = new Plyr(video, plyrOptions);
       player.on('canplaythrough', () => setIsLoading(false));
+      player.on('enterfullscreen', onFullScreenChange?.(true));
+      player.on('exitfullscreen', onFullScreenChange?.(false));
+
       video.addEventListener('error', () => setIsLoading(false));
       video.addEventListener('stalled', () => setIsLoading(false));
       video.addEventListener('suspend', () => setIsLoading(false));

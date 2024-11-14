@@ -4,20 +4,20 @@ import './styles.css';
 import { ActivityEvent, EventSource, UriSignerOptions } from '@cere-activity-sdk/events';
 import { u8aToU8a } from '@polkadot/util';
 import clsx from 'clsx';
-import Hls, { HlsConfig } from 'hls.js';
-import Plyr from 'plyr';
-import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState, useCallback } from 'react';
+import type { Level } from 'hls.js';
+import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 
 import { PublicKeySigner } from '../../classes/PublicKeySigner';
 
 interface VideoPlayerProps {
   src: string;
   hlsEnabled?: boolean;
-  loader?: HlsConfig['loader'];
+  loader?: any; // Adjusted to accommodate dynamic import
   className?: string;
   loadingComponent?: React.ReactNode;
   type?: string;
   videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
+  onFullScreenChange?: (isFullScreen: boolean) => void;
   appId?: string;
   dispatchUrl?: string;
   listenUrl?: string;
@@ -28,10 +28,11 @@ interface VideoPlayerProps {
 export const VideoPlayer = ({
   src,
   hlsEnabled = true,
-  loader = Hls.DefaultConfig.loader,
+  loader,
   className,
   loadingComponent,
   type,
+  onFullScreenChange,
   videoOverrides = { crossOrigin: 'anonymous' },
   appId,
   dispatchUrl,
@@ -42,8 +43,23 @@ export const VideoPlayer = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [hlsInstance, setHlsInstance] = useState<any>(null);
+  const [Plyr, setPlyr] = useState<any>(null);
 
-  const isVideoSupported = useMemo(() => (hlsEnabled ? Hls.isSupported() : true), [hlsEnabled]);
+  const isVideoSupported = useMemo(() => (hlsEnabled ? hlsInstance?.isSupported() : true), [hlsEnabled, hlsInstance]);
+
+  useEffect(() => {
+    const loadDependencies = async () => {
+      if (hlsEnabled) {
+        const { default: Hls } = await import('hls.js');
+        setHlsInstance(() => Hls); // Ensure Hls is correctly set as a constructor function
+      }
+      const { default: PlyrModule } = await import('plyr');
+      setPlyr(() => PlyrModule);
+    };
+
+    loadDependencies();
+  }, [hlsEnabled]);
 
   const publicKeyArray = u8aToU8a(base64PublicKey);
 
@@ -75,33 +91,30 @@ export const VideoPlayer = ({
   }, []);
 
   useEffect(() => {
-    if (playerRef.current) return;
+    if (!isVideoSupported || !Plyr) return;
 
     const videoWrapper = wrapperRef.current;
     if (!videoWrapper) return;
 
-    const hlsOptions: Partial<HlsConfig> = {
-      fragLoadingTimeOut: 30_000,
-      manifestLoadingTimeOut: 10_000,
-      levelLoadingTimeOut: 15_000,
-      loader,
-    };
-
-    const hls = new Hls(hlsOptions);
     const plyrOptions: Plyr.Options = {
       autoplay: videoOverrides.autoPlay,
     };
 
-    if (!isVideoSupported) {
-      return;
-    }
+    const initializeHls = () => {
+      const hlsOptions: Partial<any> = {
+        fragLoadingTimeOut: 30_000,
+        manifestLoadingTimeOut: 10_000,
+        levelLoadingTimeOut: 15_000,
+        loader: loader || hlsInstance.DefaultConfig.loader,
+      };
 
-    if (hlsEnabled) {
+      const hls = new hlsInstance(hlsOptions);
+
       const updateQuality = (newQuality: number) => {
         if (newQuality === 0) {
           hls.currentLevel = -1;
         } else {
-          hls.levels.forEach((level, levelIndex) => {
+          hls.levels.forEach((level: Level, levelIndex: number) => {
             if (level.height === newQuality) {
               hls.currentLevel = levelIndex;
             }
@@ -109,8 +122,8 @@ export const VideoPlayer = ({
         }
       };
 
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        const availableQualities = hls.levels.map((l) => l.height);
+      hls.on(hlsInstance.Events.MANIFEST_PARSED, () => {
+        const availableQualities = hls.levels.map((l: Level) => l.height);
         plyrOptions.quality = {
           default: -1, // auto
           options: availableQualities,
@@ -144,11 +157,15 @@ export const VideoPlayer = ({
         });
 
         player.on('canplaythrough', () => setIsLoading(false));
+        player.on('enterfullscreen', onFullScreenChange?.(true));
+        player.on('exitfullscreen', onFullScreenChange?.(false));
       });
 
-      hls.on(Hls.Events.FRAG_LOADED, () => setIsLoading(false));
+      hls.on(hlsInstance.Events.FRAG_LOADED, () => setIsLoading(false));
       hls.loadSource(src);
-    } else {
+    };
+
+    const initializeVideo = () => {
       const video = document.createElement('video');
       const source = document.createElement('source');
 
@@ -184,19 +201,30 @@ export const VideoPlayer = ({
       });
 
       player.on('canplaythrough', () => setIsLoading(false));
+      player.on('enterfullscreen', () => onFullScreenChange?.(true));
+      player.on('exitfullscreen', () => onFullScreenChange?.(false));
+
       video.addEventListener('error', () => setIsLoading(false));
       video.addEventListener('stalled', () => setIsLoading(false));
       video.addEventListener('suspend', () => setIsLoading(false));
+    };
+
+    if (hlsEnabled && hlsInstance) {
+      initializeHls();
+    } else {
+      initializeVideo();
     }
 
     return () => {
-      hls.destroy();
+      if (hlsEnabled && hlsInstance && typeof hlsInstance.destroy === 'function') {
+        hlsInstance.destroy();
+      }
       if (playerRef.current) {
         playerRef.current.remove();
       }
       playerRef.current = null;
     };
-  }, [isVideoSupported, loader, src, wrapperRef, eventSource]);
+  }, [hlsInstance, hlsEnabled, isVideoSupported, loader, src, wrapperRef, videoOverrides, Plyr, eventSource]);
 
   if (!isVideoSupported) {
     return (

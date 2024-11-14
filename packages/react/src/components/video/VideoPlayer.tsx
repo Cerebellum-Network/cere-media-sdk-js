@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import type { Level } from 'hls.js';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 
-import { PublicKeySigner } from '../../classes/PublicKeySigner';
+import { PublicKeySigner } from '../../classes';
 
 interface VideoPlayerProps {
   src: string;

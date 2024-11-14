@@ -1,7 +1,7 @@
 {
   "name": "playground",
   "private": true,
-  "version": "1.4.2-rc.12",
+  "version": "1.4.2-rc.13",
   "type": "module",
   "scripts": {
     "start": "vite --open",
@@ -13,8 +13,8 @@
   "dependencies": {
     "@cere-activity-sdk/events": "^0.0.1-rc.2",
     "@cere/embed-wallet": "0.18.2",
-    "@cere/media-sdk-client": "1.4.2-rc.12",
-    "@cere/media-sdk-react": "1.4.2-rc.12",
+    "@cere/media-sdk-client": "1.4.2-rc.13",
+    "@cere/media-sdk-react": "1.4.2-rc.13",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@metamask/detect-provider": "^2.0.0",

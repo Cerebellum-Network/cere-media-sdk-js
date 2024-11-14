@@ -1,6 +1,6 @@
 import { UriSigner, UriSignerOptions } from '@cere-activity-sdk/signers';
 import { Keyring } from '@polkadot/keyring';
-import { u8aToHex } from '@polkadot/util';
+import { hexToU8a, u8aToHex } from '@polkadot/util';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
 
 export class PublicKeySigner extends UriSigner {
@@ -19,7 +19,8 @@ export class PublicKeySigner extends UriSigner {
     }
 
     const keyring = new Keyring({ ss58Format: 54, type: this.type });
-    const pair = keyring.addFromAddress(this._publicKey);
+    const address = keyring.encodeAddress(hexToU8a(this._publicKey));
+    const pair = keyring.addFromAddress(address);
 
     return !!pair;
   }
@@ -30,13 +31,13 @@ export class PublicKeySigner extends UriSigner {
 
   get address() {
     const keyring = new Keyring({ ss58Format: 54, type: this.type });
-    const pair = keyring.addFromAddress(this._publicKey);
-    return pair.address;
+    return keyring.encodeAddress(hexToU8a(this._publicKey));
   }
 
   async sign(data: Uint8Array | string) {
     const keyring = new Keyring({ ss58Format: 54, type: this.type });
-    const pair = keyring.addFromAddress(this._publicKey);
+    const address = keyring.encodeAddress(hexToU8a(this._publicKey));
+    const pair = keyring.addFromAddress(address);
     const signature = pair.sign(data);
     return u8aToHex(signature);
   }

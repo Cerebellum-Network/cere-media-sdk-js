@@ -1,7 +1,7 @@
 {
   "name": "@cere/media-sdk-react",
   "description": "Media SDK React Hooks & Components",
-  "version": "1.4.2-rc.13",
+  "version": "1.4.2-rc.14",
   "type": "module",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
   "dependencies": {
     "@cere-activity-sdk/events": "^0.0.1-rc.2",
     "@cere-activity-sdk/signers": "^0.0.1-rc.2",
-    "@cere/media-sdk-client": "1.4.2-rc.13",
+    "@cere/media-sdk-client": "1.4.2-rc.14",
     "@polkadot/keyring": "^13.2.3",
     "@polkadot/util": "^13.2.3",
     "@polkadot/util-crypto": "^13.2.3",

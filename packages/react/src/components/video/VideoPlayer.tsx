@@ -2,7 +2,6 @@ import './plyr.css';
 import './styles.css';
 
 import { ActivityEvent, EventSource, UriSignerOptions } from '@cere-activity-sdk/events';
-import { u8aToU8a } from '@polkadot/util';
 import clsx from 'clsx';
 import type { Level } from 'hls.js';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
@@ -22,7 +21,7 @@ interface VideoPlayerProps {
   dispatchUrl?: string;
   listenUrl?: string;
   walletType?: UriSignerOptions['type'];
-  base64PublicKey?: string;
+  publicKey?: string;
 }
 
 export const VideoPlayer = ({
@@ -38,7 +37,7 @@ export const VideoPlayer = ({
   dispatchUrl,
   listenUrl,
   walletType,
-  base64PublicKey,
+  publicKey,
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
@@ -61,7 +60,7 @@ export const VideoPlayer = ({
     loadDependencies();
   }, [hlsEnabled]);
 
-  const publicKeyArray = u8aToU8a(base64PublicKey);
+  const publicKeyArray = new Uint8Array(Buffer.from(publicKey!, 'hex'));
 
   const signer = useMemo(
     () =>

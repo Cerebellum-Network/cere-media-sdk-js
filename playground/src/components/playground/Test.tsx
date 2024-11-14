@@ -10,18 +10,19 @@ export const Test = () => {
       src={url!}
       type="video/mp4"
       loadingComponent={<div />}
-      // onFullScreenChange={(fullScreen) => {
-      //   console.log('onFullScreenChange', fullScreen);
-      //
-      //   if (fullScreen) {
-      //     document.body.setAttribute('data-video-fullscreen', '1');
-      //   } else {
-      //     document.body.removeAttribute('data-video-fullscreen');
-      //   }
-      // }}
+      onFullScreenChange={(fullScreen) => {
+        console.log('onFullScreenChange', fullScreen);
+
+        if (fullScreen) {
+          document.body.setAttribute('data-video-fullscreen', '1');
+        } else {
+          document.body.removeAttribute('data-video-fullscreen');
+        }
+      }}
       appId="2095"
       dispatchUrl="https://dev-event-service.core-dev.aws.cere.io"
       listenUrl="https://socket.dev.cere.io"
+      publicKey="31a4e51cfcc492da79838bd4a2a59d694280e3feada2ff5f811f4916d9fbb0ac"
       videoOverrides={{
         autoPlay: true,
       }}

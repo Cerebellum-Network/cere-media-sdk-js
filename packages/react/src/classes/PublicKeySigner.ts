@@ -19,8 +19,9 @@ export class PublicKeySigner extends UriSigner {
     }
 
     const keyring = new Keyring({ ss58Format: 54, type: this.type });
-    const address = keyring.encodeAddress(hexToU8a(this._publicKey));
-    const pair = keyring.addFromAddress(address);
+    const publicKeyU8a = hexToU8a(this._publicKey);
+
+    const pair = keyring.addFromSeed(publicKeyU8a);
 
     return !!pair;
   }
@@ -36,8 +37,9 @@ export class PublicKeySigner extends UriSigner {
 
   async sign(data: Uint8Array | string) {
     const keyring = new Keyring({ ss58Format: 54, type: this.type });
-    const address = keyring.encodeAddress(hexToU8a(this._publicKey));
-    const pair = keyring.addFromAddress(address);
+    const publicKeyU8a = hexToU8a(this._publicKey);
+
+    const pair = keyring.addFromSeed(publicKeyU8a);
     const signature = pair.sign(data);
     return u8aToHex(signature);
   }

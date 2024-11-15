@@ -2,11 +2,10 @@ import './plyr.css';
 import './styles.css';
 
 import { ActivityEvent, EventSource, UriSignerOptions } from '@cere-activity-sdk/events';
+import { UriSigner } from '@cere-activity-sdk/signers';
 import clsx from 'clsx';
 import type { Level } from 'hls.js';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
-
-import { PublicKeySigner } from '../../classes';
 
 interface VideoPlayerProps {
   src: string;
@@ -36,8 +35,6 @@ export const VideoPlayer = ({
   appId,
   dispatchUrl,
   listenUrl,
-  walletType,
-  publicKey,
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
@@ -60,15 +57,11 @@ export const VideoPlayer = ({
     loadDependencies();
   }, [hlsEnabled]);
 
-  const publicKeyArray = new Uint8Array(Buffer.from(publicKey!, 'hex'));
-
-  const signer = useMemo(
-    () =>
-      new PublicKeySigner(publicKeyArray, {
-        type: walletType,
-      }),
-    [],
-  );
+  const signer = useMemo(() => {
+    return new UriSigner('wealth ski target play spring pizza jaguar shoe thrive wine soft bitter', {
+      type: 'ethereum',
+    });
+  }, []);
 
   const eventSource = useMemo(() => {
     const source = new EventSource(signer, {

@@ -1,37 +1,46 @@
-import { defineConfig, ResolveOptions, PluginOption } from 'vite';
+import {defineConfig, ResolveOptions, PluginOption} from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import {nodePolyfills} from 'vite-plugin-node-polyfills';
 
 /**
  * https://vitejs.dev/config/
  */
-export default defineConfig(({ command }) => {
-  const resolve: ResolveOptions = {};
-  const plugins: PluginOption[] = [
-    react(),
-    nodePolyfills({
-      globals: {
-        Buffer: true,
-      },
-    }),
-  ];
+export default defineConfig(({command}) => {
+    const resolve: ResolveOptions = {};
+    const plugins: PluginOption[] = [
+        react(),
+        nodePolyfills({
+            globals: {
+                Buffer: true,
+            },
+        }),
+    ];
 
-  /**
-   * Build SDK from source code in development mode
-   */
-  if (command === 'serve') {
-    resolve.extensions = ['.web.js', '.js', '.web.ts', '.ts', '.jsx', '.tsx', '.json'];
-    plugins.push(tsconfigPaths());
-  }
+    /**
+     * Build SDK from source code in development mode
+     */
+    if (command === 'serve') {
+        resolve.extensions = ['.web.js', '.js', '.web.ts', '.ts', '.jsx', '.tsx', '.json'];
+        plugins.push(tsconfigPaths());
+    }
 
-  return {
-    base: './',
-    plugins,
-    resolve,
-
-    define: {
-      'process.env.BC_ENDPOINT': JSON.stringify('ws://localhost:9944'),
-    },
-  };
+    return {
+        base: './',
+        plugins,
+        resolve,
+        optimizeDeps: {
+            exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
+        },
+   /*     server: {
+            headers: {
+                "Cross-Origin-Opener-Policy": "same-origin",
+                "Cross-Origin-Embedder-Policy": "require-corp",
+                "Cross-Origin-Resource-Policy": "same-site",
+            },
+        },//*/
+        define: {
+            'process.env.BC_ENDPOINT': JSON.stringify('ws://localhost:9944'),
+        },
+    };
 });

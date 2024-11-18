@@ -33,7 +33,6 @@ export const VideoPlayer = ({
   const [Plyr, setPlyr] = useState<any>(null);
 
   const isVideoSupported = useMemo(() => (hlsEnabled ? hlsInstance?.isSupported() : true), [hlsEnabled, hlsInstance]);
-
   useEffect(() => {
     const loadDependencies = async () => {
       if (hlsEnabled) {
@@ -136,6 +135,7 @@ export const VideoPlayer = ({
     }
 
     return () => {
+      console.log('GOING TO DISTROY');
       if (hlsEnabled && hlsInstance && typeof hlsInstance.destroy === 'function') {
         hlsInstance.destroy();
       }
@@ -144,7 +144,12 @@ export const VideoPlayer = ({
       }
       playerRef.current = null;
     };
-  }, [hlsInstance, hlsEnabled, isVideoSupported, loader, src, wrapperRef, videoOverrides, Plyr]);
+  }, [
+    hlsInstance,
+    Plyr,
+    hlsEnabled,
+    isVideoSupported, loader, src, wrapperRef,  /*videoOverrides*/,
+  ]);
 
   if (!isVideoSupported) {
     return (

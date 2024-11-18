@@ -30,6 +30,9 @@
     "playground": "lerna run playground"
   },
   "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/util": "^0.12.1",
+    "@ionic/react": "^8.4.0",
     "@types/hls.js": "^1.0.0",
     "@types/node": "^18.17.1",
     "clean-publish": "^4.2.0",

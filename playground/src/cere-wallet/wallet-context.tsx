@@ -28,10 +28,11 @@ export const useWalletStatus = () => {
 
 export const WalletProvider = ({ children }: PropsWithChildren<NonNullable<unknown>>) => {
   const wallet = useMemo(
-    () =>
-      new EmbedWallet({
-        env: 'dev',
-      }),
+    () => {
+      console.log('WALLET PROVIDER')
+      return new EmbedWallet({
+        env: 'stage',
+      })},
     [],
   );
 

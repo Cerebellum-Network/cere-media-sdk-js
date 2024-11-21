@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0-rc.8](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.7...v1.6.0-rc.8) (2024-11-21)
+
+### Bug Fixes
+
+- make eventSource optional ([78917de](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/78917deac44ba05cdfbe668217b3fcc6f0589e43))
+
 ## [1.6.0-rc.7](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.6...v1.6.0-rc.7) (2024-11-21)
 
 ### Features

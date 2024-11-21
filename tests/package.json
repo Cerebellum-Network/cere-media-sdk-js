@@ -1,6 +1,6 @@
 {
   "name": "@cere/media-sdk-tests",
-  "version": "1.6.0-rc.5",
+  "version": "1.6.0-rc.6",
   "description": "Cere Media SDK tests",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "test:env": "ts-node ./scripts/env.ts"
   },
   "dependencies": {
-    "@cere/media-sdk-client": "1.6.0-rc.5",
+    "@cere/media-sdk-client": "1.6.0-rc.6",
     "@types/jest": "^29.5.11",
     "axios": "^1.6.5",
     "ethers": "^5.7.2",

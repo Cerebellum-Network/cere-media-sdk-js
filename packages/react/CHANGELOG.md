@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0-rc.6](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.5...v1.6.0-rc.6) (2024-11-21)
+
+### Features
+
+- add channelId to activity event ([cbe55d0](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/cbe55d0a18a5eaffc623d0e3829b39c5324ba0f0))
+
 ## [1.6.0-rc.5](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.4...v1.6.0-rc.5) (2024-11-15)
 
 **Note:** Version bump only for package @cere/media-sdk-react

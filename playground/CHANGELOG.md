@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0-rc.7](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.6...v1.6.0-rc.7) (2024-11-21)
+
+### Features
+
+- add eventSource to VideoPlayer params ([c434c0d](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/c434c0d27c84a130c094855a70839bbce9e88046))
+
 ## [1.6.0-rc.6](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.5...v1.6.0-rc.6) (2024-11-21)
 
 **Note:** Version bump only for package playground

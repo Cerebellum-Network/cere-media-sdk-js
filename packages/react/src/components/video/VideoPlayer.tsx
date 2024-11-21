@@ -2,7 +2,6 @@ import './plyr.css';
 import './styles.css';
 
 import { ActivityEvent, EventSource, UriSignerOptions } from '@cere-activity-sdk/events';
-import { UriSigner } from '@cere-activity-sdk/signers';
 import clsx from 'clsx';
 import type { Level } from 'hls.js';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
@@ -16,10 +15,8 @@ interface VideoPlayerProps {
   type?: string;
   videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
   onFullScreenChange?: (isFullScreen: boolean) => void;
-  appId?: string;
   channelId?: string;
-  dispatchUrl?: string;
-  listenUrl?: string;
+  eventSource: EventSource;
   walletType?: UriSignerOptions['type'];
   publicKey?: string;
 }
@@ -33,10 +30,8 @@ export const VideoPlayer = ({
   type,
   onFullScreenChange,
   videoOverrides = { crossOrigin: 'anonymous' },
-  appId,
   channelId,
-  dispatchUrl,
-  listenUrl,
+  eventSource,
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
@@ -58,31 +53,6 @@ export const VideoPlayer = ({
 
     loadDependencies();
   }, [hlsEnabled]);
-
-  const signer = useMemo(() => {
-    return new UriSigner('wealth ski target play spring pizza jaguar shoe thrive wine soft bitter', {
-      type: 'ethereum',
-    });
-  }, []);
-
-  const eventSource = useMemo(() => {
-    const source = new EventSource(signer, {
-      appId: appId!,
-      dispatchUrl: dispatchUrl!,
-      listenUrl: listenUrl!,
-    });
-
-    source.isReady().then(
-      (ready) => {
-        console.log('EventSource ready:', ready);
-      },
-      (error) => {
-        console.error('EventSource error:', error);
-      },
-    );
-
-    return source;
-  }, []);
 
   const initActivityListeners = (player: Plyr) => {
     const activityEventPayload = { channelId: channelId || 'local', src };

@@ -17,6 +17,7 @@ interface VideoPlayerProps {
   videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
   onFullScreenChange?: (isFullScreen: boolean) => void;
   appId?: string;
+  channelId?: string;
   dispatchUrl?: string;
   listenUrl?: string;
   walletType?: UriSignerOptions['type'];
@@ -33,6 +34,7 @@ export const VideoPlayer = ({
   onFullScreenChange,
   videoOverrides = { crossOrigin: 'anonymous' },
   appId,
+  channelId,
   dispatchUrl,
   listenUrl,
 }: VideoPlayerProps) => {
@@ -81,6 +83,27 @@ export const VideoPlayer = ({
 
     return source;
   }, []);
+
+  const initActivityListeners = (player: Plyr) => {
+    const activityEventPayload = { channelId: channelId || 'local', src };
+
+    player.on('play', async () => {
+      const event = new ActivityEvent('VIDEO_PLAY', activityEventPayload);
+      await eventSource.dispatchEvent(event);
+    });
+    player.on('pause', async () => {
+      const event = new ActivityEvent('VIDEO_PAUSE', activityEventPayload);
+      await eventSource.dispatchEvent(event);
+    });
+    player.on('seeked', async () => {
+      const event = new ActivityEvent('VIDEO_SEEK', { ...activityEventPayload, currentTime: player.currentTime });
+      await eventSource.dispatchEvent(event);
+    });
+    player.on('ended', async () => {
+      const event = new ActivityEvent('VIDEO_ENDED', activityEventPayload);
+      await eventSource.dispatchEvent(event);
+    });
+  };
 
   useEffect(() => {
     if (!isVideoSupported || !Plyr) return;
@@ -131,22 +154,7 @@ export const VideoPlayer = ({
 
         const player = new Plyr(video, plyrOptions);
 
-        player.on('play', async () => {
-          const event = new ActivityEvent('VIDEO_PLAY', { src });
-          await eventSource.dispatchEvent(event);
-        });
-        player.on('pause', async () => {
-          const event = new ActivityEvent('VIDEO_PAUSE', { src });
-          await eventSource.dispatchEvent(event);
-        });
-        player.on('seeked', async () => {
-          const event = new ActivityEvent('VIDEO_SEEK', { src, currentTime: player.currentTime });
-          await eventSource.dispatchEvent(event);
-        });
-        player.on('ended', async () => {
-          const event = new ActivityEvent('VIDEO_ENDED', { src });
-          await eventSource.dispatchEvent(event);
-        });
+        initActivityListeners(player);
 
         player.on('canplaythrough', () => setIsLoading(false));
         player.on('enterfullscreen', onFullScreenChange?.(true));
@@ -175,22 +183,7 @@ export const VideoPlayer = ({
       Object.assign(video, videoOverrides);
       const player = new Plyr(video, plyrOptions);
 
-      player.on('play', async () => {
-        const event = new ActivityEvent('VIDEO_PLAY', { src });
-        await eventSource.dispatchEvent(event);
-      });
-      player.on('pause', async () => {
-        const event = new ActivityEvent('VIDEO_PAUSE', { src });
-        await eventSource.dispatchEvent(event);
-      });
-      player.on('seeked', async () => {
-        const event = new ActivityEvent('VIDEO_SEEK', { src, currentTime: player.currentTime });
-        await eventSource.dispatchEvent(event);
-      });
-      player.on('ended', async () => {
-        const event = new ActivityEvent('VIDEO_ENDED', { src });
-        await eventSource.dispatchEvent(event);
-      });
+      initActivityListeners(player);
 
       player.on('canplaythrough', () => setIsLoading(false));
       player.on('enterfullscreen', () => onFullScreenChange?.(true));

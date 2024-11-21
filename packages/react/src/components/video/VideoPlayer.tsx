@@ -16,7 +16,7 @@ interface VideoPlayerProps {
   videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
   onFullScreenChange?: (isFullScreen: boolean) => void;
   channelId?: string;
-  eventSource: EventSource;
+  eventSource?: EventSource;
   walletType?: UriSignerOptions['type'];
   publicKey?: string;
 }
@@ -55,24 +55,25 @@ export const VideoPlayer = ({
   }, [hlsEnabled]);
 
   const initActivityListeners = (player: Plyr) => {
-    const activityEventPayload = { channelId: channelId || 'local', src };
-
-    player.on('play', async () => {
-      const event = new ActivityEvent('VIDEO_PLAY', activityEventPayload);
-      await eventSource.dispatchEvent(event);
-    });
-    player.on('pause', async () => {
-      const event = new ActivityEvent('VIDEO_PAUSE', activityEventPayload);
-      await eventSource.dispatchEvent(event);
-    });
-    player.on('seeked', async () => {
-      const event = new ActivityEvent('VIDEO_SEEK', { ...activityEventPayload, currentTime: player.currentTime });
-      await eventSource.dispatchEvent(event);
-    });
-    player.on('ended', async () => {
-      const event = new ActivityEvent('VIDEO_ENDED', activityEventPayload);
-      await eventSource.dispatchEvent(event);
-    });
+    if (eventSource) {
+      const activityEventPayload = { channelId: channelId || 'local', src };
+      player.on('play', async () => {
+        const event = new ActivityEvent('VIDEO_PLAY', activityEventPayload);
+        await eventSource.dispatchEvent(event);
+      });
+      player.on('pause', async () => {
+        const event = new ActivityEvent('VIDEO_PAUSE', activityEventPayload);
+        await eventSource.dispatchEvent(event);
+      });
+      player.on('seeked', async () => {
+        const event = new ActivityEvent('VIDEO_SEEK', { ...activityEventPayload, currentTime: player.currentTime });
+        await eventSource.dispatchEvent(event);
+      });
+      player.on('ended', async () => {
+        const event = new ActivityEvent('VIDEO_ENDED', activityEventPayload);
+        await eventSource.dispatchEvent(event);
+      });
+    }
   };
 
   useEffect(() => {

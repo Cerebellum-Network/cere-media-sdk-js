@@ -32,6 +32,7 @@ export const VideoPlayer = ({
   videoOverrides = { crossOrigin: 'anonymous' },
   channelId,
   eventSource,
+  publicKey,
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
@@ -56,7 +57,7 @@ export const VideoPlayer = ({
 
   const initActivityListeners = (player: Plyr) => {
     if (eventSource) {
-      const activityEventPayload = { channelId: channelId || 'local', src };
+      const activityEventPayload = { channelId: channelId || 'local', src, publicKey };
       player.on('play', async () => {
         const event = new ActivityEvent('VIDEO_PLAY', activityEventPayload);
         await eventSource.dispatchEvent(event);

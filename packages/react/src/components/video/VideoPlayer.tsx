@@ -21,6 +21,11 @@ interface VideoPlayerProps {
   publicKey?: string;
 }
 
+function extractCid(src: string): string {
+  const parts = src.split('/');
+  return parts[parts.length - 2];
+}
+
 export const VideoPlayer = ({
   src,
   hlsEnabled = true,
@@ -57,7 +62,13 @@ export const VideoPlayer = ({
 
   const initActivityListeners = (player: Plyr) => {
     if (eventSource) {
-      const activityEventPayload = { channelId: channelId || 'local', src, publicKey };
+      const cid = extractCid(src);
+      const activityEventPayload = {
+        channelId: channelId || 'local',
+        src,
+        cid,
+        publicKey,
+      };
       player.on('play', async () => {
         const event = new ActivityEvent('VIDEO_PLAY', activityEventPayload);
         await eventSource.dispatchEvent(event);

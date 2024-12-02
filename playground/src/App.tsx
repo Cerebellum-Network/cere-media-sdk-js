@@ -98,7 +98,7 @@ const App = () => {
         host: 'https://polygon-amoy.infura.io/v3/cba6e957aca549d9bf19c938a3d2548a',
         chainId: 80002,
       },
-      env: 'dev',
+      env: 'stage',
     });
   }, [wallet]);
 
@@ -110,39 +110,37 @@ const App = () => {
     await wallet.connect();
   }, [wallet]);
 
-  const isAnyWalletConnected = status === 'connected' || metaMaskAccount !== null;
-
-  if (isAnyWalletConnected) {
-    return (
-      <Playground
-        metaMaskAccount={metaMaskAccount ?? undefined}
-        metamaskSigner={signer}
-        disconnect={status === 'connected' ? handleDisconnect : disconnectMetaMask}
-      />
-    );
-  }
+  const isCereWalletConnected = status === 'connected';
+  const isAnyWalletConnected = isCereWalletConnected || metaMaskAccount !== null;
 
   return (
-    <>
-      <div style={{ justifyContent: 'center' }}>
-        <img src={cereLogo} className="logo" alt="Cere logo" />
-        <h2>Cere Media SDK Playground</h2>
-        <p>Connect Wallet to Get Started</p>
-        <Box display="flex" flexDirection="column">
-          <Button
-            disabled={
-              isAnyWalletConnected || status === 'not-ready' || status === 'connecting' || status === 'initializing'
-            }
-            onClick={handleConnect}
-          >
-            Connect Cere Wallet
-          </Button>
-          <Button disabled={isAnyWalletConnected || !metaMaskProvider} onClick={connectMetaMask}>
-            Connect MetaMask
-          </Button>
-        </Box>
-      </div>
-    </>
+      <>
+        <div style={{ justifyContent: 'center' }}>
+          <img src={cereLogo} className="logo" alt="Cere logo" />
+          <h2>Cere Media SDK Playground</h2>
+          {isAnyWalletConnected ? <Playground
+              metaMaskAccount={metaMaskAccount ?? undefined}
+              metamaskSigner={signer}
+              disconnect={isCereWalletConnected ? handleDisconnect : disconnectMetaMask}
+          /> : <div>
+            <p>Connect Wallet to Get Started</p>
+            <Box display="flex" flexDirection="column">
+              <Button
+                  disabled={
+                      isAnyWalletConnected || status === 'not-ready' || status === 'connecting' || status === 'initializing'
+                  }
+                  onClick={handleConnect}
+              >
+                Connect Cere Wallet
+              </Button>
+              <Button disabled={isAnyWalletConnected || !metaMaskProvider} onClick={connectMetaMask}>
+                Connect MetaMask
+              </Button>
+            </Box>
+          </div>}
+
+        </div>
+      </>
   );
 };
 

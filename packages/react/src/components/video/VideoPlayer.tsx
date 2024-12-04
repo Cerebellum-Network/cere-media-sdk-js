@@ -1,7 +1,6 @@
 import './plyr.css';
 import './styles.css';
 
-import { ActivityEvent, EventSource, UriSignerOptions } from '@cere-activity-sdk/events';
 import clsx from 'clsx';
 import type { Level } from 'hls.js';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
@@ -15,15 +14,13 @@ interface VideoPlayerProps {
   type?: string;
   videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
   onFullScreenChange?: (isFullScreen: boolean) => void;
-  channelId?: string;
-  eventSource?: EventSource;
-  walletType?: UriSignerOptions['type'];
-  publicKey?: string;
-}
-
-function extractCid(src: string): string {
-  const parts = src.split('/');
-  return parts[parts.length - 2];
+  onPlay?: () => void;
+  onPause?: () => void;
+  onSeek?: (currentTime: number) => void;
+  onEnd?: () => void;
+  onError?: () => void;
+  onStalled?: () => void;
+  onSuspend?: () => void;
 }
 
 export const VideoPlayer = ({
@@ -34,10 +31,14 @@ export const VideoPlayer = ({
   loadingComponent,
   type,
   onFullScreenChange,
+  onPlay,
+  onPause,
+  onSeek,
+  onEnd,
+  onError,
+  onStalled,
+  onSuspend,
   videoOverrides = { crossOrigin: 'anonymous' },
-  channelId,
-  eventSource,
-  publicKey,
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLVideoElement | null>(null);
@@ -59,34 +60,6 @@ export const VideoPlayer = ({
 
     loadDependencies();
   }, [hlsEnabled]);
-
-  const initActivityListeners = (player: Plyr) => {
-    if (eventSource) {
-      const cid = extractCid(src);
-      const activityEventPayload = {
-        channelId: channelId || 'local',
-        src,
-        cid,
-        publicKey,
-      };
-      player.on('play', async () => {
-        const event = new ActivityEvent('VIDEO_PLAY', activityEventPayload);
-        await eventSource.dispatchEvent(event);
-      });
-      player.on('pause', async () => {
-        const event = new ActivityEvent('VIDEO_PAUSE', activityEventPayload);
-        await eventSource.dispatchEvent(event);
-      });
-      player.on('seeked', async () => {
-        const event = new ActivityEvent('VIDEO_SEEK', { ...activityEventPayload, currentTime: player.currentTime });
-        await eventSource.dispatchEvent(event);
-      });
-      player.on('ended', async () => {
-        const event = new ActivityEvent('VIDEO_ENDED', activityEventPayload);
-        await eventSource.dispatchEvent(event);
-      });
-    }
-  };
 
   useEffect(() => {
     if (!isVideoSupported || !Plyr) return;
@@ -137,7 +110,16 @@ export const VideoPlayer = ({
 
         const player = new Plyr(video, plyrOptions);
 
-        initActivityListeners(player);
+        player.on('play', () => onPlay && onPlay());
+        player.on('pause', () => onPause && onPause());
+        player.on('seeked', () => onSeek && onSeek(player.currentTime));
+        player.on('ended', () => onEnd && onEnd());
+        player.on('enterfullscreen', () => onFullScreenChange?.(true));
+        player.on('exitfullscreen', () => onFullScreenChange?.(false));
+
+        player.on('error', () => onError && onError());
+        player.on('stalled', () => onStalled && onStalled());
+        player.on('suspend', () => onSuspend && onSuspend());
 
         player.on('canplaythrough', () => setIsLoading(false));
         player.on('enterfullscreen', onFullScreenChange?.(true));
@@ -166,11 +148,16 @@ export const VideoPlayer = ({
       Object.assign(video, videoOverrides);
       const player = new Plyr(video, plyrOptions);
 
-      initActivityListeners(player);
-
-      player.on('canplaythrough', () => setIsLoading(false));
+      player.on('play', () => onPlay && onPlay());
+      player.on('pause', () => onPause && onPause());
+      player.on('seeked', () => onSeek && onSeek(player.currentTime));
+      player.on('ended', () => onEnd && onEnd());
       player.on('enterfullscreen', () => onFullScreenChange?.(true));
       player.on('exitfullscreen', () => onFullScreenChange?.(false));
+
+      player.on('error', () => onError && onError());
+      player.on('stalled', () => onStalled && onStalled());
+      player.on('suspend', () => onSuspend && onSuspend());
 
       video.addEventListener('error', () => setIsLoading(false));
       video.addEventListener('stalled', () => setIsLoading(false));
@@ -192,7 +179,7 @@ export const VideoPlayer = ({
       }
       playerRef.current = null;
     };
-  }, [hlsInstance, hlsEnabled, isVideoSupported, loader, src, wrapperRef, videoOverrides, Plyr, eventSource]);
+  }, [hlsInstance, hlsEnabled, isVideoSupported, loader, src, wrapperRef, videoOverrides, Plyr]);
 
   if (!isVideoSupported) {
     return (

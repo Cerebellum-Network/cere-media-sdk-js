@@ -1,3 +1,5 @@
+import './plyr.css';
+
 import clsx from 'clsx';
 import type { Level } from 'hls.js';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';

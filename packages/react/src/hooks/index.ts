@@ -5,3 +5,4 @@ export * from './use-download-content';
 export * from './use-serverside-url';
 export * from './use-is-ios';
 export * from './use-nfts';
+export * from './use-video-tracker';

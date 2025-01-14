@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import type { Level } from 'hls.js';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useVideoTracker } from '../../hooks';
+
 interface VideoPlayerProps {
   src: string;
   hlsEnabled?: boolean;
@@ -20,6 +22,8 @@ interface VideoPlayerProps {
   onError?: () => void;
   onStalled?: () => void;
   onSuspend?: () => void;
+  onVideoWatched?: () => void;
+  completedThreshold?: number;
 }
 
 export const VideoPlayer = ({
@@ -37,6 +41,8 @@ export const VideoPlayer = ({
   onError,
   onStalled,
   onSuspend,
+  onVideoWatched,
+  completedThreshold,
   videoOverrides = { crossOrigin: 'anonymous' },
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -44,6 +50,9 @@ export const VideoPlayer = ({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hlsInstance, setHlsInstance] = useState<any>(null);
   const [Plyr, setPlyr] = useState<any>(null);
+  const [totalDuration, setTotalDuration] = useState(0);
+
+  useVideoTracker({ videoRef: playerRef, totalDuration, threshold: completedThreshold, onVideoWatched });
 
   const isVideoSupported = useMemo(() => (hlsEnabled ? hlsInstance?.isSupported() : true), [hlsEnabled, hlsInstance]);
 
@@ -120,7 +129,19 @@ export const VideoPlayer = ({
         player.on('stalled', () => onStalled && onStalled());
         player.on('suspend', () => onSuspend && onSuspend());
 
-        player.on('canplaythrough', () => setIsLoading(false));
+        player.on('canplaythrough', () => {
+          setIsLoading(false);
+          if (player.duration) {
+            setTotalDuration(player.duration);
+          } else {
+            const interval = setInterval(() => {
+              if (player.duration) {
+                setTotalDuration(player.duration);
+                clearInterval(interval);
+              }
+            }, 100);
+          }
+        });
         player.on('enterfullscreen', onFullScreenChange?.(true));
         player.on('exitfullscreen', onFullScreenChange?.(false));
       });
@@ -151,6 +172,19 @@ export const VideoPlayer = ({
       player.on('pause', () => onPause && onPause());
       player.on('seeked', () => onSeek && onSeek(player.currentTime));
       player.on('ended', () => onEnd && onEnd());
+      player.on('canplaythrough', () => {
+        setIsLoading(false);
+        if (player.duration) {
+          setTotalDuration(player.duration);
+        } else {
+          const interval = setInterval(() => {
+            if (player.duration) {
+              setTotalDuration(player.duration);
+              clearInterval(interval);
+            }
+          }, 100);
+        }
+      });
       player.on('enterfullscreen', () => onFullScreenChange?.(true));
       player.on('exitfullscreen', () => onFullScreenChange?.(false));
 

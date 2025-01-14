@@ -1,8 +1,8 @@
 import { Box, Button } from '@mui/material';
 import { SelectTenant } from '../select-tenant';
 import { useState } from 'react';
-import { CheckNft } from './CheckNft.tsx';
 import { ethers } from 'ethers';
+import { PlaygroundNavigation } from './PlaygroundNavigation.tsx';
 
 export const Playground = ({
   disconnect,
@@ -80,8 +80,9 @@ export const Playground = ({
           </Button>
         </Box>
       )}
+
       <Box sx={{ minWidth: '800px', minH: '80vh' }}>
-        <CheckNft metamaskSigner={metamaskSigner} />
+        <PlaygroundNavigation metamaskSigner={metamaskSigner} />
       </Box>
     </>
   );

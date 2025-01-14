@@ -4,9 +4,6 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import { theme } from './components/theme';
 
-import './index.css';
-import './components/css/plyr.css';
-import './components/css/styles.css';
 import { WalletProvider } from './cere-wallet';
 import { Buffer } from 'buffer';
 

@@ -1,5 +1,4 @@
 import './plyr.css';
-import './styles.css';
 
 import clsx from 'clsx';
 import type { Level } from 'hls.js';
@@ -14,6 +13,13 @@ interface VideoPlayerProps {
   type?: string;
   videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
   onFullScreenChange?: (isFullScreen: boolean) => void;
+  onPlay?: () => void;
+  onPause?: () => void;
+  onSeek?: (currentTime: number) => void;
+  onEnd?: () => void;
+  onError?: () => void;
+  onStalled?: () => void;
+  onSuspend?: () => void;
 }
 
 export const VideoPlayer = ({
@@ -24,6 +30,13 @@ export const VideoPlayer = ({
   loadingComponent,
   type,
   onFullScreenChange,
+  onPlay,
+  onPause,
+  onSeek,
+  onEnd,
+  onError,
+  onStalled,
+  onSuspend,
   videoOverrides = { crossOrigin: 'anonymous' },
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -93,7 +106,20 @@ export const VideoPlayer = ({
         playerRef.current = video;
         videoWrapper.appendChild(video);
         hls.attachMedia(video);
+
         const player = new Plyr(video, plyrOptions);
+
+        player.on('play', () => onPlay && onPlay());
+        player.on('pause', () => onPause && onPause());
+        player.on('seeked', () => onSeek && onSeek(player.currentTime));
+        player.on('ended', () => onEnd && onEnd());
+        player.on('enterfullscreen', () => onFullScreenChange?.(true));
+        player.on('exitfullscreen', () => onFullScreenChange?.(false));
+
+        player.on('error', () => onError && onError());
+        player.on('stalled', () => onStalled && onStalled());
+        player.on('suspend', () => onSuspend && onSuspend());
+
         player.on('canplaythrough', () => setIsLoading(false));
         player.on('enterfullscreen', onFullScreenChange?.(true));
         player.on('exitfullscreen', onFullScreenChange?.(false));
@@ -120,9 +146,17 @@ export const VideoPlayer = ({
 
       Object.assign(video, videoOverrides);
       const player = new Plyr(video, plyrOptions);
-      player.on('canplaythrough', () => setIsLoading(false));
+
+      player.on('play', () => onPlay && onPlay());
+      player.on('pause', () => onPause && onPause());
+      player.on('seeked', () => onSeek && onSeek(player.currentTime));
+      player.on('ended', () => onEnd && onEnd());
       player.on('enterfullscreen', () => onFullScreenChange?.(true));
       player.on('exitfullscreen', () => onFullScreenChange?.(false));
+
+      player.on('error', () => onError && onError());
+      player.on('stalled', () => onStalled && onStalled());
+      player.on('suspend', () => onSuspend && onSuspend());
 
       video.addEventListener('error', () => setIsLoading(false));
       video.addEventListener('stalled', () => setIsLoading(false));

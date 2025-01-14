@@ -3,6 +3,88 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0-rc.13](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.12...v1.6.0-rc.13) (2024-12-19)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.6.0-rc.12](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.11...v1.6.0-rc.12) (2024-12-19)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.6.0-rc.11](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.10...v1.6.0-rc.11) (2024-12-04)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.6.0-rc.10](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.9...v1.6.0-rc.10) (2024-11-28)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.6.0-rc.9](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.8...v1.6.0-rc.9) (2024-11-22)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.6.0-rc.8](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.7...v1.6.0-rc.8) (2024-11-21)
+
+### Bug Fixes
+
+- make eventSource optional ([78917de](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/78917deac44ba05cdfbe668217b3fcc6f0589e43))
+
+## [1.6.0-rc.7](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.6...v1.6.0-rc.7) (2024-11-21)
+
+### Features
+
+- add eventSource to VideoPlayer params ([c434c0d](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/c434c0d27c84a130c094855a70839bbce9e88046))
+
+## [1.6.0-rc.6](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.5...v1.6.0-rc.6) (2024-11-21)
+
+### Features
+
+- add channelId to activity event ([cbe55d0](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/cbe55d0a18a5eaffc623d0e3829b39c5324ba0f0))
+
+## [1.6.0-rc.5](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.4...v1.6.0-rc.5) (2024-11-15)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.6.0-rc.4](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.3...v1.6.0-rc.4) (2024-11-14)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.6.0-rc.3](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.2...v1.6.0-rc.3) (2024-11-14)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.6.0-rc.2](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.1...v1.6.0-rc.2) (2024-11-14)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.6.0-rc.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.6.0-rc.0...v1.6.0-rc.1) (2024-11-14)
+
+**Note:** Version bump only for package @cere/media-sdk-react
+
+## [1.6.0-rc.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.5.2-rc.0...v1.6.0-rc.0) (2024-11-14)
+
+## [1.5.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.5.0...v1.5.1) (2024-10-01)
+
+### Bug Fixes
+
+- Full-screen callback is not fired properly ([15849bf](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/15849bfff9f5018fb476bc86ce362d72e2f118a1))
+
+## [1.5.0](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.16...v1.5.0) (2024-10-01)
+
+### Features
+
+- Add media player full-screen callback ([0fb16d2](https://github.com/Cerebellum-Network/cere-media-sdk-js/commit/0fb16d241c5bcef34403f2e64a4a734ea5fdb8c2))
+
+## [1.4.2-rc.16](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.15...v1.4.2-rc.16) (2024-08-29)
+
+## [1.4.2-rc.15](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.14...v1.4.2-rc.15) (2024-08-29)
+
+## [1.4.2-rc.14](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.13...v1.4.2-rc.14) (2024-08-28)
+
+## [1.4.2-rc.13](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.12...v1.4.2-rc.13) (2024-08-27)
+
+## [1.4.2-rc.12](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.4.2-rc.11...v1.4.2-rc.12) (2024-08-27)
+
 ## [1.5.1](https://github.com/Cerebellum-Network/cere-media-sdk-js/compare/v1.5.0...v1.5.1) (2024-10-01)
 
 ### Bug Fixes

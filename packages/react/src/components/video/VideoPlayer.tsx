@@ -170,8 +170,8 @@ export const VideoPlayer = ({
       video.addEventListener('error', () => setIsLoading(false));
       video.addEventListener('stalled', () => setIsLoading(false));
       video.addEventListener('suspend', () => setIsLoading(false));
-      // video.addEventListener('enterfullscreen', () => onFullScreenChange?.(true));
-      // video.addEventListener('exitfullscreen', () => onFullScreenChange?.(false));
+      video.addEventListener('enterfullscreen', () => onFullScreenChange?.(true));
+      video.addEventListener('exitfullscreen', () => onFullScreenChange?.(false));
     };
 
     if (hlsEnabled && hlsInstance) {

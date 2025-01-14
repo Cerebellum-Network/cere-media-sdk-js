@@ -82,12 +82,25 @@ export const VideoPlayer = ({
 
       const hls = new hlsInstance(hlsOptions);
 
+      const updateQuality = (newQuality: number) => {
+        if (newQuality === 0) {
+          hls.currentLevel = -1;
+        } else {
+          hls.levels.forEach((level: Level, levelIndex: number) => {
+            if (level.height === newQuality) {
+              hls.currentLevel = levelIndex;
+            }
+          });
+        }
+      };
+
       hls.on(hlsInstance.Events.MANIFEST_PARSED, () => {
         const availableQualities = hls.levels.map((l: Level) => l.height);
         plyrOptions.quality = {
           default: -1, // auto
           options: availableQualities,
           forced: true,
+          onChange: (quality: number) => updateQuality(quality),
         };
         const video = document.createElement('video');
         video.className = 'cere-video';

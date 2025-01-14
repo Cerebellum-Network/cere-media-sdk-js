@@ -4,8 +4,6 @@ import clsx from 'clsx';
 import type { Level } from 'hls.js';
 import { VideoHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useVideoTracker } from '../../hooks';
-
 interface VideoPlayerProps {
   src: string;
   hlsEnabled?: boolean;
@@ -22,8 +20,7 @@ interface VideoPlayerProps {
   onError?: () => void;
   onStalled?: () => void;
   onSuspend?: () => void;
-  onVideoWatched?: () => void;
-  completedThreshold?: number;
+  onTimeUpdate?: (currentTime: number, duration: number) => void;
 }
 
 export const VideoPlayer = ({
@@ -41,8 +38,7 @@ export const VideoPlayer = ({
   onError,
   onStalled,
   onSuspend,
-  onVideoWatched,
-  completedThreshold,
+  onTimeUpdate,
   videoOverrides = { crossOrigin: 'anonymous' },
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -50,9 +46,6 @@ export const VideoPlayer = ({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hlsInstance, setHlsInstance] = useState<any>(null);
   const [Plyr, setPlyr] = useState<any>(null);
-  const [totalDuration, setTotalDuration] = useState(0);
-
-  useVideoTracker({ videoRef: playerRef, totalDuration, threshold: completedThreshold, onVideoWatched });
 
   const isVideoSupported = useMemo(() => (hlsEnabled ? hlsInstance?.isSupported() : true), [hlsEnabled, hlsInstance]);
 
@@ -89,25 +82,12 @@ export const VideoPlayer = ({
 
       const hls = new hlsInstance(hlsOptions);
 
-      const updateQuality = (newQuality: number) => {
-        if (newQuality === 0) {
-          hls.currentLevel = -1;
-        } else {
-          hls.levels.forEach((level: Level, levelIndex: number) => {
-            if (level.height === newQuality) {
-              hls.currentLevel = levelIndex;
-            }
-          });
-        }
-      };
-
       hls.on(hlsInstance.Events.MANIFEST_PARSED, () => {
         const availableQualities = hls.levels.map((l: Level) => l.height);
         plyrOptions.quality = {
           default: -1, // auto
           options: availableQualities,
           forced: true,
-          onChange: (quality: number) => updateQuality(quality),
         };
         const video = document.createElement('video');
         video.className = 'cere-video';
@@ -121,7 +101,11 @@ export const VideoPlayer = ({
         player.on('play', () => onPlay && onPlay());
         player.on('pause', () => onPause && onPause());
         player.on('seeked', () => onSeek && onSeek(player.currentTime));
+        player.on('timeupdate', () => onTimeUpdate && onTimeUpdate(player.currentTime, player.duration));
         player.on('ended', () => onEnd && onEnd());
+        player.on('canplaythrough', () => {
+          setIsLoading(false);
+        });
         player.on('enterfullscreen', () => onFullScreenChange?.(true));
         player.on('exitfullscreen', () => onFullScreenChange?.(false));
 
@@ -129,19 +113,6 @@ export const VideoPlayer = ({
         player.on('stalled', () => onStalled && onStalled());
         player.on('suspend', () => onSuspend && onSuspend());
 
-        player.on('canplaythrough', () => {
-          setIsLoading(false);
-          if (player.duration) {
-            setTotalDuration(player.duration);
-          } else {
-            const interval = setInterval(() => {
-              if (player.duration) {
-                setTotalDuration(player.duration);
-                clearInterval(interval);
-              }
-            }, 100);
-          }
-        });
         player.on('enterfullscreen', onFullScreenChange?.(true));
         player.on('exitfullscreen', onFullScreenChange?.(false));
       });
@@ -174,17 +145,8 @@ export const VideoPlayer = ({
       player.on('ended', () => onEnd && onEnd());
       player.on('canplaythrough', () => {
         setIsLoading(false);
-        if (player.duration) {
-          setTotalDuration(player.duration);
-        } else {
-          const interval = setInterval(() => {
-            if (player.duration) {
-              setTotalDuration(player.duration);
-              clearInterval(interval);
-            }
-          }, 100);
-        }
       });
+      player.on('timeupdate', () => onTimeUpdate && onTimeUpdate(player.currentTime, player.duration));
       player.on('enterfullscreen', () => onFullScreenChange?.(true));
       player.on('exitfullscreen', () => onFullScreenChange?.(false));
 
@@ -195,6 +157,8 @@ export const VideoPlayer = ({
       video.addEventListener('error', () => setIsLoading(false));
       video.addEventListener('stalled', () => setIsLoading(false));
       video.addEventListener('suspend', () => setIsLoading(false));
+      // video.addEventListener('enterfullscreen', () => onFullScreenChange?.(true));
+      // video.addEventListener('exitfullscreen', () => onFullScreenChange?.(false));
     };
 
     if (hlsEnabled && hlsInstance) {

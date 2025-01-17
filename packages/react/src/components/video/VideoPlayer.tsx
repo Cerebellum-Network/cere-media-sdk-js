@@ -11,6 +11,7 @@ interface VideoPlayerProps {
   className?: string;
   loadingComponent?: React.ReactNode;
   type?: string;
+  currentTime?: number;
   videoOverrides?: VideoHTMLAttributes<HTMLVideoElement>;
   onFullScreenChange?: (isFullScreen: boolean) => void;
   onPlay?: () => void;
@@ -39,6 +40,7 @@ export const VideoPlayer = ({
   onStalled,
   onSuspend,
   onTimeUpdate,
+  currentTime,
   videoOverrides = { crossOrigin: 'anonymous' },
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -106,6 +108,7 @@ export const VideoPlayer = ({
         video.className = 'cere-video';
         Object.assign(video, videoOverrides);
         playerRef.current = video;
+        playerRef.current.currentTime = currentTime || 0;
         videoWrapper.appendChild(video);
         hls.attachMedia(video);
 
@@ -147,6 +150,7 @@ export const VideoPlayer = ({
 
       video.appendChild(source);
       playerRef.current = video;
+      playerRef.current.currentTime = currentTime || 0;
       videoWrapper.appendChild(video);
 
       Object.assign(video, videoOverrides);

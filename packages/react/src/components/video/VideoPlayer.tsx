@@ -20,6 +20,7 @@ interface VideoPlayerProps {
   onError?: () => void;
   onStalled?: () => void;
   onSuspend?: () => void;
+  onTimeUpdate?: (currentTime: number, duration: number) => void;
 }
 
 export const VideoPlayer = ({
@@ -37,6 +38,7 @@ export const VideoPlayer = ({
   onError,
   onStalled,
   onSuspend,
+  onTimeUpdate,
   videoOverrides = { crossOrigin: 'anonymous' },
 }: VideoPlayerProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -112,7 +114,11 @@ export const VideoPlayer = ({
         player.on('play', () => onPlay && onPlay());
         player.on('pause', () => onPause && onPause());
         player.on('seeked', () => onSeek && onSeek(player.currentTime));
+        player.on('timeupdate', () => onTimeUpdate && onTimeUpdate(player.currentTime, player.duration));
         player.on('ended', () => onEnd && onEnd());
+        player.on('canplaythrough', () => {
+          setIsLoading(false);
+        });
         player.on('enterfullscreen', () => onFullScreenChange?.(true));
         player.on('exitfullscreen', () => onFullScreenChange?.(false));
 
@@ -120,7 +126,6 @@ export const VideoPlayer = ({
         player.on('stalled', () => onStalled && onStalled());
         player.on('suspend', () => onSuspend && onSuspend());
 
-        player.on('canplaythrough', () => setIsLoading(false));
         player.on('enterfullscreen', onFullScreenChange?.(true));
         player.on('exitfullscreen', onFullScreenChange?.(false));
       });
@@ -151,6 +156,10 @@ export const VideoPlayer = ({
       player.on('pause', () => onPause && onPause());
       player.on('seeked', () => onSeek && onSeek(player.currentTime));
       player.on('ended', () => onEnd && onEnd());
+      player.on('canplaythrough', () => {
+        setIsLoading(false);
+      });
+      player.on('timeupdate', () => onTimeUpdate && onTimeUpdate(player.currentTime, player.duration));
       player.on('enterfullscreen', () => onFullScreenChange?.(true));
       player.on('exitfullscreen', () => onFullScreenChange?.(false));
 
@@ -161,6 +170,8 @@ export const VideoPlayer = ({
       video.addEventListener('error', () => setIsLoading(false));
       video.addEventListener('stalled', () => setIsLoading(false));
       video.addEventListener('suspend', () => setIsLoading(false));
+      video.addEventListener('enterfullscreen', () => onFullScreenChange?.(true));
+      video.addEventListener('exitfullscreen', () => onFullScreenChange?.(false));
     };
 
     if (hlsEnabled && hlsInstance) {

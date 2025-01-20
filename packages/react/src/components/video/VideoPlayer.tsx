@@ -65,6 +65,12 @@ export const VideoPlayer = ({
   }, [hlsEnabled]);
 
   useEffect(() => {
+    if (playerRef.current && currentTime !== undefined) {
+      playerRef.current.currentTime = currentTime;
+    }
+  }, [playerRef.current, currentTime]);
+
+  useEffect(() => {
     if (!isVideoSupported || !Plyr) return;
 
     const videoWrapper = wrapperRef.current;
@@ -108,7 +114,6 @@ export const VideoPlayer = ({
         video.className = 'cere-video';
         Object.assign(video, videoOverrides);
         playerRef.current = video;
-        playerRef.current.currentTime = currentTime || 0;
         videoWrapper.appendChild(video);
         hls.attachMedia(video);
 
@@ -150,7 +155,6 @@ export const VideoPlayer = ({
 
       video.appendChild(source);
       playerRef.current = video;
-      playerRef.current.currentTime = currentTime || 0;
       videoWrapper.appendChild(video);
 
       Object.assign(video, videoOverrides);

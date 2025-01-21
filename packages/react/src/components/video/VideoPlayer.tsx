@@ -65,24 +65,22 @@ export const VideoPlayer = ({
   }, [hlsEnabled]);
 
   useEffect(() => {
-    const video = playerRef.current;
-
-    if (video && currentTime !== undefined) {
+    if (playerRef?.current && currentTime !== undefined) {
       const onReady = () => {
-        video.currentTime = currentTime;
+        playerRef.current!.currentTime = currentTime;
       };
 
-      if (video.readyState >= 1) {
+      if (playerRef.current.readyState >= 1) {
         onReady();
       } else {
-        video.addEventListener('loadedmetadata', onReady);
+        playerRef.current.addEventListener('loadedmetadata', onReady);
       }
 
       return () => {
-        video.removeEventListener('loadedmetadata', onReady);
+        playerRef.current!.removeEventListener('loadedmetadata', onReady);
       };
     }
-  }, [currentTime]);
+  }, [playerRef.current, currentTime]);
 
   useEffect(() => {
     if (!isVideoSupported || !Plyr) return;

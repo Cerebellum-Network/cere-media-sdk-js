@@ -49,6 +49,8 @@ export const VideoPlayer = ({
   const [hlsInstance, setHlsInstance] = useState<any>(null);
   const [Plyr, setPlyr] = useState<any>(null);
 
+  const hasStartedRef = useRef(false);
+
   const isVideoSupported = useMemo(() => (hlsEnabled ? hlsInstance?.isSupported() : true), [hlsEnabled, hlsInstance]);
 
   useEffect(() => {
@@ -131,7 +133,12 @@ export const VideoPlayer = ({
 
         const player = new Plyr(video, plyrOptions);
 
-        player.on('play', () => onPlay && onPlay());
+        player.on('play', () => {
+          if (!hasStartedRef.current) {
+            hasStartedRef.current = true;
+            onPlay?.();
+          }
+        });
         player.on('pause', () => onPause && onPause());
         player.on('seeked', () => onSeek && onSeek(player.currentTime));
         player.on('timeupdate', () => onTimeUpdate && onTimeUpdate(player.currentTime, player.duration));
@@ -172,7 +179,12 @@ export const VideoPlayer = ({
       Object.assign(video, videoOverrides);
       const player = new Plyr(video, plyrOptions);
 
-      player.on('play', () => onPlay && onPlay());
+      player.on('play', () => {
+        if (!hasStartedRef.current) {
+          hasStartedRef.current = true;
+          onPlay?.();
+        }
+      });
       player.on('pause', () => onPause && onPause());
       player.on('seeked', () => onSeek && onSeek(player.currentTime));
       player.on('ended', () => onEnd && onEnd());
